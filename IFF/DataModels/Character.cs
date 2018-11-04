@@ -11,21 +11,10 @@ namespace IFF.DataModels {
     public byte Level;
     [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 40)]
     public string Icon;
-    public byte Flag1;
-    public byte Flag2;
-    public byte Flag3;
     public uint Price;
     public uint DiscountPrice;
     public uint UsedPrice;
     public uint FlagShop;
-    public uint TikiPointsQuantity;
-    public uint TikiPoints;
-    public ushort RecylingPoints;
-    public ushort BonusProbability;
-    public ushort RecylingPoints2;
-    public ushort RecylingPoints3;
-    public uint TikiType;
-    public uint TikiPang;
     public uint ActiveDate;
     [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 16)]
     public string ActivationDate;
