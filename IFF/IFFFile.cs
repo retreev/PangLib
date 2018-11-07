@@ -16,7 +16,8 @@ namespace IFF {
             "Desc",
             "Course",
             "Club",
-            "ClubSet"
+            "ClubSet",
+            "HairStyle"
         };
 
         public List<object> Entries = new List<object> ();
