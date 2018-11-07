@@ -17,6 +17,7 @@ namespace IFF {
             "Course",
             "Club",
             "ClubSet",
+            "Enchant",
             "HairStyle",
             "Title"
         };
