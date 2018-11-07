@@ -19,14 +19,14 @@ namespace IFF.DataModels {
     public uint WedgeID;
     public uint PutterID;
     public ushort Power;
-	public ushort Control;
-	public ushort Accuracy;
-	public ushort Spin;
-	public ushort Curve;
+    public ushort Control;
+    public ushort Accuracy;
+    public ushort Spin;
+    public ushort Curve;
     public ushort PowerSlot;
-	public ushort ControlSlot;
-	public ushort AccuracySlot;
-	public ushort SpinSlot;
-	public ushort CurveSlot;
+    public ushort ControlSlot;
+    public ushort AccuracySlot;
+    public ushort SpinSlot;
+    public ushort CurveSlot;
   }
 }
