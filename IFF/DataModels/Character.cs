@@ -5,7 +5,7 @@ namespace IFF.DataModels {
   [StructLayout (LayoutKind.Sequential, Pack = 4)]
   public struct Character {
     public uint Active;
-    public uint TypeId;
+    public uint ID;
     [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 40)]
     public string Name;
     public byte Level;
