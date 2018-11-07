@@ -14,7 +14,8 @@ namespace IFF {
         private List<string> DataModels = new List<string> () {
             "Character",
             "Desc",
-            "Course"
+            "Course",
+            "Club"
         };
 
         public List<object> Entries = new List<object> ();
