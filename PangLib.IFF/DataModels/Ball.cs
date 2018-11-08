@@ -39,6 +39,6 @@ namespace PangLib.IFF.DataModels
     public string EffectName;
     [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 240)]
     public string Unknown4;
-    public uint Stock;
+    public uint PangBonus;
   }
 }
