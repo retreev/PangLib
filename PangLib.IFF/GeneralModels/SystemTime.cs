@@ -2,6 +2,7 @@ using System.Runtime.InteropServices;
 
 namespace PangLib.IFF.GeneralModels
 {
+  [StructLayout (LayoutKind.Sequential, Pack = 4)]
   public struct SystemTime
   {
     public ushort Year;
