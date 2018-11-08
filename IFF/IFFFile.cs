@@ -12,6 +12,7 @@ namespace IFF {
         private ushort[] MagicNumber = new ushort[] { 11, 12, 13 };
 
         private List<string> DataModels = new List<string> () {
+            "Ball",
             "Character",
             "Desc",
             "Course",
