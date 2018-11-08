@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 
-namespace IFF.DataModels {
-
+namespace PangLib.IFF.DataModels
+{
   [StructLayout (LayoutKind.Sequential, Pack = 4)]
   public struct Match {
     public uint Active;

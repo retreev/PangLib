@@ -4,11 +4,12 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Runtime.InteropServices;
-using IFF.DataModels;
+using PangLib.IFF.DataModels;
 
-namespace IFF {
-    public class IFFFile {
-
+namespace PangLib.IFF 
+{
+    public class IFFFile 
+    {
         private ushort[] MagicNumber = new ushort[] { 11, 12, 13 };
 
         private List<string> DataModels = new List<string> () {
@@ -77,7 +78,7 @@ namespace IFF {
 
                         byte[] recordData = Reader.ReadBytes ((int) this.RecordLength);
 
-                        var data = Activator.CreateInstance (System.Type.GetType ("IFF.DataModels." + this.Type));
+                        var data = Activator.CreateInstance (System.Type.GetType ("PangLib.IFF.DataModels." + this.Type));
 
                         int size = Marshal.SizeOf (data);
                         IntPtr ptr = Marshal.AllocHGlobal (size);
@@ -127,7 +128,9 @@ namespace IFF {
 
             if (this.DataModels.Contains (type)) {
                 return type;
-            } else {
+            } 
+            else
+            {
                 return "Unknown";
             }
         }
