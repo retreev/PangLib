@@ -14,6 +14,7 @@ namespace PangLib.IFF
 
         private List<string> DataModels = new List<string> () {
             "Ball",
+            "Caddie",
             "Character",
             "Desc",
             "Course",
