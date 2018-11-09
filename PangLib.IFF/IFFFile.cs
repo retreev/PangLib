@@ -22,6 +22,7 @@ namespace PangLib.IFF
             "ClubSet",
             "Enchant",
             "HairStyle",
+            "Mascot",
             "Match",
             "Title"
         };
