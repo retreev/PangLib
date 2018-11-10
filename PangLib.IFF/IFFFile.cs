@@ -13,6 +13,7 @@ namespace PangLib.IFF
         private ushort[] MagicNumber = new ushort[] { 11, 12, 13 };
 
         private List<string> DataModels = new List<string> () {
+            "AuxPart",
             "Ball",
             "Caddie",
             "Card",
