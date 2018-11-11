@@ -1,7 +1,17 @@
 namespace PangLib.Utilities.Cryptography
 {
+    /// <summary>
+    /// Main XTEA cipher class
+    /// </summary>
     public static class XTEA
     {
+        /// <summary>
+        /// Enciphers the given data with the given key with given rounds
+        /// </summary>
+        /// <param name="rounds">Number of rounds the data should be enciphered</param>
+        /// <param name="data">Array of 2 32-bit sized data blocks to be enciphered</param>
+        /// <param name="key">Array of 4 32-bit sized key blocks to encipher the data with</param>
+        /// <returns>Enciphered data</returns>
         public static uint[] Encipher(int rounds, uint[] data, uint[] key)
         {
             uint delta = 0x61C88647;
@@ -22,6 +32,13 @@ namespace PangLib.Utilities.Cryptography
             return data;
         }
 
+        /// <summary>
+        /// Deciphers the given data with the given key with given rounds
+        /// </summary>
+        /// <param name="rounds">Number of rounds the data should be deciphered</param>
+        /// <param name="data">Array of 2 32-bit sized data blocks to be deciphered</param>
+        /// <param name="key">Array of 4 32-bit sized key blocks to decipher the data with</param>
+        /// <returns>Deciphered data</returns>
         public static uint[] Decipher(int rounds, uint[] data, uint[] key)
         {
             uint delta = 0x61C88647;
