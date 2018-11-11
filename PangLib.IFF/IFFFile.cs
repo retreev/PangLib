@@ -22,7 +22,7 @@ namespace PangLib.IFF
         /// <summary>
         /// Currently supported IFF data models
         /// </summary>
-        private List<string> DataModels = new List<string> () {
+        private List<string> DataModels = new List<string>() {
             "AuxPart",
             "Ball",
             "Caddie",
@@ -39,10 +39,10 @@ namespace PangLib.IFF
             "Title"
         };
 
-        public List<object> Entries = new List<object> ();
+        public List<object> Entries = new List<object>();
         public string FilePath;
         public bool IsZIPFile;
-        
+
         private BinaryReader Reader;
         private string FileDataString;
         private byte[] FileDataBytes;
@@ -54,18 +54,18 @@ namespace PangLib.IFF
         /// Constructs a new IFFFile instance
         /// </summary>
         /// <param name="filePath">The file path of the IFF file</param>
-        public IFFFile (string filePath) {
-            this.FileDataString = File.ReadAllText (filePath);
-            this.FileDataBytes = File.ReadAllBytes (filePath);
-            this.FilePath = filePath;
-            this.IsZIPFile = CheckIfZIPFile ();
-            this.Type = GetTypeFromFileName ();
+        public IFFFile(string filePath) {
+            FileDataString = File.ReadAllText(filePath);
+            FileDataBytes = File.ReadAllBytes(filePath);
+            FilePath = filePath;
+            IsZIPFile = CheckIfZIPFile();
+            Type = GetTypeFromFileName();
 
-            if (!this.IsZIPFile) {
-                this.Reader = new BinaryReader (new MemoryStream (FileDataBytes));
+            if (!IsZIPFile) {
+                Reader = new BinaryReader (new MemoryStream(FileDataBytes));
 
-                this.RecordLength = this.GetRecordLength ();
-                this.RecordCount = this.GetRecordCount ();
+                RecordLength = GetRecordLength();
+                RecordCount = GetRecordCount();
             }
         }
 
@@ -73,18 +73,18 @@ namespace PangLib.IFF
         /// Checks if a IFF file is a ZIP file
         /// </summary>
         /// <returns>A boolean representing the file being an archive</returns>
-        public bool CheckIfZIPFile () {
-            return FileDataString.StartsWith ("PK");
+        public bool CheckIfZIPFile() {
+            return FileDataString.StartsWith("PK");
         }
 
         /// <summary>
         /// If the IFF file is a ZIP file, this method will extract it to a given path
         /// </summary>
         /// <param name="extractPath">Path to extract the IFF file to</param>
-        public void ExtractToDirectory (string extractPath) {
-            if (this.IsZIPFile) {
-                using (ZipArchive archive = ZipFile.Open (FilePath, ZipArchiveMode.Update)) {
-                    archive.ExtractToDirectory (extractPath);
+        public void ExtractToDirectory(string extractPath) {
+            if (IsZIPFile) {
+                using (ZipArchive archive = ZipFile.Open(FilePath, ZipArchiveMode.Update)) {
+                    archive.ExtractToDirectory(extractPath);
                 }
             }
         }
@@ -95,27 +95,27 @@ namespace PangLib.IFF
         /// The bytes of a single entry are then marshalled onto a dynamically fetched structure
         /// from PangLib.IFF.DataModels
         /// </summary>
-        public void Parse () {
-            if (!this.IsZIPFile && this.Type != "Unknown") {
-                if (this.CheckMagicNumber ()) {
-                    for (int i = 0; i < this.RecordCount; i++) {
-                        this.JumpToRecord (i);
+        public void Parse() {
+            if (!IsZIPFile && Type != "Unknown") {
+                if (CheckMagicNumber()) {
+                    for (int i = 0; i < RecordCount; i++) {
+                        JumpToRecord(i);
 
-                        byte[] recordData = Reader.ReadBytes ((int) this.RecordLength);
+                        byte[] recordData = Reader.ReadBytes((int) RecordLength);
 
-                        var data = Activator.CreateInstance (System.Type.GetType ("PangLib.IFF.DataModels." + this.Type));
+                        var data = Activator.CreateInstance(System.Type.GetType ("PangLib.IFF.DataModels." + Type));
 
-                        int size = Marshal.SizeOf (data);
-                        IntPtr ptr = Marshal.AllocHGlobal (size);
+                        int size = Marshal.SizeOf(data);
+                        IntPtr ptr = Marshal.AllocHGlobal(size);
 
-                        Array.Resize (ref recordData, size);
+                        Array.Resize(ref recordData, size);
 
-                        Marshal.Copy (recordData, 0, ptr, size);
+                        Marshal.Copy(recordData, 0, ptr, size);
 
-                        data = Marshal.PtrToStructure (ptr, data.GetType ());
-                        Marshal.FreeHGlobal (ptr);
+                        data = Marshal.PtrToStructure(ptr, data.GetType ());
+                        Marshal.FreeHGlobal(ptr);
 
-                        this.Entries.Add (data);
+                        Entries.Add(data);
                     }
                 }
             }
@@ -125,22 +125,22 @@ namespace PangLib.IFF
         /// Checks if the IFF file has one of the magic numbers
         /// </summary>
         /// <returns>A boolean representing the file having a magic number</returns>
-        public bool CheckMagicNumber () {
+        public bool CheckMagicNumber() {
             long Position = Reader.BaseStream.Position;
-            Reader.BaseStream.Seek (4L, SeekOrigin.Begin);
-            ushort MagicNumber = Reader.ReadUInt16 ();
-            Reader.BaseStream.Seek (Position, SeekOrigin.Begin);
-            return this.MagicNumber.Contains<ushort> (MagicNumber);
+            Reader.BaseStream.Seek(4L, SeekOrigin.Begin);
+            ushort MagicNumber = Reader.ReadUInt16();
+            Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
+            return this.MagicNumber.Contains<ushort>(MagicNumber);
         }
 
         /// <summary>
         /// Gets the record count from the IFF file (the first UInt16)
         /// </summary>
-        public ushort GetRecordCount () {
+        public ushort GetRecordCount() {
             long Position = Reader.BaseStream.Position;
-            Reader.BaseStream.Seek (0, System.IO.SeekOrigin.Begin);
-            ushort RecordCount = Reader.ReadUInt16 ();
-            Reader.BaseStream.Seek (Position, SeekOrigin.Begin);
+            Reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
+            ushort RecordCount = Reader.ReadUInt16();
+            Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
             return RecordCount;
         }
 
@@ -151,9 +151,9 @@ namespace PangLib.IFF
         /// amount of bytes we have minus the first 8 (header) bytes
         /// </summary>
         /// <returns>The length of a single record</returns>
-        public long GetRecordLength () {
+        public long GetRecordLength() {
             long Position = Reader.BaseStream.Position;
-            ushort RecordCount = this.GetRecordCount ();
+            ushort RecordCount = GetRecordCount();
             long DataLength = Reader.BaseStream.Length - 8L;
             return (long) (DataLength / ((long) RecordCount));
         }
@@ -163,8 +163,8 @@ namespace PangLib.IFF
         /// the starting position of a given record index
         /// </summary>
         /// <param name="index">Index of the record to seek to</param>
-        public void JumpToRecord (int index) {
-            Reader.BaseStream.Seek (8L + (this.RecordLength * index), System.IO.SeekOrigin.Begin);
+        public void JumpToRecord(int index) {
+            Reader.BaseStream.Seek(8L + (RecordLength * index), System.IO.SeekOrigin.Begin);
         }
 
         /// <summary>
@@ -172,10 +172,10 @@ namespace PangLib.IFF
         /// of the IFF file
         /// </summary>
         /// <returns>The type of a record if valid, and "Unknown" if invalid</returns>
-        public string GetTypeFromFileName () {
-            string type = Path.GetFileNameWithoutExtension (this.FilePath);
+        public string GetTypeFromFileName() {
+            string type = Path.GetFileNameWithoutExtension(FilePath);
 
-            if (this.DataModels.Contains (type)) {
+            if (DataModels.Contains(type)) {
                 return type;
             } 
             else
