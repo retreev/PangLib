@@ -1,60 +1,77 @@
 ﻿using System;
-using System.Text;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace PangLib.DAT
 {
+    /// <summary>
+    /// Main DAT file class
+    /// </summary>
     public class DATFile
     {
-        public List<string> Entries = new List<string> ();
-
-        private BinaryReader Reader;
-
+        public List<string> Entries = new List<string>();
         public string FilePath;
 
+        private BinaryReader Reader;
         private byte[] FileDataBytes;
-
         private Encoding FileEncoding;
 
-        public DATFile (string filePath) {
-            this.FileDataBytes = File.ReadAllBytes (filePath);
-            this.FilePath = filePath;
-            this.FileEncoding = this.GetEncodingFromFileName();
+        /// <summary>
+        /// Constructs a new DATFile instance
+        /// </summary>
+        /// <param name="filePath">The file path of the DAT file</param>
+        public DATFile(string filePath)
+        {
+            FileDataBytes = File.ReadAllBytes(filePath);
+            FilePath = filePath;
+            FileEncoding = GetEncodingFromFileName();
 
-            this.Reader = new BinaryReader(new MemoryStream(this.FileDataBytes), this.FileEncoding);
+            Reader = new BinaryReader(new MemoryStream(FileDataBytes), FileEncoding);
         }
 
-        public void Parse () {
+        /// <summary>
+        /// Parses the data from the DAT file
+        /// </summary>
+        public void Parse()
+        {
             List<char> stringChars = new List<char>();
 
-            while (this.Reader.BaseStream.Position < this.Reader.BaseStream.Length)
+            while (Reader.BaseStream.Position < Reader.BaseStream.Length)
             {
-                if (this.Reader.PeekChar() != 0x00)
+                if (Reader.PeekChar() != 0x00)
                 {
-                    stringChars.Add(this.Reader.ReadChar());
+                    stringChars.Add(Reader.ReadChar());
                 }
                 else
                 {
                     char[] chars = stringChars.ToArray();
-                    byte[] bytes = this.FileEncoding.GetBytes(chars);
+                    byte[] bytes = FileEncoding.GetBytes(chars);
 
-                    this.Entries.Add(this.FileEncoding.GetString(bytes));
+                    Entries.Add(FileEncoding.GetString(bytes));
 
-                    this.Reader.BaseStream.Seek(1L, SeekOrigin.Current);
+                    Reader.BaseStream.Seek(1L, SeekOrigin.Current);
                     stringChars = new List<char>();
                 }
             }
         }
 
-        private Encoding GetEncodingFromFileName () {
-            string fileName = Path.GetFileNameWithoutExtension (this.FilePath).ToLower();
+        /// <summary>
+        /// Tries to get the file encoding based on
+        /// the naming scheme of the files
+        ///
+        /// Falls back on UTF-8 as default
+        /// </summary>
+        /// <returns>Encoding of the DAT file</returns>
+        private Encoding GetEncodingFromFileName()
+        {
+            string fileName = Path.GetFileNameWithoutExtension(FilePath).ToLower();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
             Encoding targetEncoding;
 
-            switch (fileName) 
+            switch (fileName)
             {
                 case "korea":
                     targetEncoding = Encoding.GetEncoding(51949);
@@ -85,8 +102,13 @@ namespace PangLib.DAT
             return targetEncoding;
         }
 
-        public void SetEncoding (Encoding encoding) {
-            this.FileEncoding = encoding;
+        /// <summary>
+        /// Sets the encoding to be used by the DATFile instance
+        /// </summary>
+        /// <param name="encoding">Encoding to set</param>
+        public void SetEncoding(Encoding encoding)
+        {
+            FileEncoding = encoding;
         }
     }
 }
