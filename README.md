@@ -1,4 +1,4 @@
-<img align="left" src=".github/Images/pang.png" width="48" />
+<img align="left" src=".github/Images/pang.png" width="64" />
 
 # PangLib [![CodeFactor](https://www.codefactor.io/repository/github/pangyatools/panglib/badge)](https://www.codefactor.io/repository/github/pangyatools/panglib)
 
@@ -19,9 +19,15 @@ Example, wanting to use the `PangLib.IFF` library:
 ```shell
 $ mkdir MyCoolProject && cd MyCoolProject
 
+
+
 $ dotnet new console
 
+
+
 $ dotnet add reference "[path to PangLib repository]/PangLib.IFF/PangLib.IFF.csproj"
+
+
 
 ```
 
