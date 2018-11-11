@@ -16,19 +16,10 @@ Once that is done you can simply clone this repository somewhere, create your pr
 
 Example, wanting to use the `PangLib.IFF` library:
 
-```shell
+```
 $ mkdir MyCoolProject && cd MyCoolProject
-
-
-
 $ dotnet new console
-
-
-
 $ dotnet add reference "[path to PangLib repository]/PangLib.IFF/PangLib.IFF.csproj"
-
-
-
 ```
 
 You should get a message about the reference being added successfully, now you can use the library inside your application!
