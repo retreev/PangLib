@@ -63,6 +63,7 @@ namespace PangLib.PAK
                 }
                 else
                 {
+                    fileEntry.Compression ^= 0x20;
                     fileEntry.FileName = Encoding.UTF8.GetString(tempName);
                 }
 
