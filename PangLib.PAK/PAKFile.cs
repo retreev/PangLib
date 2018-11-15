@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using PangLib.Utilities.Cryptography;
 
 namespace PangLib.PAK
 {
     public class PAKFile
     {
+        public List<FileEntry> Entries = new List<FileEntry>();
         public string FilePath;
 
-        private List<FileEntry> Entries = new List<FileEntry>();
         private BinaryReader Reader;
         private byte[] FileDataBytes;
         private uint FileListOffset;
@@ -51,6 +53,18 @@ namespace PangLib.PAK
                 fileEntry.Offset = Reader.ReadUInt32();
                 fileEntry.FileSize = Reader.ReadUInt32();
                 fileEntry.RealFileSize = Reader.ReadUInt32();
+
+                byte[] tempName = Reader.ReadBytes(fileEntry.FileNameLength);
+
+                if (fileEntry.Compression < 4 && fileEntry.Compression > -1)
+                {
+                    fileEntry.Unknown1 = Reader.ReadByte();
+                    fileEntry.FileName = Encoding.UTF8.GetString(XOR.Cipher(tempName, 0x71u));
+                }
+                else
+                {
+                    fileEntry.FileName = Encoding.UTF8.GetString(tempName);
+                }
 
                 Entries.Add(fileEntry);
             }
