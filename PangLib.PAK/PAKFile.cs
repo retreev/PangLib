@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using PangLib.Utilities.Cryptography;
 
@@ -17,8 +19,11 @@ namespace PangLib.PAK
         private uint FileCount;
         private byte Signature;
 
-        public PAKFile(string filePath)
+        private dynamic Key;
+
+        public PAKFile(string filePath, dynamic key)
         {
+            Key = key;
             FileDataBytes = File.ReadAllBytes(filePath);
 
             Reader = new BinaryReader(new MemoryStream(FileDataBytes));
@@ -58,19 +63,50 @@ namespace PangLib.PAK
 
                 if (fileEntry.Compression < 4 && fileEntry.Compression > -1)
                 {
+                    uint decryptionKey = (uint) Key;
+
                     fileEntry.Unknown1 = Reader.ReadByte();
-                    fileEntry.FileName = Encoding.UTF8.GetString(XOR.Cipher(tempName, 0x71u));
+                    fileEntry.FileName = Encoding.UTF8.GetString(XOR.Cipher(tempName, decryptionKey));
                 }
                 else
                 {
+                    uint[] decryptionKey = (uint[]) Key;
+
                     fileEntry.Compression ^= 0x20;
-                    fileEntry.FileName = Encoding.UTF8.GetString(tempName);
+
+                    fileEntry.FileName = DecryptFileName(tempName, decryptionKey);
+
+                    uint[] decryptionData = new uint[]
+                    {
+                        fileEntry.Offset,
+                        fileEntry.RealFileSize
+                    };
+
+                    uint[] resultData = XTEA.Decipher(16, decryptionData, decryptionKey);
+
+                    fileEntry.Offset = resultData[0];
+                    fileEntry.RealFileSize = resultData[1];
                 }
 
                 Entries.Add(fileEntry);
             }
 
             Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
+        }
+
+        private string DecryptFileName(byte[] fileNameBuffer, uint[] key)
+        {
+            Span<byte> nameSpan = fileNameBuffer;
+
+            for (int j = 0; j < nameSpan.Length; j = j + 8)
+            {
+                Span<byte> chunk = nameSpan.Slice(j, 8);
+                Span<uint> decrypted = XTEA.Decipher(16, MemoryMarshal.Cast<byte, uint>(chunk).ToArray(), key);
+                Span<byte> resource = MemoryMarshal.AsBytes(decrypted);
+                resource.CopyTo(chunk);
+            }
+
+            return Encoding.UTF8.GetString(nameSpan.ToArray().TakeWhile(x => x != 0x00).ToArray());
         }
     }
 
