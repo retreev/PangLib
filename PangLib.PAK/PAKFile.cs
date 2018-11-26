@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using PangLib.Utilities.Cryptography;
+using PangLib.Utilities.Compression;
 
 namespace PangLib.PAK
 {
@@ -92,6 +93,39 @@ namespace PangLib.PAK
             }
 
             Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
+        }
+
+        public void ReadFiles()
+        {
+            byte[] uncompressedData;
+            byte[] compressedData;
+            byte[] decompressedData;
+            Entries.ForEach(fileEntry =>
+            {
+                switch (fileEntry.Compression)
+                {
+                    case 0:
+                        Reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
+                        uncompressedData = Reader.ReadBytes((int)fileEntry.FileSize);
+                        File.WriteAllBytes(fileEntry.FileName, uncompressedData);
+                        break;
+                    case 1:
+                        Reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
+                        compressedData = Reader.ReadBytes((int)fileEntry.FileSize);
+                        decompressedData = LZ77.Decompress(compressedData, fileEntry.FileSize, fileEntry.RealFileSize, fileEntry.Compression);
+                        File.WriteAllBytes(fileEntry.FileName, decompressedData);
+                        break;
+                    case 2:
+                        Directory.CreateDirectory(fileEntry.FileName);
+                        break;
+                    case 3:
+                        Reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
+                        compressedData = Reader.ReadBytes((int)fileEntry.FileSize);
+                        decompressedData = LZ77.Decompress(compressedData, fileEntry.FileSize, fileEntry.RealFileSize, fileEntry.Compression);
+                        File.WriteAllBytes(fileEntry.FileName, decompressedData);
+                        break;
+                }
+            });
         }
 
         private string DecryptFileName(byte[] fileNameBuffer, uint[] key)
