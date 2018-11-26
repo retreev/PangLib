@@ -5,8 +5,8 @@ namespace PangLib.Utilities.Compression
     /// <summary>
     /// Main LZ77 compression class
     /// </summary>
-    public static class LZ77 {
-
+    public static class LZ77
+    {
         /// <summary>
         /// This method decompresses a given bytearray from LZ77
         ///
