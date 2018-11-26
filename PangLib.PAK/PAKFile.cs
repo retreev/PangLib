@@ -95,35 +95,28 @@ namespace PangLib.PAK
             Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
         }
 
-        public void ReadFiles()
+        public void ExtractFiles()
         {
-            byte[] uncompressedData;
-            byte[] compressedData;
-            byte[] decompressedData;
+            byte[] data = null;
+
             Entries.ForEach(fileEntry =>
             {
+                Reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
+                data = Reader.ReadBytes((int)fileEntry.FileSize);
+
                 switch (fileEntry.Compression)
                 {
-                    case 0:
-                        Reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
-                        uncompressedData = Reader.ReadBytes((int)fileEntry.FileSize);
-                        File.WriteAllBytes(fileEntry.FileName, uncompressedData);
-                        break;
                     case 1:
-                        Reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
-                        compressedData = Reader.ReadBytes((int)fileEntry.FileSize);
-                        decompressedData = LZ77.Decompress(compressedData, fileEntry.FileSize, fileEntry.RealFileSize, fileEntry.Compression);
-                        File.WriteAllBytes(fileEntry.FileName, decompressedData);
+                    case 3:
+                        data = LZ77.Decompress(data, fileEntry.FileSize, fileEntry.RealFileSize, fileEntry.Compression);
                         break;
                     case 2:
                         Directory.CreateDirectory(fileEntry.FileName);
                         break;
-                    case 3:
-                        Reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
-                        compressedData = Reader.ReadBytes((int)fileEntry.FileSize);
-                        decompressedData = LZ77.Decompress(compressedData, fileEntry.FileSize, fileEntry.RealFileSize, fileEntry.Compression);
-                        File.WriteAllBytes(fileEntry.FileName, decompressedData);
-                        break;
+                }
+
+                if (fileEntry.FileSize != 0) {
+                    File.WriteAllBytes(fileEntry.FileName, data);
                 }
             });
         }
