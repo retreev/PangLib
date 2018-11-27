@@ -9,6 +9,9 @@ using PangLib.Utilities.Compression;
 
 namespace PangLib.PAK
 {
+    /// <summary>
+    /// Main PAK file class
+    /// </summary>
     public class PAKFile
     {
         public List<FileEntry> Entries = new List<FileEntry>();
@@ -22,6 +25,11 @@ namespace PangLib.PAK
 
         private dynamic Key;
 
+        /// <summary>
+        /// Constructor for the PAK file instance
+        /// </summary>
+        /// <param name="filePath">Path of the PAK file</param>
+        /// <param name="key">Decryption key for encrypted fields</param>
         public PAKFile(string filePath, dynamic key)
         {
             Key = key;
@@ -33,6 +41,10 @@ namespace PangLib.PAK
             ReadFileEntries();
         }
 
+        /// <summary>
+        /// Reads the file header of the PAK file and saves relevant
+        /// information in instance attributes
+        /// </summary>
         public void ReadFileHeader()
         {
             long Position = Reader.BaseStream.Position;
@@ -45,6 +57,9 @@ namespace PangLib.PAK
             Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
         }
 
+        /// <summary>
+        /// Reads the file entries of the PAK file
+        /// </summary>
         public void ReadFileEntries()
         {
             long Position = Reader.BaseStream.Position;
@@ -95,6 +110,11 @@ namespace PangLib.PAK
             Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
         }
 
+        /// <summary>
+        /// Extracts the files from the file list
+        ///
+        /// Also performs decompression or creation of folders where necessary
+        /// </summary>
         public void ExtractFiles()
         {
             byte[] data = null;
@@ -121,6 +141,12 @@ namespace PangLib.PAK
             });
         }
 
+        /// <summary>
+        /// Decrypts the name of a file using XTEA
+        /// </summary>
+        /// <param name="fileNameBuffer">Bytes of the file name</param>
+        /// <param name="key">Key to decrypt the filename with</param>
+        /// <returns>The decrypted filename</returns>
         private string DecryptFileName(byte[] fileNameBuffer, uint[] key)
         {
             Span<byte> nameSpan = fileNameBuffer;
@@ -137,6 +163,9 @@ namespace PangLib.PAK
         }
     }
 
+    /// <summary>
+    /// Main structure of file entries
+    /// </summary>
     public struct FileEntry
     {
         public byte FileNameLength;
