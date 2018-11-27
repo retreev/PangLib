@@ -7,6 +7,9 @@ using PangLib.Utilities.Cryptography;
 
 namespace PangLib.UpdateList
 {
+    /// <summary>
+    /// Main UpdateList file class
+    /// </summary>
     public class UpdateList
     {
         public string Document;
@@ -14,11 +17,20 @@ namespace PangLib.UpdateList
         private uint[] DecryptionKey;
         private string FilePath;
 
+        /// <summary>
+        /// Constructor for the UpdateList class
+        /// </summary>
+        /// <param name="filePath">Path to the updatelist file</param>
         public UpdateList(string filePath)
         {
             FilePath = filePath;
         }
 
+        /// <summary>
+        /// Decrypts and parses the updatelist file
+        ///
+        /// Saves the parsed updatelist in the Document instance attribute
+        /// </summary>
         public void Parse()
         {
             if (DecryptionKey == null)
@@ -39,6 +51,10 @@ namespace PangLib.UpdateList
             Document = Encoding.UTF8.GetString(updateList.ToArray());
         }
 
+        /// <summary>
+        /// Sets the decryption key for the updatelist decryption
+        /// </summary>
+        /// <param name="key">Decryption key</param>
         public void SetDecryptionKey(uint[] key)
         {
             DecryptionKey = key;
