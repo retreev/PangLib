@@ -34,6 +34,7 @@ More information on how you can use each library can be found in their folders a
 | **PangLib.DAT**        | Library to handle and parse data from `.dat` files                                 |
 | **PangLib.PAK**        | Library to handle and parse data from `.pak` files                                 |
 | **PangLib.PET**        | Library to handle and parse data from `.*pet` files                                |
+| **PangLib.UCC**        | Library to handle and parse data from SelfDesign files                             |
 | **PangLib.UpdateList** | Library to handle and parse data from `updatelist` files                           |
 | **PangLib.Utilities**  | Utilities used in other `PangLib` libraries, handling cryptography and compression |
 
