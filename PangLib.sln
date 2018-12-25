@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PangLib.UpdateList", "PangL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PangLib.PET", "PangLib.PET\PangLib.PET.csproj", "{0AE680EB-980B-4213-B41C-2EC77CB51C26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PangLib.UCC", "PangLib.UCC\PangLib.UCC.csproj", "{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}"
+EndProject
 Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,5 +102,17 @@ Global
 		{0AE680EB-980B-4213-B41C-2EC77CB51C26}.Release|x64.Build.0 = Release|Any CPU
 		{0AE680EB-980B-4213-B41C-2EC77CB51C26}.Release|x86.ActiveCfg = Release|Any CPU
 		{0AE680EB-980B-4213-B41C-2EC77CB51C26}.Release|x86.Build.0 = Release|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Debug|x64.Build.0 = Debug|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Debug|x86.Build.0 = Debug|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Release|x64.ActiveCfg = Release|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Release|x64.Build.0 = Release|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Release|x86.ActiveCfg = Release|Any CPU
+		{36DFC886-C311-4CCC-A9A3-8B6C53A66A56}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
