@@ -122,7 +122,7 @@ namespace PangLib.DAT
         /// Load a DAT file into a DATFile instance
         /// </summary>
         /// <param name="filePath">File path to load the DAT file from</param>
-        public static DATFile LoadFromFile(string filePath)
+        public static DATFile Load(string filePath)
         {
             DATFile DAT = new DATFile();
 
