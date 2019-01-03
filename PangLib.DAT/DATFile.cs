@@ -26,25 +26,27 @@ namespace PangLib.DAT
         private void Parse()
         {
             byte[] fileDataBytes = File.ReadAllBytes(FilePath);
-            BinaryReader reader = new BinaryReader(new MemoryStream(fileDataBytes), FileEncoding);
 
-            List<char> stringChars = new List<char>();
-
-            while (reader.BaseStream.Position < reader.BaseStream.Length)
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(fileDataBytes), FileEncoding))
             {
-                if (reader.PeekChar() != 0x00)
-                {
-                    stringChars.Add(reader.ReadChar());
-                }
-                else
-                {
-                    char[] chars = stringChars.ToArray();
-                    byte[] bytes = FileEncoding.GetBytes(chars);
+                List<char> stringChars = new List<char>();
 
-                    Entries.Add(FileEncoding.GetString(bytes));
+                while (reader.BaseStream.Position < reader.BaseStream.Length)
+                {
+                    if (reader.PeekChar() != 0x00)
+                    {
+                        stringChars.Add(reader.ReadChar());
+                    }
+                    else
+                    {
+                        char[] chars = stringChars.ToArray();
+                        byte[] bytes = FileEncoding.GetBytes(chars);
 
-                    reader.BaseStream.Seek(1L, SeekOrigin.Current);
-                    stringChars = new List<char>();
+                        Entries.Add(FileEncoding.GetString(bytes));
+
+                        reader.BaseStream.Seek(1L, SeekOrigin.Current);
+                        stringChars = new List<char>();
+                    }
                 }
             }
         }
