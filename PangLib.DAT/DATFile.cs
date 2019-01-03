@@ -134,5 +134,21 @@ namespace PangLib.DAT
 
             return DAT;
         }
+
+        /// <summary>
+        /// Save a DATFile instance to a file
+        /// </summary>
+        /// <param name="filePath">File path to save the DAT file to</param>
+        public void Save(string filePath)
+        {
+            using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.Write), FileEncoding))
+            {
+                foreach (string entry in Entries)
+                {
+                    writer.Write(entry.ToCharArray());
+                    writer.Write((byte)0);
+                }
+            }
+        }
     }
 }
