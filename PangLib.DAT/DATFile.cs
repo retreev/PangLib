@@ -11,37 +11,30 @@ namespace PangLib.DAT
     public class DATFile
     {
         public List<string> Entries = new List<string>();
-        public string FilePath;
 
-        private BinaryReader Reader;
-        private byte[] FileDataBytes;
+        private string FilePath;
         private Encoding FileEncoding;
 
         /// <summary>
         /// Constructs a new DATFile instance
         /// </summary>
-        /// <param name="filePath">The file path of the DAT file</param>
-        public DATFile(string filePath)
-        {
-            FileDataBytes = File.ReadAllBytes(filePath);
-            FilePath = filePath;
-            FileEncoding = GetEncodingFromFileName();
-
-            Reader = new BinaryReader(new MemoryStream(FileDataBytes), FileEncoding);
-        }
+        public DATFile() { }
 
         /// <summary>
         /// Parses the data from the DAT file
         /// </summary>
-        public void Parse()
+        private void Parse()
         {
+            byte[] fileDataBytes = File.ReadAllBytes(FilePath);
+            BinaryReader reader = new BinaryReader(new MemoryStream(fileDataBytes), FileEncoding);
+
             List<char> stringChars = new List<char>();
 
-            while (Reader.BaseStream.Position < Reader.BaseStream.Length)
+            while (reader.BaseStream.Position < reader.BaseStream.Length)
             {
-                if (Reader.PeekChar() != 0x00)
+                if (reader.PeekChar() != 0x00)
                 {
-                    stringChars.Add(Reader.ReadChar());
+                    stringChars.Add(reader.ReadChar());
                 }
                 else
                 {
@@ -50,7 +43,7 @@ namespace PangLib.DAT
 
                     Entries.Add(FileEncoding.GetString(bytes));
 
-                    Reader.BaseStream.Seek(1L, SeekOrigin.Current);
+                    reader.BaseStream.Seek(1L, SeekOrigin.Current);
                     stringChars = new List<char>();
                 }
             }
@@ -65,6 +58,11 @@ namespace PangLib.DAT
         /// <returns>Encoding of the DAT file</returns>
         private Encoding GetEncodingFromFileName()
         {
+            if (FilePath == null)
+            {
+                throw new InvalidOperationException("No file path given to get encoding from, use SetEncoding() method!");
+            }
+
             string fileName = Path.GetFileNameWithoutExtension(FilePath).ToLower();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -109,6 +107,30 @@ namespace PangLib.DAT
         public void SetEncoding(Encoding encoding)
         {
             FileEncoding = encoding;
+        }
+
+        /// <summary>
+        /// Sets the file path of the DATFile instance
+        /// </summary>
+        /// <param name="filePath">File path to set</param>
+        public void SetFilePath(string filePath)
+        {
+            FilePath = filePath;
+        }
+
+        /// <summary>
+        /// Load a DAT file into a DATFile instance
+        /// </summary>
+        /// <param name="filePath">File path to load the DAT file from</param>
+        public static DATFile LoadFromFile(string filePath)
+        {
+            DATFile DAT = new DATFile();
+
+            DAT.SetFilePath(filePath);
+            DAT.SetEncoding(DAT.GetEncodingFromFileName());
+            DAT.Parse();
+
+            return DAT;
         }
     }
 }
