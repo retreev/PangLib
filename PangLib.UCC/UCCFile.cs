@@ -25,19 +25,17 @@ namespace PangLib.UCC
             int posY = 0;
 
             ZipArchiveEntry entry = ZIPFile.GetEntry(entryName);
-            
+
             MemoryStream memoryStream = new MemoryStream();
             entry.Open().CopyTo(memoryStream);
             memoryStream.Position = 0;
-            
-            BinaryReader reader = new BinaryReader(memoryStream);
 
-            if (reader.BaseStream.Length > 65536)
+            if (memoryStream.Length > 65536)
             {
                 width = 256;
                 height = 256;
             }
-            else if (reader.BaseStream.Length > 32768)
+            else if (memoryStream.Length > 32768)
             {
                 width = 128;
                 height = 64;
@@ -55,48 +53,51 @@ namespace PangLib.UCC
 
             bitmap = new Bitmap(width, height);
 
-            while (reader.BaseStream.Position < reader.BaseStream.Length)
+            using (BinaryReader reader = new BinaryReader(memoryStream))
             {
-                int loopCount = 3;
-
-                if (entryName == "icon")
+                while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {
-                    loopCount = 4;
-                }
-                
-                int[] hexColor = new int[4];
-                
-                for (int i = 0; i < loopCount; i++)
-                {
-                    hexColor[i] = reader.ReadByte();
+                    int loopCount = 3;
 
-                    if (hexColor[i] < 0)
+                    if (entryName == "icon")
                     {
-                        hexColor[i] = 0;
+                        loopCount = 4;
                     }
-                    else if (hexColor[i] > 255)
+
+                    int[] hexColor = new int[4];
+
+                    for (int i = 0; i < loopCount; i++)
                     {
-                        hexColor[i] = 255;
+                        hexColor[i] = reader.ReadByte();
+
+                        if (hexColor[i] < 0)
+                        {
+                            hexColor[i] = 0;
+                        }
+                        else if (hexColor[i] > 255)
+                        {
+                            hexColor[i] = 255;
+                        }
                     }
-                }
 
-                if (entryName == "icon")
-                {
-                    color = Color.FromArgb(hexColor[3], hexColor[2], hexColor[1], hexColor[0]);
-                }
-                else
-                {
-                    color = Color.FromArgb(255, hexColor[2], hexColor[1], hexColor[0]);
-                }
-                
-                bitmap.SetPixel(posX, posY, color);
+                    if (entryName == "icon")
+                    {
+                        color = Color.FromArgb(hexColor[3], hexColor[2], hexColor[1], hexColor[0]);
+                    }
+                    else
+                    {
+                        color = Color.FromArgb(255, hexColor[2], hexColor[1], hexColor[0]);
+                    }
 
-                posX++;
+                    bitmap.SetPixel(posX, posY, color);
 
-                if (posX == width)
-                {
-                    posY++;
-                    posX = 0;
+                    posX++;
+
+                    if (posX == width)
+                    {
+                        posY++;
+                        posX = 0;
+                    }
                 }
             }
 
@@ -104,3 +105,5 @@ namespace PangLib.UCC
         }
     }
 }
+
+
