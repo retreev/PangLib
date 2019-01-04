@@ -16,9 +16,6 @@ namespace PangLib.UCC
 
         public Bitmap GetBitmapFromFileEntry(string entryName)
         {
-            Bitmap bitmap;
-            Color color;
-
             int width;
             int height;
             int posX = 0;
@@ -51,7 +48,7 @@ namespace PangLib.UCC
                 height = 128;
             }
 
-            bitmap = new Bitmap(width, height);
+            Bitmap bitmap = new Bitmap(width, height);
 
             using (BinaryReader reader = new BinaryReader(memoryStream))
             {
@@ -80,24 +77,16 @@ namespace PangLib.UCC
                         }
                     }
 
-                    if (entryName == "icon")
-                    {
-                        color = Color.FromArgb(hexColor[3], hexColor[2], hexColor[1], hexColor[0]);
-                    }
-                    else
-                    {
-                        color = Color.FromArgb(255, hexColor[2], hexColor[1], hexColor[0]);
-                    }
+                    Color color = Color.FromArgb(entryName == "icon" ? hexColor[3] : 255, hexColor[2], hexColor[1], hexColor[0]);
 
                     bitmap.SetPixel(posX, posY, color);
 
                     posX++;
 
-                    if (posX == width)
-                    {
-                        posY++;
-                        posX = 0;
-                    }
+                    if (posX != width) continue;
+                    
+                    posY++;
+                    posX = 0;
                 }
             }
 
