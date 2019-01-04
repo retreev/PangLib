@@ -5,15 +5,27 @@ using System.IO.Compression;
 
 namespace PangLib.UCC
 {
+    /// <summary>
+    /// Main UCC file class
+    /// </summary>
     public class UCCFile
     {
         private ZipArchive ZIPFile;
 
+        /// <summary>
+        /// Constructor for UCC file instance
+        /// </summary>
+        /// <param name="filePath">Path of the UCC file</param>
         public UCCFile(string filePath)
         {
             ZIPFile = ZipFile.Open(filePath, ZipArchiveMode.Read);
         }
-
+        
+        /// <summary>
+        /// Get the specified entry of the UCC file and return it as a bitmap
+        /// </summary>
+        /// <param name="entryName">Name of the entry</param>
+        /// <returns>Bitmap instance of the specified entry</returns>
         public Bitmap GetBitmapFromFileEntry(string entryName)
         {
             int width;
