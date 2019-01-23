@@ -4,7 +4,7 @@ Library to handle and parse data from Pangya translation (`.dat`) files.
 
 ## Installation
 
-You can download this on NuGet using the .NET CLI
+You can download this package on NuGet using the .NET CLI
 
 ```
 dotnet add package PangLib.DAT
