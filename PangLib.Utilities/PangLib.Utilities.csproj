@@ -1,6 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <PackageId>PangLib.Utilities</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>pixeldesu</Authors>
+    <Description>Utilities for common interaction with PangYa game files (encryption/compression)</Description>
+    <PackageTags>xor;lz;compression;encryption;pangya</PackageTags>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+
+    <RepositoryUrl>https://github.com/pangyatools/PangLib</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/pangyatools/PangLib</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/pangyatools/PangLib/master/.github/Images/pang.png</PackageIconUrl>
+
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
