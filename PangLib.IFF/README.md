@@ -16,9 +16,6 @@ dotnet add package PangLib.IFF
 // Create new instance and load file into it
 IFFFile IFF = new IFFFile("./Caddie.iff");
 
-// Parse contents of IFF file
-IFF.Parse();
-
 // You can now access the IFF file entries on IFF.Entries
 // Beware that you have to cast them to the proper
 // DataModels structure as IFFFile only saves object types
