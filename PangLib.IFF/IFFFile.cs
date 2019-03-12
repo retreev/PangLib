@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Runtime.InteropServices;
-using PangLib.IFF.DataModels;
 
 namespace PangLib.IFF
 {
@@ -20,7 +18,7 @@ namespace PangLib.IFF
         private ushort RecordCount;
         private ushort BindingID;
         private uint Version;
-        
+
         private long RecordLength;
 
         /// <summary>
@@ -30,7 +28,7 @@ namespace PangLib.IFF
         public IFFFile(string filePath)
         {
             FilePath = filePath;
-            
+
             Parse();
         }
 
@@ -61,9 +59,9 @@ namespace PangLib.IFF
             {
                 if ((IsZIPFile = (new string(reader.ReadChars(2)) == "PK")) == true)
                     return;
-                
+
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
-                
+
                 RecordCount = reader.ReadUInt16();
                 RecordLength = (long) ((reader.BaseStream.Length - 8L) / ((long) RecordCount));
                 BindingID = reader.ReadUInt16();
@@ -72,15 +70,19 @@ namespace PangLib.IFF
                 for (int i = 0; i < RecordCount; i++)
                 {
                     reader.BaseStream.Seek(8L + (RecordLength * i), System.IO.SeekOrigin.Begin);
-                    
-                    byte[] recordData = reader.ReadBytes((int)RecordLength);
-                    
+
+                    byte[] recordData = reader.ReadBytes((int) RecordLength);
+
                     T data = new T();
-                    
+
                     int size = Marshal.SizeOf(data);
                     IntPtr ptr = Marshal.AllocHGlobal(size);
 
-                    Array.Resize(ref recordData, size);
+                    if (recordData.Length != size)
+                    {
+                        throw new InvalidCastException(
+                            $"The record length ({recordData.Length}) mismatches the length of the passed structure ({size})");
+                    }
 
                     Marshal.Copy(recordData, 0, ptr, size);
 
