@@ -11,42 +11,17 @@ namespace PangLib.IFF
     /// <summary>
     /// Main IFF file class
     /// </summary>
-    public class IFFFile
+    public class IFFFile<T> where T : new()
     {
-        /// <summary>
-        /// IFF File header magic numbers, if these aren't 
-        /// at position 4, the file is not a valid IFF
-        /// </summary>
-        private ushort[] MagicNumber = new ushort[] { 11, 12, 13 };
-
-        /// <summary>
-        /// Currently supported IFF data models
-        /// </summary>
-        private List<string> DataModels = new List<string>()
-        {
-            "AuxPart",
-            "Ball",
-            "Caddie",
-            "Card",
-            "Character",
-            "Desc",
-            "Course",
-            "Club",
-            "ClubSet",
-            "Enchant",
-            "HairStyle",
-            "Mascot",
-            "Match",
-            "Title"
-        };
-
-        public List<object> Entries = new List<object>();
+        public List<T> Entries = new List<T>();
         public string FilePath;
         public bool IsZIPFile;
 
         private ushort RecordCount;
+        private ushort BindingID;
+        private uint Version;
+        
         private long RecordLength;
-        private string Type;
 
         /// <summary>
         /// Constructs a new IFFFile instance
@@ -55,28 +30,8 @@ namespace PangLib.IFF
         public IFFFile(string filePath)
         {
             FilePath = filePath;
-            Type = GetTypeFromFileName();
-
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(filePath))))
-            {
-                IsZIPFile = CheckIfZIPFile(reader);
-
-                if (!IsZIPFile)
-                {
-                    RecordCount = GetRecordCount(reader);
-                    RecordLength = GetRecordLength(reader);
-                    Parse(reader);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Checks if a IFF file is a ZIP file
-        /// </summary>
-        /// <returns>A boolean representing the file being an archive</returns>
-        private bool CheckIfZIPFile(BinaryReader reader)
-        {
-            return new String(reader.ReadChars(2)) == "PK";
+            
+            Parse();
         }
 
         /// <summary>
@@ -100,101 +55,40 @@ namespace PangLib.IFF
         /// The bytes of a single entry are then marshalled onto a dynamically fetched structure
         /// from PangLib.IFF.DataModels
         /// </summary>
-        private void Parse(BinaryReader reader)
+        private void Parse()
         {
-            if (!IsZIPFile && Type != "Unknown")
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
             {
-                if (CheckMagicNumber(reader))
+                if ((IsZIPFile = (new string(reader.ReadChars(2)) == "PK")) == true)
+                    return;
+                
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                
+                RecordCount = reader.ReadUInt16();
+                RecordLength = (long) ((reader.BaseStream.Length - 8L) / ((long) RecordCount));
+                BindingID = reader.ReadUInt16();
+                Version = reader.ReadUInt32();
+
+                for (int i = 0; i < RecordCount; i++)
                 {
-                    for (int i = 0; i < RecordCount; i++)
-                    {
-                        JumpToRecord(reader, i);
+                    reader.BaseStream.Seek(8L + (RecordLength * i), System.IO.SeekOrigin.Begin);
+                    
+                    byte[] recordData = reader.ReadBytes((int)RecordLength);
+                    
+                    T data = new T();
+                    
+                    int size = Marshal.SizeOf(data);
+                    IntPtr ptr = Marshal.AllocHGlobal(size);
 
-                        byte[] recordData = reader.ReadBytes((int)RecordLength);
+                    Array.Resize(ref recordData, size);
 
-                        var data = Activator.CreateInstance(System.Type.GetType("PangLib.IFF.DataModels." + Type));
+                    Marshal.Copy(recordData, 0, ptr, size);
 
-                        int size = Marshal.SizeOf(data);
-                        IntPtr ptr = Marshal.AllocHGlobal(size);
+                    data = (T) Marshal.PtrToStructure(ptr, data.GetType());
+                    Marshal.FreeHGlobal(ptr);
 
-                        Array.Resize(ref recordData, size);
-
-                        Marshal.Copy(recordData, 0, ptr, size);
-
-                        data = Marshal.PtrToStructure(ptr, data.GetType());
-                        Marshal.FreeHGlobal(ptr);
-
-                        Entries.Add(data);
-                    }
+                    Entries.Add(data);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Checks if the IFF file has one of the magic numbers
-        /// </summary>
-        /// <returns>A boolean representing the file having a magic number</returns>
-        private bool CheckMagicNumber(BinaryReader reader)
-        {
-            long Position = reader.BaseStream.Position;
-            reader.BaseStream.Seek(4L, SeekOrigin.Begin);
-            ushort MagicNumber = reader.ReadUInt16();
-            reader.BaseStream.Seek(Position, SeekOrigin.Begin);
-            return this.MagicNumber.Contains<ushort>(MagicNumber);
-        }
-
-        /// <summary>
-        /// Gets the record count from the IFF file (the first UInt16)
-        /// </summary>
-        private ushort GetRecordCount(BinaryReader reader)
-        {
-            long Position = reader.BaseStream.Position;
-            reader.BaseStream.Seek(0, System.IO.SeekOrigin.Begin);
-            ushort RecordCount = reader.ReadUInt16();
-            reader.BaseStream.Seek(Position, SeekOrigin.Begin);
-            return RecordCount;
-        }
-
-        /// <summary>
-        /// Gets the length of a single record from the IFF file
-        ///
-        /// This is based on the result from GetRecordCount and the
-        /// amount of bytes we have minus the first 8 (header) bytes
-        /// </summary>
-        /// <returns>The length of a single record</returns>
-        private long GetRecordLength(BinaryReader reader)
-        {
-            long Position = reader.BaseStream.Position;
-            long DataLength = reader.BaseStream.Length - 8L;
-            return (long)(DataLength / ((long)RecordCount));
-        }
-
-        /// <summary>
-        /// Seeks the IFFFile instances BinaryReader to  
-        /// the starting position of a given record index
-        /// </summary>
-        /// <param name="index">Index of the record to seek to</param>
-        private void JumpToRecord(BinaryReader reader, int index)
-        {
-            reader.BaseStream.Seek(8L + (RecordLength * index), System.IO.SeekOrigin.Begin);
-        }
-
-        /// <summary>
-        /// Gets and checks the record type from the file name
-        /// of the IFF file
-        /// </summary>
-        /// <returns>The type of a record if valid, and "Unknown" if invalid</returns>
-        public string GetTypeFromFileName()
-        {
-            string type = Path.GetFileNameWithoutExtension(FilePath);
-
-            if (DataModels.Contains(type))
-            {
-                return type;
-            }
-            else
-            {
-                return "Unknown";
             }
         }
     }

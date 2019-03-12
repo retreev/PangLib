@@ -13,14 +13,14 @@ dotnet add package PangLib.IFF
 ## Usage
 
 ```cs
+using PangLib.IFF;
+using PangLib.IFF.DataModels;
+
 // Create new instance and load file into it
-IFFFile IFF = new IFFFile("./Caddie.iff");
+IFFFile<Caddie> IFF = new IFFFile<Caddie>("./Caddie.iff");
 
 // You can now access the IFF file entries on IFF.Entries
-// Beware that you have to cast them to the proper
-// DataModels structure as IFFFile only saves object types
-// in it's dictionary
-Caddie Papel = (Caddie) IFF.Entries.Get(1);
+Caddie Papel = IFF.Entries.Get(1);
 ```
 
 ## Known Issues
