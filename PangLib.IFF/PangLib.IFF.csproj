@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageId>PangLib.IFF</PackageId>
-        <Version>4.0.0</Version>
+        <Version>4.1.0</Version>
         <Authors>pixeldesu</Authors>
         <Description>PangLib.IFF is a library that enables handling and parsing of PangYa meta data/item (IFF) files</Description>
         <PackageTags>pangya;iff;game-files</PackageTags>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.IO.Compression;
 using System.Runtime.InteropServices;
 
 namespace PangLib.IFF
@@ -33,26 +32,12 @@ namespace PangLib.IFF
         }
 
         /// <summary>
-        /// If the IFF file is a ZIP file, this method will extract it to a given path
-        /// </summary>
-        /// <param name="extractPath">Path to extract the IFF file to</param>
-        public void ExtractToDirectory(string extractPath)
-        {
-            if (IsZIPFile)
-            {
-                using (ZipArchive archive = ZipFile.Open(FilePath, ZipArchiveMode.Update))
-                {
-                    archive.ExtractToDirectory(extractPath);
-                }
-            }
-        }
-
-        /// <summary>
         /// Parses the data from the IFF file and saves it into the Entries property
         /// 
-        /// The bytes of a single entry are then marshalled onto a dynamically fetched structure
-        /// from PangLib.IFF.DataModels
+        /// The bytes of a single entry are then marshalled into the structure provided by the
+        /// generic type of the IFFFile instance
         /// </summary>
+        /// <exception cref="InvalidCastException">Is thrown when the size of a single record mismatches the size of the given generic structure</exception>
         private void Parse()
         {
             using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
