@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace PangLib.IFF
@@ -13,23 +14,18 @@ namespace PangLib.IFF
         public List<T> Entries = new List<T>();
         public string FilePath;
         public bool IsZIPFile;
+        
+        public ushort BindingID { get; set; }
+        public uint Version { get; set; }
 
         private ushort RecordCount;
-        private ushort BindingID;
-        private uint Version;
-
         private long RecordLength;
 
         /// <summary>
         /// Constructs a new IFFFile instance
         /// </summary>
         /// <param name="filePath">The file path of the IFF file</param>
-        public IFFFile(string filePath)
-        {
-            FilePath = filePath;
-
-            Parse();
-        }
+        public IFFFile() { }
 
         /// <summary>
         /// Parses the data from the IFF file and saves it into the Entries property
@@ -77,6 +73,47 @@ namespace PangLib.IFF
                     Entries.Add(data);
                 }
             }
+        }
+
+        /// <summary>
+        /// Save a IFFFile instance to a file
+        /// </summary>
+        /// <param name="filePath">File path to save the IFF file to</param>
+        public void Save(string filePath)
+        {
+            using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.Write)))
+            {
+                writer.Write((ushort) Entries.Count);
+                writer.Write(BindingID);
+                writer.Write(Version);
+                
+                Entries.ForEach(entry =>
+                {
+                    int size = Marshal.SizeOf(entry);
+                    byte[] arr = new byte[size];
+
+                    IntPtr ptr = Marshal.AllocHGlobal(size);
+                    Marshal.StructureToPtr(entry, ptr, true);
+                    Marshal.Copy(ptr, arr, 0, size);
+                    Marshal.FreeHGlobal(ptr);
+                    
+                    writer.Write(arr);
+                });
+            }
+        }
+
+        /// <summary>
+        /// Load an IFF file into an IFF
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public static IFFFile<T> Load(string filePath)
+        {
+            IFFFile<T> IFF = new IFFFile<T> {FilePath = filePath};
+
+            IFF.Parse();
+
+            return IFF;
         }
     }
 }
