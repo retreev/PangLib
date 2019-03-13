@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 namespace PangLib.IFF
@@ -24,7 +23,6 @@ namespace PangLib.IFF
         /// <summary>
         /// Constructs a new IFFFile instance
         /// </summary>
-        /// <param name="filePath">The file path of the IFF file</param>
         public IFFFile() { }
 
         /// <summary>
@@ -105,8 +103,8 @@ namespace PangLib.IFF
         /// <summary>
         /// Load an IFF file into an IFF
         /// </summary>
-        /// <param name="filePath"></param>
-        /// <returns></returns>
+        /// <param name="filePath">File path to load the IFF file from</param>
+        /// <returns>An IFFFile instance</returns>
         public static IFFFile<T> Load(string filePath)
         {
             IFFFile<T> IFF = new IFFFile<T> {FilePath = filePath};
