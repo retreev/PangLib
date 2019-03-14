@@ -12,15 +12,20 @@ An IFF file only ever includes one type of record, which you can make out by the
 
 ### File Header
 
-Right at the beginning of the file there's the file header, containing two pieces of information, the amount of the data records inside the file and a magic number, which is speculated to either be region-related or just random.
+Right at the beginning of the file there's the file header:
 
 ```csharp
 struct IFFHeader
 {
     ushort RecordCount;
-    ushort MagicNumber; // one of [11, 12, 13]
+    ushort BindingID;
+    uint   Version;
 }
 ```
+
+* **RecordCount**: Count of data sets inside this file
+* **BindingID**: A overarching ID matching with the whole IFF metadata set (data is bound together)
+* **Version**: Revision or Version of the IFF file (usually between 11-13)
 
 ### Common IFF Data
 
@@ -59,6 +64,9 @@ struct IFFCommon
     public _SYSTEMTIME EndTime;
 }
 ```
+
+**Note:** The previously assumed _magic number_ (between byte 4-8) is actually a version/revision number. It's notable that between those revisions some structures in the common data fields
+and probably in other places have changed.
 
 The rest of the file or the structure in general is based on the individual file/record type, you can find the definition of the other structures in `Documentation/Formats/IFF/Models`.
 
