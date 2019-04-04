@@ -19,7 +19,7 @@ Example, wanting to use the `PangLib.IFF` library:
 ```
 $ mkdir MyCoolProject && cd MyCoolProject
 $ dotnet new console
-$ dotnet add reference "[path to PangLib repository]/PangLib.IFF/PangLib.IFF.csproj"
+$ dotnet add package [panglib-package-name]
 ```
 
 You should get a message about the reference being added successfully, now you can use the library inside your application!
@@ -34,6 +34,7 @@ More information on how you can use each library can be found in their folders a
 | **PangLib.DAT**        | Library to handle and parse data from `.dat` files                                 |
 | **PangLib.PAK**        | Library to handle and parse data from `.pak` files                                 |
 | **PangLib.PET**        | Library to handle and parse data from `.*pet` files                                |
+| **PangLib.PSP.PAK**    | Library to handle and parse data from PSP `.pak` files                             |
 | **PangLib.UCC**        | Library to handle and parse data from SelfDesign files                             |
 | **PangLib.UpdateList** | Library to handle and parse data from `updatelist` files                           |
 | **PangLib.Utilities**  | Utilities used in other `PangLib` libraries, handling cryptography and compression |
