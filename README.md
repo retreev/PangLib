@@ -36,6 +36,7 @@ More information on how you can use each library can be found in their folders a
 | **PangLib.PET**        | Library to handle and parse data from `.*pet` files                                |
 | **PangLib.PSP.NOP**    | Library to handle and parse data from PSP `.nop` files                             |
 | **PangLib.PSP.PAK**    | Library to handle and parse data from PSP `.pak` files                             |
+| **PangLib.PSP.QST**    | Library to handle and parse data from PSP `.qst` files                             |
 | **PangLib.UCC**        | Library to handle and parse data from SelfDesign files                             |
 | **PangLib.UpdateList** | Library to handle and parse data from `updatelist` files                           |
 | **PangLib.Utilities**  | Utilities used in other `PangLib` libraries, handling cryptography and compression |
