@@ -21,5 +21,5 @@ NOPFile NOP = new NOPFile("./west_01_n.nop");
 // Extracts the NOP file
 // NOTE: NOP file paths are absolute, so the game will attempt to extract to
 // c:\projectg_psp\projectg\data_umd\..
-PAK.ExtractFiles(".\\data\\");
+NOP.ExtractFiles();
 ```
