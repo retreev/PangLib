@@ -39,6 +39,7 @@ More information on how you can use each library can be found in their folders a
 | **PangLib.PSP.QST**    | ![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.QST.svg)    | Library to handle and parse data from PSP `.qst` files   |
 | **PangLib.UCC**        | ![Nuget](https://img.shields.io/nuget/v/PangLib.UCC.svg)        | Library to handle and parse data from SelfDesign files   |
 | **PangLib.UpdateList** | ![Nuget](https://img.shields.io/nuget/v/PangLib.UpdateList.svg) | Library to handle and parse data from `updatelist` files |
+| **PangLib.Wii.ECB**    | ![Nuget](https://img.shields.io/nuget/v/PangLib.Wii.ECB.svg)    | Library to handle and parse data from Wii `.ECB` files   |
 | **PangLib.Utilities**  | ![Nuget](https://img.shields.io/nuget/v/PangLib.Utilities.svg)  | Common utilities used in other `PangLib` libraries       |
 
 ## Contributing
