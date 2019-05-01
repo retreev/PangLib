@@ -6,7 +6,7 @@ The PAK (Package) File format is Pangya: Fantasy Golfs archive/packaging format.
 
 As the name suggests, it contains the list of files of the archive. Inside the file, you read following structure until the end of the file:
 
-```
+```csharp
 public struct FileEntry
 {
     public ushort Type;
