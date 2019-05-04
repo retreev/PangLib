@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageId>PangLib.PAK</PackageId>
-        <Version>1.0.0</Version>
+        <Version>1.0.1</Version>
         <Authors>pixeldesu</Authors>
         <Description>PangLib.PAK is a library that enables handling of PangYa archive (PAK) files</Description>
         <PackageTags>pangya;archive;pak;game-files</PackageTags>

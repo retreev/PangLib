@@ -15,10 +15,8 @@ namespace PangLib.PAK
     public class PAKFile
     {
         public List<FileEntry> Entries = new List<FileEntry>();
-        public string FilePath;
-
-        private BinaryReader Reader;
-        private byte[] FileDataBytes;
+        private string FilePath;
+        
         private uint FileListOffset;
         private uint FileCount;
         private byte Signature;
@@ -32,82 +30,69 @@ namespace PangLib.PAK
         /// <param name="key">Decryption key for encrypted fields</param>
         public PAKFile(string filePath, dynamic key)
         {
+            FilePath = filePath;
             Key = key;
-            FileDataBytes = File.ReadAllBytes(filePath);
 
-            Reader = new BinaryReader(new MemoryStream(FileDataBytes));
-
-            ReadFileHeader();
-            ReadFileEntries();
+            ReadMetadata();
         }
 
         /// <summary>
-        /// Reads the file header of the PAK file and saves relevant
-        /// information in instance attributes
+        /// Reads the PAK file metadata, including file list information and the file list
         /// </summary>
-        public void ReadFileHeader()
+        private void ReadMetadata()
         {
-            long Position = Reader.BaseStream.Position;
-            Reader.BaseStream.Seek(-9L, SeekOrigin.End);
-
-            FileListOffset = Reader.ReadUInt32();
-            FileCount = Reader.ReadUInt32();
-            Signature = Reader.ReadByte();
-
-            Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
-        }
-
-        /// <summary>
-        /// Reads the file entries of the PAK file
-        /// </summary>
-        public void ReadFileEntries()
-        {
-            long Position = Reader.BaseStream.Position;
-            Reader.BaseStream.Seek(FileListOffset, SeekOrigin.Begin);
-
-            for (uint i = 0; i < FileCount; i++)
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
             {
-                FileEntry fileEntry = new FileEntry();
+                reader.BaseStream.Seek(-9L, SeekOrigin.End);
 
-                fileEntry.FileNameLength = Reader.ReadByte();
-                fileEntry.Compression = Reader.ReadByte();
-                fileEntry.Offset = Reader.ReadUInt32();
-                fileEntry.FileSize = Reader.ReadUInt32();
-                fileEntry.RealFileSize = Reader.ReadUInt32();
+                FileListOffset = reader.ReadUInt32();
+                FileCount = reader.ReadUInt32();
+                Signature = reader.ReadByte();
 
-                byte[] tempName = Reader.ReadBytes(fileEntry.FileNameLength);
+                reader.BaseStream.Seek(FileListOffset, SeekOrigin.Begin);
 
-                if (fileEntry.Compression < 4 && fileEntry.Compression > -1)
+                for (uint i = 0; i < FileCount; i++)
                 {
-                    uint decryptionKey = (uint) Key;
+                    FileEntry fileEntry = new FileEntry();
 
-                    fileEntry.Unknown1 = Reader.ReadByte();
-                    fileEntry.FileName = Encoding.UTF8.GetString(XOR.Cipher(tempName, decryptionKey));
-                }
-                else
-                {
-                    uint[] decryptionKey = (uint[]) Key;
+                    fileEntry.FileNameLength = reader.ReadByte();
+                    fileEntry.Compression = reader.ReadByte();
+                    fileEntry.Offset = reader.ReadUInt32();
+                    fileEntry.FileSize = reader.ReadUInt32();
+                    fileEntry.RealFileSize = reader.ReadUInt32();
 
-                    fileEntry.Compression ^= 0x20;
+                    byte[] tempName = reader.ReadBytes(fileEntry.FileNameLength);
 
-                    fileEntry.FileName = DecryptFileName(tempName, decryptionKey);
-
-                    uint[] decryptionData = new uint[]
+                    if (fileEntry.Compression < 4 && fileEntry.Compression > -1)
                     {
-                        fileEntry.Offset,
-                        fileEntry.RealFileSize
-                    };
+                        uint decryptionKey = (uint) Key;
 
-                    uint[] resultData = XTEA.Decipher(16, decryptionData, decryptionKey);
+                        reader.BaseStream.Seek(1L, SeekOrigin.Current);
+                        fileEntry.FileName = Encoding.UTF8.GetString(XOR.Cipher(tempName, decryptionKey));
+                    }
+                    else
+                    {
+                        uint[] decryptionKey = (uint[]) Key;
 
-                    fileEntry.Offset = resultData[0];
-                    fileEntry.RealFileSize = resultData[1];
+                        fileEntry.Compression ^= 0x20;
+
+                        fileEntry.FileName = DecryptFileName(tempName, decryptionKey);
+
+                        uint[] decryptionData = new uint[]
+                        {
+                            fileEntry.Offset,
+                            fileEntry.RealFileSize
+                        };
+
+                        uint[] resultData = XTEA.Decipher(16, decryptionData, decryptionKey);
+
+                        fileEntry.Offset = resultData[0];
+                        fileEntry.RealFileSize = resultData[1];
+                    }
+
+                    Entries.Add(fileEntry);
                 }
-
-                Entries.Add(fileEntry);
             }
-
-            Reader.BaseStream.Seek(Position, SeekOrigin.Begin);
         }
 
         /// <summary>
@@ -117,28 +102,31 @@ namespace PangLib.PAK
         /// </summary>
         public void ExtractFiles()
         {
-            byte[] data = null;
-
-            Entries.ForEach(fileEntry =>
+            using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
             {
-                Reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
-                data = Reader.ReadBytes((int)fileEntry.FileSize);
+                byte[] data = null;
 
-                switch (fileEntry.Compression)
+                Entries.ForEach(fileEntry =>
                 {
-                    case 1:
-                    case 3:
-                        data = LZ77.Decompress(data, fileEntry.FileSize, fileEntry.RealFileSize, fileEntry.Compression);
-                        break;
-                    case 2:
-                        Directory.CreateDirectory(fileEntry.FileName);
-                        break;
-                }
+                    reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
+                    data = reader.ReadBytes((int)fileEntry.FileSize);
 
-                if (fileEntry.FileSize != 0) {
-                    File.WriteAllBytes(fileEntry.FileName, data);
-                }
-            });
+                    switch (fileEntry.Compression)
+                    {
+                        case 1:
+                        case 3:
+                            data = LZ77.Decompress(data, fileEntry.FileSize, fileEntry.RealFileSize, fileEntry.Compression);
+                            break;
+                        case 2:
+                            Directory.CreateDirectory(fileEntry.FileName);
+                            break;
+                    }
+
+                    if (fileEntry.FileSize != 0) {
+                        File.WriteAllBytes(fileEntry.FileName, data);
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -174,6 +162,5 @@ namespace PangLib.PAK
         public uint FileSize;
         public uint RealFileSize;
         public string FileName;
-        public byte Unknown1;
     }
 }
