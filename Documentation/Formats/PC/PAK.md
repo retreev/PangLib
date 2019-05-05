@@ -36,7 +36,6 @@ struct PAKFileEntry
     uint FileSize;
     uint RealFileSize;
     string FileName;
-    byte Unknown1;
 }
 ```
 
@@ -53,8 +52,7 @@ way off, we need to use XTEA for the metadata.
 The old legacy archives only have a single value enciphered with the XOR, and that's the file name. Simply XOR the filename's bytes
 with the XOR key and you get the proper filename.
 
-After reading in the filename, there is also another byte-value you need to read in, as denoted by the `PAKFileEntry` structure, we
-just call it `Unknown1`, this value is not present in XTEA-archives.
+After reading in the filename, there is also another byte-value null-byte you need to skip over. Albeit the string being size is delimited by the `FileNameLength`, there is another delimiter present.
 
 #### XTEA
 
