@@ -18,8 +18,7 @@ Currently, there isn't much use for the library, but it will be able to parse di
 // Load PET file into instance
 PETFile PET = new PETFile("./item1_01.pet");
 
-// Parse PET file contents
-PET.Parse();
+// You can now access the different structure types in their corresponding member variables
 ```
 
 ## Known Issues

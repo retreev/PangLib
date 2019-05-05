@@ -19,9 +19,11 @@ namespace PangLib.PET
         public PETFile(string filePath)
         {
             FilePath = filePath;
+
+            Parse();
         }
 
-        public void Parse()
+        private void Parse()
         {
             using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
             {
