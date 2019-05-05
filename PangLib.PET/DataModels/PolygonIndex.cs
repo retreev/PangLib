@@ -1,6 +1,6 @@
 namespace PangLib.PET.DataModels
 {
-    class PolygonIndex
+    public class PolygonIndex
     {
         public uint Index;
         public float X;

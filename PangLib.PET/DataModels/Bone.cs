@@ -1,6 +1,6 @@
 namespace PangLib.PET.DataModels
 {
-    class Bone
+    public class Bone
     {
         public string Name;
         public byte Parent;

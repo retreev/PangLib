@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -12,7 +11,7 @@ namespace PangLib.PET.Helpers
         {
             List<Bone> Bones = new List<Bone>();
 
-            int boneCount = (int)sectionReader.ReadSByte();
+            int boneCount = (int) sectionReader.ReadSByte();
 
             for (int i = 0; i < boneCount; i++)
             {

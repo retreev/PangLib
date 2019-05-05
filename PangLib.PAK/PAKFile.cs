@@ -87,7 +87,7 @@ namespace PangLib.PAK
                         uint[] resultData = XTEA.Decipher(16, decryptionData, decryptionKey);
 
                         fileEntry.Offset = resultData[0];
-                        fileEntry.RealFileSize = resultData[1];
+                        fileEntry.RealFileSize = resultData[1]; 
                     }
 
                     Entries.Add(fileEntry);

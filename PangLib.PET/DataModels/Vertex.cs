@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 
 namespace PangLib.PET.DataModels
 {
-    class Vertex
+    public class Vertex
     {
         public float X;
         public float Y;
