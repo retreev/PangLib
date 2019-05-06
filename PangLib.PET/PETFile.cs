@@ -15,6 +15,7 @@ namespace PangLib.PET
         public List<Vertex> Vertices;
         public List<Polygon> Polygons;
         public List<Bone> Bones;
+        public List<Texture> Textures;
 
         public PETFile(string filePath)
         {
@@ -42,6 +43,7 @@ namespace PangLib.PET
                                 break;
                             case "TEXT":
                                 // TODO: Implement parsing of TEXT section
+                                Textures = TextureReader.ReadAllTextures(sectionReader);
                                 break;
                             case "SMTL":
                                 // TODO: Implement parsing of SMTL section
