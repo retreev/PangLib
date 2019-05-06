@@ -5,5 +5,6 @@ namespace PangLib.PET.DataModels
     public class Polygon
     {
         public List<PolygonIndex> PolygonIndices = new List<PolygonIndex>();
+        public uint TextureIndex;
     }
 }

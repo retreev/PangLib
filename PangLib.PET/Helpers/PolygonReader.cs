@@ -33,6 +33,11 @@ namespace PangLib.PET.Helpers
                 Polygons.Add(polygon);
             }
 
+            for (int i = 0; i < polygonCount; i++)
+            {
+                Polygons[i].TextureIndex = sectionReader.ReadByte();
+            }
+
             return Polygons;
         }
     }
