@@ -10,6 +10,11 @@ namespace PangLib.PET
     {
         private string FilePath;
 
+        public Version Version = new Version() {
+            Major = 1,
+            Minor = 0
+        };
+
         public List<CollisionBox> CollisionBoxes;
         public List<Motion> Motions;
         public List<Vertex> Vertices;
@@ -39,7 +44,7 @@ namespace PangLib.PET
                         switch (sectionName)
                         {
                             case "VERS":
-                                // TODO: Implement parsing of VERS section
+                                Version = VersionReader.ReadVersion(sectionReader);
                                 break;
                             case "TEXT":
                                 // TODO: Implement parsing of TEXT section
