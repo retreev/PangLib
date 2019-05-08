@@ -15,6 +15,7 @@ namespace PangLib.PET
             Minor = 0
         };
 
+        public List<Animation> Animations;
         public List<CollisionBox> CollisionBoxes;
         public List<Motion> Motions;
         public List<Vertex> Vertices;
@@ -57,7 +58,7 @@ namespace PangLib.PET
                                 Bones = BoneReader.ReadAllBones(sectionReader);
                                 break;
                             case "ANIM":
-                                // TODO: Implement parsing of ANIM section
+                                Animations = AnimationReader.ReadAllAnimations(sectionReader);
                                 break;
                             case "MESH":
                                 Vertices = VertexReader.ReadAllVertices(sectionReader);
