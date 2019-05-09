@@ -42,10 +42,10 @@ namespace PangLib.PET.Helpers
                 for (int i = 0; i < rotationDataCount; i++)
                 {
                     RotationData rotationData = new RotationData() {
-                        W = sectionReader.ReadSingle(),
                         X = sectionReader.ReadSingle(),
                         Y = sectionReader.ReadSingle(),
                         Z = sectionReader.ReadSingle(),
+                        W = sectionReader.ReadSingle(),
                         Time = sectionReader.ReadSingle()
                     };
 
