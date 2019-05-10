@@ -8,7 +8,7 @@ namespace PangLib.PET.Helpers
     {
         public static List<Vertex> ReadAllVertices(BinaryReader sectionReader)
         {
-            List<Vertex> Vertices = new List<Vertex>();
+            List<Vertex> vertices = new List<Vertex>();
 
             uint vertexCount = sectionReader.ReadUInt32();
 
@@ -20,28 +20,28 @@ namespace PangLib.PET.Helpers
                 vertex.Y = sectionReader.ReadSingle();
                 vertex.Z = sectionReader.ReadSingle();
 
-                sbyte fullWeight = 0;
+                byte fullWeight = 0;
                 int readCount = 0;
 
-                while (fullWeight != 255 && readCount < 2)
+                while (fullWeight != 255 || readCount < 2)
                 {
                     BoneInformation boneInformation = new BoneInformation();
 
-                    sbyte weight = sectionReader.ReadSByte();
+                    byte weight = sectionReader.ReadByte();
 
                     boneInformation.Weight = weight;
                     fullWeight += weight;
 
-                    boneInformation.BoneID = sectionReader.ReadSByte();
+                    boneInformation.BoneID = sectionReader.ReadByte();
 
                     vertex.BoneInformation.Add(boneInformation);
                     readCount += 1;
                 }
 
-                Vertices.Add(vertex);
+                vertices.Add(vertex);
             }
 
-            return Vertices;
+            return vertices;
         }
     }
 }
