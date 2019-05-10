@@ -62,7 +62,7 @@ namespace PangLib.PET
                                 break;
                             case "MESH":
                                 Vertices = VertexReader.ReadAllVertices(sectionReader);
-                                Polygons = PolygonReader.ReadAllPolygons(sectionReader);
+                                Polygons = PolygonReader.ReadAllPolygons(sectionReader, Version);
                                 break;
                             case "FANM":
                                 // TODO: Implement parsing of FANM section

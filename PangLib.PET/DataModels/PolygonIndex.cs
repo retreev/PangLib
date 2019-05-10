@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace PangLib.PET.DataModels
 {
     public class PolygonIndex
@@ -6,7 +8,6 @@ namespace PangLib.PET.DataModels
         public float X;
         public float Y;
         public float Z;
-        public float U;
-        public float V;
+        public List<UVMapping> UVMappings = new List<UVMapping>();
     }
 }
