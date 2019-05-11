@@ -6,7 +6,7 @@ namespace PangLib.PET.Helpers
 {
     public class AnimationReader
     {
-        public static List<Animation> ReadAllAnimations(BinaryReader sectionReader)
+        public static List<Animation> ReadAllAnimations(BinaryReader sectionReader, Version version)
         {
             List<Animation> Animations = new List<Animation>();
 
@@ -34,19 +34,69 @@ namespace PangLib.PET.Helpers
                 }
 
                 uint rotationDataCount = sectionReader.ReadUInt32();
-                animation.Unknown1 = sectionReader.ReadUInt32();
+
+                if (version.Minor == 0)
+                {
+                    // TODO: Check if this is an unknown value or just padding
+                    animation.Unknown1 = sectionReader.ReadUInt32();
+                }
 
                 for (int i = 0; i < rotationDataCount; i++)
                 {
-                    RotationData rotationData = new RotationData() {
-                        X = sectionReader.ReadSingle(),
-                        Y = sectionReader.ReadSingle(),
-                        Z = sectionReader.ReadSingle(),
-                        W = sectionReader.ReadSingle(),
-                        Time = sectionReader.ReadSingle()
-                    };
+                    RotationData rotationData;
 
+                    if (version.Minor >= 2)
+                    {
+                        rotationData = new RotationData() {
+                            Time = sectionReader.ReadSingle(),
+                            X = sectionReader.ReadSingle(),
+                            Y = sectionReader.ReadSingle(),
+                            Z = sectionReader.ReadSingle(),
+                            W = sectionReader.ReadSingle()
+                        };
+                    }
+                    else {
+                        rotationData = new RotationData() {
+                            X = sectionReader.ReadSingle(),
+                            Y = sectionReader.ReadSingle(),
+                            Z = sectionReader.ReadSingle(),
+                            W = sectionReader.ReadSingle(),
+                            Time = sectionReader.ReadSingle()
+                        };
+                    }
                     animation.RotationData.Add(rotationData);
+                }
+
+                if (version.Minor >= 2)
+                {
+                    uint scalingDataCount = sectionReader.ReadUInt32();
+
+                    for (int i = 0; i < scalingDataCount; i++)
+                    {
+                        ScalingData scalingData = new ScalingData() {
+                            Time = sectionReader.ReadSingle(),
+                            X = sectionReader.ReadSingle(),
+                            Y = sectionReader.ReadSingle(),
+                            Z = sectionReader.ReadSingle()
+                        };
+
+                        animation.ScalingData.Add(scalingData);
+                    }
+                }
+
+                if (version.Minor >= 3)
+                {
+                    uint animationFlagCount = sectionReader.ReadUInt32();
+
+                    for (int i = 0; i < animationFlagCount; i++)
+                    {
+                        AnimationFlag animationFlag = new AnimationFlag() {
+                            Time = sectionReader.ReadSingle(),
+                            Value = sectionReader.ReadSingle()
+                        };
+
+                        animation.AnimationFlags.Add(animationFlag);
+                    }
                 }
 
                 Animations.Add(animation);

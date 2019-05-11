@@ -58,7 +58,7 @@ namespace PangLib.PET
                                 Bones = BoneReader.ReadAllBones(sectionReader);
                                 break;
                             case "ANIM":
-                                Animations = AnimationReader.ReadAllAnimations(sectionReader);
+                                Animations = AnimationReader.ReadAllAnimations(sectionReader, Version);
                                 break;
                             case "MESH":
                                 Vertices = VertexReader.ReadAllVertices(sectionReader);
