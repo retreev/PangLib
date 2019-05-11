@@ -21,7 +21,7 @@
 0000: Spray = xmas_roi.spr, (0, 0, 0), (0, 0, 0.), strongbond
 ```
 
-**Arguments:**
+#### Arguments:
 
 - File Name
 - Positional Values
@@ -43,7 +43,7 @@
 :Add_spawn = airnight3_wave.spr, attached, (age, 10)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - File Name
 - Dependency on parent (direct ascendant) (_attached_/_nonattached_)
@@ -62,7 +62,7 @@
 :Add_Rotation = (1, 1, 1), (0, 2d, 50000, 2d)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Rotation Axis Direction
   - `x`
@@ -80,7 +80,7 @@
 :Add_NRotation = (1, 1, 1), (0, 2d, 50000, 2d)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Rotation Axis Direction
   - `x`
@@ -98,7 +98,7 @@
 :Add_Revolution = ((0, 0, 0), (0, 1, 0)), (0, 1.0d, 20000, 1.0d)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Rotational Values
   - Rotational Axis Position
@@ -121,7 +121,7 @@
 :Add_PRevolution = ((0, 0, 0), (1, 0, 0)), (0, 1.0d, 20000, 1.0d)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Rotational Values
   - Rotational Axis Position
@@ -144,7 +144,7 @@
 :AttachedToParent = on, (1, 1, 1)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Dependency (_on_/_off_)
 - Dependent Axis (0 = off, 1 = on)
@@ -158,7 +158,7 @@
 29000: stop
 ```
 
-**Arguments:**
+#### Arguments:
 
 _None_
 
@@ -168,6 +168,6 @@ _None_
 4600: goto = loop_a
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Label Name

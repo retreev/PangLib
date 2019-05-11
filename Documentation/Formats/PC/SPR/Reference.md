@@ -48,7 +48,7 @@
 Source = [Explode.jpg, 32, 32
 ```
 
-**Arguments:**
+#### Arguments:
 
 - File Name
 - Sprite Width
@@ -61,7 +61,7 @@ Source = [Explode.jpg, 32, 32
 Source = *pet gp_blackhole-purple02.pet, petlight
 ```
 
-**Arguments:**
+#### Arguments:
 
 - File Name (prefixed with `*pet`)
 - Lighting _(petlight)_
@@ -72,7 +72,7 @@ Source = *pet gp_blackhole-purple02.pet, petlight
 Blend = Add, Add
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Blend Mode, one of:
   - `Normal`
@@ -91,7 +91,7 @@ Blend = Add, Add
 Lighting = Off
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Lighting Mode, one of or none:
   - `Off`
@@ -105,7 +105,7 @@ Lighting = Off
 GenPos = (0, 0, 0), (0, 0, 0)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Minimum AABB (Axis-aligned bounding box)
   - `x`
@@ -122,7 +122,7 @@ GenPos = (0, 0, 0), (0, 0, 0)
 Init_Size = (1.45, 1.45), 1
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Multiples (between 0 and 1)
   - Minimal Size
@@ -135,7 +135,7 @@ Init_Size = (1.45, 1.45), 1
 Add_Size = (0 %, 90 %), (100 %, 150 %)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Percentiles
   - Start Time
@@ -150,7 +150,7 @@ Add_Size = (0 %, 90 %), (100 %, 150 %)
 Init_Frame = (0, 2)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Integer values
   - Minimal Frame
@@ -162,7 +162,7 @@ Init_Frame = (0, 2)
 Add_Frame = (0%, 100%), (0, 15, 1f)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Percentiles
   - Start Time
@@ -178,7 +178,7 @@ Add_Frame = (0%, 100%), (0, 15, 1f)
 Add_Generation = (0, 100), 30, 30d
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Integer values
   - Start Frame
@@ -192,7 +192,7 @@ Add_Generation = (0, 100), 30, 30d
 LifeTime = (40f, 60f)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Float values
   - Minimum lifetime (ms/frames)
@@ -204,7 +204,7 @@ LifeTime = (40f, 60f)
 Add_Fade = (0 %, (255, 255, 100, 100)), (100 %, (255, 255, 100, 100))
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Start values
   - Start Time (Percentile)
@@ -219,7 +219,7 @@ Add_Fade = (0 %, (255, 255, 100, 100)), (100 %, (255, 255, 100, 100))
 Init_Velocity = (0, 0.2, 0), (0, 0.5, 0)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Minimum Velocity Direction
   - `x`
@@ -236,7 +236,7 @@ Init_Velocity = (0, 0.2, 0), (0, 0.5, 0)
 Add_Velocity = (0, 100 %), (5000, 0 %)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Start values
   - Start Time (ms/frames)
@@ -251,7 +251,7 @@ Add_Velocity = (0, 100 %), (5000, 0 %)
 Tail = 10, 3f, (255, 0, 0, 0), ~ball_straight.jpg, 90, monolith, cameraside
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Length
 - Generation Interval (ms/frames)
@@ -267,7 +267,7 @@ Tail = 10, 3f, (255, 0, 0, 0), ~ball_straight.jpg, 90, monolith, cameraside
 Init_Angle = (0d, 0d, 0d), (360d, 360d, 360d)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Minimum Angles (deg/rad)
   - `x`
@@ -284,7 +284,7 @@ Init_Angle = (0d, 0d, 0d), (360d, 360d, 360d)
 Init_Rotation = (-10d, -10d, -10d), (10d, 10d, 10d)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Minimum Angular Velocity (deg/rad)
   - `x`
@@ -301,7 +301,7 @@ Init_Rotation = (-10d, -10d, -10d), (10d, 10d, 10d)
 Add_Rotation = (0%, 100%), (100%, 100%)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Start values
   - Start Time (Percentile)
@@ -316,7 +316,7 @@ Add_Rotation = (0%, 100%), (100%, 100%)
 Friction = 0.003
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Friction (Float)
 
@@ -326,7 +326,7 @@ Friction = 0.003
 GroundFriction = 0.1
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Friction (Float)
 
@@ -336,7 +336,7 @@ GroundFriction = 0.1
 Gravity = (0, -0.01, 0)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Gravity Direction
   - `x`
@@ -349,7 +349,7 @@ Gravity = (0, -0.01, 0)
 Add_GravityPoint = (0, 0, 0), 0, 0, 0.03
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Center Position
   - `x`
@@ -365,7 +365,7 @@ Add_GravityPoint = (0, 0, 0), 0, 0, 0.03
 Ground = 0, 1%, 0
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Height
 - Elasticity (Percentile)
@@ -377,7 +377,7 @@ Ground = 0, 1%, 0
 Add_Quake = (0, 0, 0), (1000, (0, 0, 0)), (2000, (0, 0, 0))
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Center Position
   - `x`
@@ -403,7 +403,7 @@ Add_Quake = (0, 0, 0), (1000, (0, 0, 0)), (2000, (0, 0, 0))
 Add_Flash = 0, 5, 10
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Start Time (ms/frames)
 - Maximum Time (ms/frames)
@@ -415,7 +415,7 @@ Add_Flash = 0, 5, 10
 CamOffset = 0.1
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Offset to Camera (Float)
 
@@ -425,7 +425,7 @@ CamOffset = 0.1
 Vol_Core = (0.85, 0.8)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Positional values
   - Horizontal Scale
@@ -437,7 +437,7 @@ Vol_Core = (0.85, 0.8)
 Vol_Max_Opacity = 0.5
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Opacity (Float)
 
@@ -447,7 +447,7 @@ Vol_Max_Opacity = 0.5
 Dist_Limit = 300, 400
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Positional values
   - `x`
@@ -459,7 +459,7 @@ Dist_Limit = 300, 400
 Add_Bubble = (0, 0), (0.003, 2.2), (0.003, 2)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Bubble motion values
   - Front/Back Amplitude
@@ -477,7 +477,7 @@ Add_Bubble = (0, 0), (0.003, 2.2), (0.003, 2)
 Ext_Orientation = 1, 1, 1
 ```
 
-**Arguments:**
+#### Arguments:
 
 - `x` (0 or 1)
 - `y` (0 or 1)
@@ -489,7 +489,7 @@ Ext_Orientation = 1, 1, 1
 Add_Wind = (0.03, 0.05)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Float values
   - Minimum Rate
@@ -501,7 +501,7 @@ Add_Wind = (0.03, 0.05)
 Ext_Wind = (1, 0, 0)
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Positional values
   - `x`
@@ -514,7 +514,7 @@ Ext_Wind = (1, 0, 0)
 IsSphere = 1
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Integer (0: Box, 1: Sphere)
 
@@ -524,6 +524,6 @@ IsSphere = 1
 RegenAtSamePos = 1
 ```
 
-**Arguments:**
+#### Arguments:
 
 - Integer boolean representation

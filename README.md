@@ -28,8 +28,8 @@ More information on how you can use each library can be found in their folders a
 
 ## Available Libraries
 
-| Library | Version | Description |
-| ------- | ------- | ----------- |
+| Library                | Version                                                         | Description                                              |
+| ---------------------- | --------------------------------------------------------------- | -------------------------------------------------------- |
 | **PangLib.IFF**        | ![Nuget](https://img.shields.io/nuget/v/PangLib.IFF.svg)        | Library to handle and parse data from `.iff` files       |
 | **PangLib.DAT**        | ![Nuget](https://img.shields.io/nuget/v/PangLib.DAT.svg)        | Library to handle and parse data from `.dat` files       |
 | **PangLib.PAK**        | ![Nuget](https://img.shields.io/nuget/v/PangLib.PAK.svg)        | Library to handle and parse data from `.pak` files       |

@@ -23,9 +23,9 @@ struct IFFHeader
 }
 ```
 
-* **RecordCount**: Count of data sets inside this file
-* **BindingID**: A overarching ID matching with the whole IFF metadata set (data is bound together)
-* **Version**: Revision or Version of the IFF file (usually between 11-13)
+- **RecordCount**: Count of data sets inside this file
+- **BindingID**: A overarching ID matching with the whole IFF metadata set (data is bound together)
+- **Version**: Revision or Version of the IFF file (usually between 11-13)
 
 ### Common IFF Data
 

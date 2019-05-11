@@ -22,19 +22,19 @@ will refuse to interpret it.
 </updatefiles>
 ```
 
-#### `patchVer`
+### `patchVer`
 
 This value includes the name of the current version
 
-#### `patchNum`
+### `patchNum`
 
 This value includes the current iteration of the patch (patch index)
 
-#### `updatelistVer`
+### `updatelistVer`
 
 Version number of the updatelist specification
 
-#### `updatefiles`
+### `updatefiles`
 
 List of all files included
 
@@ -42,7 +42,7 @@ List of all files included
 
 - `count` - Number of files to be patched
 
-#### `fileinfo`
+### `fileinfo`
 
 File included in the patch
 
