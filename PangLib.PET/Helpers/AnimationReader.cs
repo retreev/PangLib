@@ -19,21 +19,18 @@ namespace PangLib.PET.Helpers
                 if (animation.BoneID == 255)
                     break;
 
-                uint animPropertyCount = sectionReader.ReadUInt32();
+                uint positionDataCount = sectionReader.ReadUInt32();
 
-                for (int i = 0; i < animPropertyCount; i++)
+                for (int i = 0; i < positionDataCount; i++)
                 {
-                    AnimationProperty animProperty = new AnimationProperty();
+                    PositionData positionData = new PositionData() {
+                        Time = sectionReader.ReadSingle(),
+                        X = sectionReader.ReadSingle(),
+                        Y = sectionReader.ReadSingle(),
+                        Z = sectionReader.ReadSingle(),
+                    };
 
-                    animProperty.Time = sectionReader.ReadSingle();
-                    animProperty.Position = new float[3];
-
-                    for (int j = 0; j < 3; j++)
-                    {
-                        animProperty.Position[j] = sectionReader.ReadSingle();
-                    }
-
-                    animation.AnimationProperties.Add(animProperty);
+                    animation.PositionData.Add(positionData);
                 }
 
                 uint rotationDataCount = sectionReader.ReadUInt32();
