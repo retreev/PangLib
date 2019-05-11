@@ -74,7 +74,7 @@ namespace PangLib.PET
                                 Motions = MotionReader.ReadAllMotions(sectionReader);
                                 break;
                             case "COLL":
-                                CollisionBoxes = CollisionBoxReader.ReadAllCollisionBoxes(sectionReader);
+                                CollisionBoxes = CollisionBoxReader.ReadAllCollisionBoxes(sectionReader, Version);
                                 break;
                         }
                     }

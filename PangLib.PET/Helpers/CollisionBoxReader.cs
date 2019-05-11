@@ -7,7 +7,7 @@ namespace PangLib.PET.Helpers
 {
     static class CollisionBoxReader
     {
-        public static List<CollisionBox> ReadAllCollisionBoxes(BinaryReader sectionReader)
+        public static List<CollisionBox> ReadAllCollisionBoxes(BinaryReader sectionReader, Version version)
         {
             List<CollisionBox> CollisionBoxes = new List<CollisionBox>();
 
@@ -28,7 +28,11 @@ namespace PangLib.PET.Helpers
 
                 collisionBox.BoneName = Encoding.UTF8.GetString(sectionReader.ReadBytes(boneNameLength));
 
-                collisionBox.Unknown3 = sectionReader.ReadByte();
+                if (version.Minor == 0)
+                {
+                    collisionBox.Unknown3 = sectionReader.ReadByte();
+                }
+                
                 collisionBox.Unknown4 = sectionReader.ReadUInt32();
                 collisionBox.Unknown5 = sectionReader.ReadUInt32();
 
