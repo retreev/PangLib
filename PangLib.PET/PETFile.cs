@@ -16,6 +16,7 @@ namespace PangLib.PET
         };
 
         public List<Animation> Animations;
+        public List<Frame> Frames;
         public List<CollisionBox> CollisionBoxes;
         public List<Motion> Motions;
         public List<Vertex> Vertices;
@@ -48,7 +49,6 @@ namespace PangLib.PET
                                 Version = VersionReader.ReadVersion(sectionReader);
                                 break;
                             case "TEXT":
-                                // TODO: Implement parsing of TEXT section
                                 Textures = TextureReader.ReadAllTextures(sectionReader);
                                 break;
                             case "SMTL":
@@ -68,7 +68,7 @@ namespace PangLib.PET
                                 // TODO: Implement parsing of FANM section
                                 break;
                             case "FRAM":
-                                // TODO: Implement parsing of FRAM section
+                                Frames = FrameReader.ReadAllFrames(sectionReader);
                                 break;
                             case "MOTI":
                                 Motions = MotionReader.ReadAllMotions(sectionReader);
