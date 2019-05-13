@@ -96,7 +96,7 @@ namespace PangLib.PET
                                 // TODO: Implement parsing of SMTL section
                                 break;
                             case "BONE":
-                                Bones = BoneReader.ReadAllBones(sectionReader);
+                                Bones = BoneReader.ReadAllBones(sectionReader, Version);
                                 break;
                             case "ANIM":
                                 Animations = AnimationReader.ReadAllAnimations(sectionReader, Version);

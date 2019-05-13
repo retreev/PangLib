@@ -14,8 +14,9 @@ namespace PangLib.PET.Helpers
         /// Helper method to read all bones from a Puppet file and return a list of them
         /// </summary>
         /// <param name="sectionReader">BinaryReader instance containing the Bone section data</param>
+        /// <param name="version">Version of the Puppet file</param>
         /// <returns>List of bones from the Puppet file</returns>
-        public static List<Bone> ReadAllBones(BinaryReader sectionReader)
+        public static List<Bone> ReadAllBones(BinaryReader sectionReader, Version version)
         {
             List<Bone> bones = new List<Bone>();
 
@@ -45,6 +46,11 @@ namespace PangLib.PET.Helpers
                 for (int j = 0; j < 12; j++)
                 {
                     bone.Matrix[j] = sectionReader.ReadSingle();
+                }
+
+                if (version.Minor >= 3)
+                {
+                    bone.Unknown1 = sectionReader.ReadSingle();
                 }
 
                 bones.Add(bone);
