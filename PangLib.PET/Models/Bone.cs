@@ -22,5 +22,10 @@ namespace PangLib.PET.Models
         /// Perspective projection matrix of the bone
         /// </summary>
         public float[] Matrix { get; set; }
+        
+        /// <summary>
+        /// Unknown value present in version 1.3 files
+        /// </summary>
+        public float Unknown1 { get; set; }
     }
 }
