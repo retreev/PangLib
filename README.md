@@ -42,6 +42,10 @@ More information on how you can use each library can be found in their folders a
 | **PangLib.Wii.ECB**    | ![Nuget](https://img.shields.io/nuget/v/PangLib.Wii.ECB.svg)    | Library to handle and parse data from Wii `.ECB` files   |
 | **PangLib.Utilities**  | ![Nuget](https://img.shields.io/nuget/v/PangLib.Utilities.svg)  | Common utilities used in other `PangLib` libraries       |
 
+## Documentation
+
+Documentation on the parsed file formats can be found at [docs.pangya.golf](https://docs.pangya.golf)
+
 ## Contributing
 
 Want to contribute? **Awesome!**
