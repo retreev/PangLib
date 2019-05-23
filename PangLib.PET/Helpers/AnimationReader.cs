@@ -4,7 +4,7 @@ using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
-    public class AnimationReader
+    static class AnimationReader
     {
         public static List<Animation> ReadAllAnimations(BinaryReader sectionReader, Version version)
         {
@@ -24,7 +24,7 @@ namespace PangLib.PET.Helpers
 
                 for (int i = 0; i < positionDataCount; i++)
                 {
-                    PositionData positionData = new PositionData() {
+                    PositionData positionData = new PositionData {
                         Time = sectionReader.ReadSingle(),
                         X = sectionReader.ReadSingle(),
                         Y = sectionReader.ReadSingle(),
@@ -49,7 +49,7 @@ namespace PangLib.PET.Helpers
 
                     if (version.Minor >= 2)
                     {
-                        rotationData = new RotationData() {
+                        rotationData = new RotationData {
                             Time = sectionReader.ReadSingle(),
                             X = sectionReader.ReadSingle(),
                             Y = sectionReader.ReadSingle(),
@@ -58,7 +58,7 @@ namespace PangLib.PET.Helpers
                         };
                     }
                     else {
-                        rotationData = new RotationData() {
+                        rotationData = new RotationData {
                             X = sectionReader.ReadSingle(),
                             Y = sectionReader.ReadSingle(),
                             Z = sectionReader.ReadSingle(),
@@ -77,7 +77,7 @@ namespace PangLib.PET.Helpers
 
                     for (int i = 0; i < scalingDataCount; i++)
                     {
-                        ScalingData scalingData = new ScalingData() {
+                        ScalingData scalingData = new ScalingData {
                             Time = sectionReader.ReadSingle(),
                             X = sectionReader.ReadSingle(),
                             Y = sectionReader.ReadSingle(),
@@ -95,7 +95,7 @@ namespace PangLib.PET.Helpers
 
                     for (int i = 0; i < animationFlagCount; i++)
                     {
-                        AnimationFlag animationFlag = new AnimationFlag() {
+                        AnimationFlag animationFlag = new AnimationFlag {
                             Time = sectionReader.ReadSingle(),
                             Value = sectionReader.ReadSingle()
                         };

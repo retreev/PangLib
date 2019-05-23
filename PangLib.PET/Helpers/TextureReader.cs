@@ -6,7 +6,7 @@ using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
-    public class TextureReader
+    static class TextureReader
     {
         public static List<Texture> ReadAllTextures(BinaryReader sectionReader)
         {
