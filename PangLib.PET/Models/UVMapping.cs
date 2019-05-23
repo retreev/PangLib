@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class UVMapping
+    public struct UVMapping
     {
         public float U;
         public float V;

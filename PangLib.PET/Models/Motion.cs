@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class Motion
+    public struct Motion
     {
         public string Name;
         public uint FrameStart;

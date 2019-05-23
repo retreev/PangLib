@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using PangLib.PET.DataModels;
+using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
@@ -9,7 +9,7 @@ namespace PangLib.PET.Helpers
     {
         public static List<Bone> ReadAllBones(BinaryReader sectionReader)
         {
-            List<Bone> Bones = new List<Bone>();
+            List<Bone> bones = new List<Bone>();
 
             int boneCount = (int) sectionReader.ReadSByte();
 
@@ -31,16 +31,18 @@ namespace PangLib.PET.Helpers
                 sectionReader.BaseStream.Seek(1L, SeekOrigin.Current);
 
                 bone.Parent = sectionReader.ReadByte();
+                
+                bone.Matrix = new float[12];
 
                 for (int j = 0; j < 12; j++)
                 {
                     bone.Matrix[j] = sectionReader.ReadSingle();
                 }
 
-                Bones.Add(bone);
+                bones.Add(bone);
             }
 
-            return Bones;
+            return bones;
         }
     }
 }

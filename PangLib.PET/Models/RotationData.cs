@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class RotationData
+    public struct RotationData
     {
         public float W;
         public float X;

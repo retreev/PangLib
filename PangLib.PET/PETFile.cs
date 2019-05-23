@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using PangLib.PET.DataModels;
+using PangLib.PET.Models;
 using PangLib.PET.Helpers;
 
 namespace PangLib.PET
@@ -10,7 +10,7 @@ namespace PangLib.PET
     {
         private string FilePath;
 
-        public Version Version = new Version() {
+        public Version Version = new Version {
             Major = 1,
             Minor = 0
         };
@@ -19,10 +19,9 @@ namespace PangLib.PET
         public List<Frame> Frames;
         public List<CollisionBox> CollisionBoxes;
         public List<Motion> Motions;
-        public List<Vertex> Vertices;
-        public List<Polygon> Polygons;
         public List<Bone> Bones;
         public List<Texture> Textures;
+        public Mesh Mesh;
 
         public PETFile(string filePath)
         {
@@ -61,8 +60,7 @@ namespace PangLib.PET
                                 Animations = AnimationReader.ReadAllAnimations(sectionReader, Version);
                                 break;
                             case "MESH":
-                                Vertices = VertexReader.ReadAllVertices(sectionReader);
-                                Polygons = PolygonReader.ReadAllPolygons(sectionReader, Version);
+                                Mesh = MeshReader.ReadMesh(sectionReader, Version);
                                 break;
                             case "FANM":
                                 // TODO: Implement parsing of FANM section

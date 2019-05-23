@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using PangLib.PET.DataModels;
+using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
@@ -9,7 +9,7 @@ namespace PangLib.PET.Helpers
     {
         public static List<Motion> ReadAllMotions(BinaryReader sectionReader)
         {
-            List<Motion> Motions = new List<Motion>();
+            List<Motion> motions = new List<Motion>();
 
             uint motionCount = sectionReader.ReadUInt32();
 
@@ -38,10 +38,10 @@ namespace PangLib.PET.Helpers
 
                 motion.BoneName = Encoding.UTF8.GetString(sectionReader.ReadBytes(boneNameLength));
 
-                Motions.Add(motion);
+                motions.Add(motion);
             }
 
-            return Motions;
+            return motions;
         }
     }
 }

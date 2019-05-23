@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class ScalingData
+    public struct PositionData
     {
         public float Time;
         public float X;

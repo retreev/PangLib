@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class CollisionBox
+    public struct CollisionBox
     {
         public uint Unknown1;
         public uint Unknown2;

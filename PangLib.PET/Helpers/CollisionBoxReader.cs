@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using PangLib.PET.DataModels;
+using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
@@ -9,7 +9,7 @@ namespace PangLib.PET.Helpers
     {
         public static List<CollisionBox> ReadAllCollisionBoxes(BinaryReader sectionReader, Version version)
         {
-            List<CollisionBox> CollisionBoxes = new List<CollisionBox>();
+            List<CollisionBox> collisionBoxes = new List<CollisionBox>();
 
             uint collisionBoxCount = sectionReader.ReadUInt32();
 
@@ -43,10 +43,10 @@ namespace PangLib.PET.Helpers
                 collisionBox.MaxY = sectionReader.ReadSingle();
                 collisionBox.MaxZ = sectionReader.ReadSingle();
 
-                CollisionBoxes.Add(collisionBox);
+                collisionBoxes.Add(collisionBox);
             }
 
-            return CollisionBoxes;
+            return collisionBoxes;
         }
     }
 }

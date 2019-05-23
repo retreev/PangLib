@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class AnimationFlag
+    public struct AnimationFlag
     {
         public float Time;
         public float Value;

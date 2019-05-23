@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class Frame
+    public struct Frame
     {
         public uint Index;
         public string Script;

@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class Version
+    public struct Version
     {
         public int Major;
         public int Minor;

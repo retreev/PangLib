@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
-using PangLib.PET.DataModels;
+using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
@@ -20,6 +20,7 @@ namespace PangLib.PET.Helpers
                     break;
 
                 uint positionDataCount = sectionReader.ReadUInt32();
+                animation.PositionData = new List<PositionData>();
 
                 for (int i = 0; i < positionDataCount; i++)
                 {
@@ -34,6 +35,7 @@ namespace PangLib.PET.Helpers
                 }
 
                 uint rotationDataCount = sectionReader.ReadUInt32();
+                animation.RotationData = new List<RotationData>();
 
                 if (version.Minor == 0)
                 {
@@ -70,6 +72,7 @@ namespace PangLib.PET.Helpers
                 if (version.Minor >= 2)
                 {
                     uint scalingDataCount = sectionReader.ReadUInt32();
+                    animation.ScalingData = new List<ScalingData>();
 
                     for (int i = 0; i < scalingDataCount; i++)
                     {
@@ -87,6 +90,7 @@ namespace PangLib.PET.Helpers
                 if (version.Minor >= 3)
                 {
                     uint animationFlagCount = sectionReader.ReadUInt32();
+                    animation.AnimationFlags = new List<AnimationFlag>();
 
                     for (int i = 0; i < animationFlagCount; i++)
                     {

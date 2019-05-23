@@ -1,6 +1,6 @@
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class BoneInformation
+    public struct BoneInformation
     {
         public byte Weight;
         public byte BoneID;

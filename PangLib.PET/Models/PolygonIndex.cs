@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 
-namespace PangLib.PET.DataModels
+namespace PangLib.PET.Models
 {
-    public class PolygonIndex
+    public struct PolygonIndex
     {
         public uint Index;
         public float X;
         public float Y;
         public float Z;
-        public List<UVMapping> UVMappings = new List<UVMapping>();
+        public List<UVMapping> UVMappings;
     }
 }
