@@ -2,8 +2,8 @@ namespace PangLib.PET.Models
 {
     public struct Mesh
     {
-        public Vertex[] Vertices;
-        public Polygon[] Polygons;
-        public uint[] TextureMap;
+        public Vertex[] Vertices { get; set; }
+        public Polygon[] Polygons { get; set; }
+        public uint[] TextureMap { get; set; }
     }
 }
