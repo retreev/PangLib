@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace PangLib.PET.Models
 {
     public struct PolygonIndex
@@ -8,6 +6,6 @@ namespace PangLib.PET.Models
         public float X;
         public float Y;
         public float Z;
-        public List<UVMapping> UVMappings;
+        public UVMapping[] UVMappings;
     }
 }

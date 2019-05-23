@@ -1,11 +1,9 @@
-using System.Collections.Generic;
-
 namespace PangLib.PET.Models
 {
     public struct Mesh
     {
-        public List<Vertex> Vertices;
-        public List<Polygon> Polygons;
+        public Vertex[] Vertices;
+        public Polygon[] Polygons;
         public uint[] TextureMap;
     }
 }

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
@@ -12,19 +11,19 @@ namespace PangLib.PET.Helpers
             Mesh mesh = new Mesh();
 
             uint vertexCount = sectionReader.ReadUInt32();
-            mesh.Vertices = new List<Vertex>();
+            mesh.Vertices = new Vertex[vertexCount];
 
             for (int i = 0; i < vertexCount; i++)
             {
-                mesh.Vertices.Add(ReadVertex(sectionReader));
+                mesh.Vertices[i] = ReadVertex(sectionReader);
             }
             
             uint polygonCount = sectionReader.ReadUInt32();
-            mesh.Polygons = new List<Polygon>();
+            mesh.Polygons = new Polygon[polygonCount];
 
             for (int i = 0; i < polygonCount; i++)
             {
-                mesh.Polygons.Add(ReadPolygon(sectionReader, version));
+                mesh.Polygons[i] = ReadPolygon(sectionReader, version);
             }
             
             mesh.TextureMap = new uint[polygonCount];
@@ -71,44 +70,46 @@ namespace PangLib.PET.Helpers
         public static Polygon ReadPolygon(BinaryReader sectionReader, Version version)
         {
             Polygon polygon = new Polygon();
-            polygon.PolygonIndices = new List<PolygonIndex>();
+            polygon.PolygonIndices = new PolygonIndex[3];
 
-            for (int j = 0; j < 3; j++)
+            for (int i = 0; i < 3; i++)
             {
-                PolygonIndex polygonIndex = new PolygonIndex();
-
-                polygonIndex.Index = sectionReader.ReadUInt32();
-                polygonIndex.X = sectionReader.ReadSingle();
-                polygonIndex.Y = sectionReader.ReadSingle();
-                polygonIndex.Z = sectionReader.ReadSingle();
-                    
-                polygonIndex.UVMappings = new List<UVMapping>();
+                PolygonIndex polygonIndex = new PolygonIndex
+                {
+                    Index = sectionReader.ReadUInt32(),
+                    X = sectionReader.ReadSingle(),
+                    Y = sectionReader.ReadSingle(),
+                    Z = sectionReader.ReadSingle()
+                };
 
                 if (version.Minor >= 2)
                 {
                     byte uvMapCount = sectionReader.ReadByte();
+                    polygonIndex.UVMappings = new UVMapping[uvMapCount];
 
-                    for (int k = 0; k < uvMapCount; k++)
+                    for (int j = 0; j < uvMapCount; j++)
                     {
-                        UVMapping uvMapping = new UVMapping() {
+                        UVMapping uvMapping = new UVMapping {
                             U = sectionReader.ReadSingle(),
                             V = sectionReader.ReadSingle()
                         };
 
-                        polygonIndex.UVMappings.Add(uvMapping);
+                        polygonIndex.UVMappings[j] = uvMapping;
                     }
                 }
                 else
                 {
-                    UVMapping uvMapping = new UVMapping() {
+                    polygonIndex.UVMappings = new UVMapping[1];
+                    
+                    UVMapping uvMapping = new UVMapping {
                         U = sectionReader.ReadSingle(),
                         V = sectionReader.ReadSingle()
                     };
 
-                    polygonIndex.UVMappings.Add(uvMapping);
+                    polygonIndex.UVMappings[0] = uvMapping;
                 }
 
-                polygon.PolygonIndices.Add(polygonIndex);
+                polygon.PolygonIndices[i] = polygonIndex;
             }
 
             return polygon;

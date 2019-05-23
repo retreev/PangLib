@@ -20,7 +20,7 @@ namespace PangLib.PET.Helpers
                     break;
 
                 uint positionDataCount = sectionReader.ReadUInt32();
-                animation.PositionData = new List<PositionData>();
+                animation.PositionData = new PositionData[positionDataCount];
 
                 for (int i = 0; i < positionDataCount; i++)
                 {
@@ -31,11 +31,11 @@ namespace PangLib.PET.Helpers
                         Z = sectionReader.ReadSingle(),
                     };
 
-                    animation.PositionData.Add(positionData);
+                    animation.PositionData[i] = positionData;
                 }
 
                 uint rotationDataCount = sectionReader.ReadUInt32();
-                animation.RotationData = new List<RotationData>();
+                animation.RotationData = new RotationData[rotationDataCount];
 
                 if (version.Minor == 0)
                 {
@@ -66,13 +66,14 @@ namespace PangLib.PET.Helpers
                             Time = sectionReader.ReadSingle()
                         };
                     }
-                    animation.RotationData.Add(rotationData);
+                    
+                    animation.RotationData[i] = rotationData;
                 }
 
                 if (version.Minor >= 2)
                 {
                     uint scalingDataCount = sectionReader.ReadUInt32();
-                    animation.ScalingData = new List<ScalingData>();
+                    animation.ScalingData = new ScalingData[scalingDataCount];
 
                     for (int i = 0; i < scalingDataCount; i++)
                     {
@@ -83,14 +84,14 @@ namespace PangLib.PET.Helpers
                             Z = sectionReader.ReadSingle()
                         };
 
-                        animation.ScalingData.Add(scalingData);
+                        animation.ScalingData[i] = scalingData;
                     }
                 }
 
                 if (version.Minor >= 3)
                 {
                     uint animationFlagCount = sectionReader.ReadUInt32();
-                    animation.AnimationFlags = new List<AnimationFlag>();
+                    animation.AnimationFlags = new AnimationFlag[animationFlagCount];
 
                     for (int i = 0; i < animationFlagCount; i++)
                     {
@@ -99,7 +100,7 @@ namespace PangLib.PET.Helpers
                             Value = sectionReader.ReadSingle()
                         };
 
-                        animation.AnimationFlags.Add(animationFlag);
+                        animation.AnimationFlags[i] = animationFlag;
                     }
                 }
 
