@@ -2,6 +2,6 @@ namespace PangLib.PET.Models
 {
     public struct Polygon
     {
-        public PolygonIndex[] PolygonIndices;
+        public PolygonIndex[] PolygonIndices { get; set; }
     }
 }

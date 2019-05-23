@@ -2,6 +2,6 @@ namespace PangLib.PET.Models
 {
     public struct Texture
     {
-        public string FileName;
+        public string FileName { get; set; }
     }
 }

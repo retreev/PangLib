@@ -2,10 +2,10 @@ namespace PangLib.PET.Models
 {
     public struct PolygonIndex
     {
-        public uint Index;
-        public float X;
-        public float Y;
-        public float Z;
-        public UVMapping[] UVMappings;
+        public uint Index { get; set; }
+        public float X { get; set; }
+        public float Y { get; set; }
+        public float Z { get; set; }
+        public UVMapping[] UVMappings { get; set; }
     }
 }

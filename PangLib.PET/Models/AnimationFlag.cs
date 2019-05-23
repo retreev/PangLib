@@ -2,7 +2,7 @@ namespace PangLib.PET.Models
 {
     public struct AnimationFlag
     {
-        public float Time;
-        public float Value;
+        public float Time { get; set; }
+        public float Value { get; set; }
     }
 }

@@ -10,18 +10,19 @@ namespace PangLib.PET
     {
         private string FilePath;
 
-        public Version Version = new Version {
+        public Version Version { get; set; } = new Version
+        {
             Major = 1,
             Minor = 0
         };
 
-        public List<Animation> Animations;
-        public List<Frame> Frames;
-        public List<CollisionBox> CollisionBoxes;
-        public List<Motion> Motions;
-        public List<Bone> Bones;
-        public List<Texture> Textures;
-        public Mesh Mesh;
+        public List<Animation> Animations { get; set; }
+        public List<Frame> Frames { get; set; }
+        public List<CollisionBox> CollisionBoxes { get; set; }
+        public List<Motion> Motions { get; set; }
+        public List<Bone> Bones { get; set; }
+        public List<Texture> Textures { get; set; }
+        public Mesh Mesh { get; set; }
 
         public PETFile(string filePath)
         {

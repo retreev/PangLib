@@ -2,8 +2,8 @@ namespace PangLib.PET.Models
 {
     public struct Bone
     {
-        public string Name;
-        public byte Parent;
-        public float[] Matrix;
+        public string Name { get; set; }
+        public byte Parent { get; set; }
+        public float[] Matrix { get; set; }
     }
 }
