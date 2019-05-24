@@ -6,27 +6,72 @@ using PangLib.PET.Helpers;
 
 namespace PangLib.PET
 {
+    /// <summary>
+    /// Main PET file class
+    /// </summary>
     public class PETFile
     {
+        /// <summary>
+        /// Version of the Puppet file
+        /// </summary>
+        /// <remarks>
+        /// Initializes with a 1.0 version because some Puppet files don't have a Version section
+        /// these files are regarded as 1.0
+        /// </remarks>
         public Version Version { get; set; } = new Version
         {
             Major = 1,
             Minor = 0
         };
 
+        /// <summary>
+        /// List of <see cref="PangLib.PET.Models.Animation"/> parsed from this Puppet file
+        /// </summary>
         public List<Animation> Animations { get; set; }
+        
+        /// <summary>
+        /// List of <see cref="PangLib.PET.Models.Frame"/> parsed from this Puppet file
+        /// </summary>
         public List<Frame> Frames { get; set; }
+        
+        /// <summary>
+        /// List of <see cref="PangLib.PET.Models.CollisionBox"/> parsed from this Puppet file
+        /// </summary>
         public List<CollisionBox> CollisionBoxes { get; set; }
+        
+        /// <summary>
+        /// List of <see cref="PangLib.PET.Models.Motion"/> parsed from this Puppet file
+        /// </summary>
         public List<Motion> Motions { get; set; }
+        
+        /// <summary>
+        /// List of <see cref="PangLib.PET.Models.Bone"/> parsed from this Puppet file
+        /// </summary>
         public List<Bone> Bones { get; set; }
+        
+        /// <summary>
+        /// List of <see cref="PangLib.PET.Models.Texture"/> parsed from this Puppet file
+        /// </summary>
         public List<Texture> Textures { get; set; }
+        
+        /// <summary>
+        /// <see cref="PangLib.PET.Models.Mesh"/> parsed from this Puppet file
+        /// </summary>
         public Mesh Mesh { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="PETFile"/> from the provided stream
+        /// </summary>
+        /// <param name="data">Stream containing the Puppet file data</param>
         public PETFile(Stream data)
         {
             Parse(data);
         }
 
+        /// <summary>
+        /// Parses the passed Stream into Puppet structures
+        /// </summary>
+        /// <param name="data">Stream containing the Puppet file data</param>
         private void Parse(Stream data)
         {
             using (BinaryReader reader = new BinaryReader(data))
