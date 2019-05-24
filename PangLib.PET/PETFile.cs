@@ -8,8 +8,6 @@ namespace PangLib.PET
 {
     public class PETFile
     {
-        private string FilePath;
-
         public Version Version { get; set; } = new Version
         {
             Major = 1,
@@ -24,16 +22,14 @@ namespace PangLib.PET
         public List<Texture> Textures { get; set; }
         public Mesh Mesh { get; set; }
 
-        public PETFile(string filePath)
+        public PETFile(Stream data)
         {
-            FilePath = filePath;
-
-            Parse();
+            Parse(data);
         }
 
-        private void Parse()
+        private void Parse(Stream data)
         {
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
+            using (BinaryReader reader = new BinaryReader(data))
             {
                 while (reader.BaseStream.Position < reader.BaseStream.Length)
                 {

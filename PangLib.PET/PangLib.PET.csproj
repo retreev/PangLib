@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageId>PangLib.PET</PackageId>
-        <Version>4.0.0</Version>
+        <Version>5.0.0</Version>
         <Authors>pixeldesu</Authors>
         <Description>PangLib.PET is a library that enables handling and parsing of PangYa model (PET) files</Description>
         <PackageTags>pangya;models;pet;game-files</PackageTags>
