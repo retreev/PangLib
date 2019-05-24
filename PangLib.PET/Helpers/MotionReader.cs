@@ -5,8 +5,16 @@ using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
+    /// <summary>
+    /// Helper class to read <see cref="PangLib.PET.Models.Motion"/> structures from Puppet files
+    /// </summary>
     static class MotionReader
     {
+        /// <summary>
+        /// Helper method to read all motions from a Puppet file and return a list of them
+        /// </summary>
+        /// <param name="sectionReader">BinaryReader instance containing the Motion section data</param>
+        /// <returns>List of motions from the Puppet file</returns>
         public static List<Motion> ReadAllMotions(BinaryReader sectionReader)
         {
             List<Motion> motions = new List<Motion>();

@@ -6,8 +6,16 @@ using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
+    /// <summary>
+    /// Helper class to read <see cref="PangLib.PET.Models.Texture"/> structures from Puppet files
+    /// </summary>
     static class TextureReader
     {
+        /// <summary>
+        /// Helper method to read all textures from a Puppet file and return a list of them
+        /// </summary>
+        /// <param name="sectionReader">BinaryReader instance containing the Texture section data</param>
+        /// <returns>List of textures from the Puppet file</returns>
         public static List<Texture> ReadAllTextures(BinaryReader sectionReader)
         {
             List<Texture> textures = new List<Texture>();

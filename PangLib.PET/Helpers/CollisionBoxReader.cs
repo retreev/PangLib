@@ -5,8 +5,17 @@ using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
+    /// <summary>
+    /// Helper class to read <see cref="PangLib.PET.Models.CollisionBox"/> structures from Puppet files
+    /// </summary>
     static class CollisionBoxReader
     {
+        /// <summary>
+        /// Helper method to read all collision boxes from a Puppet file and return a list of them
+        /// </summary>
+        /// <param name="sectionReader">BinaryReader instance containing the Collision Box section data</param>
+        /// <param name="version">Version of the Puppet file</param>
+        /// <returns>List of collision boxes from the Puppet file</returns>
         public static List<CollisionBox> ReadAllCollisionBoxes(BinaryReader sectionReader, Version version)
         {
             List<CollisionBox> collisionBoxes = new List<CollisionBox>();

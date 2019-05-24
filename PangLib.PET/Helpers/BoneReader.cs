@@ -5,8 +5,16 @@ using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
+    /// <summary>
+    /// Helper class to read <see cref="PangLib.PET.Models.Bone"/> structures from Puppet files
+    /// </summary>
     static class BoneReader
     {
+        /// <summary>
+        /// Helper method to read all bones from a Puppet file and return a list of them
+        /// </summary>
+        /// <param name="sectionReader">BinaryReader instance containing the Bone section data</param>
+        /// <returns>List of bones from the Puppet file</returns>
         public static List<Bone> ReadAllBones(BinaryReader sectionReader)
         {
             List<Bone> bones = new List<Bone>();

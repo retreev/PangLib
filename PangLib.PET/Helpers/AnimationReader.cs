@@ -4,8 +4,17 @@ using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
+    /// <summary>
+    /// Helper class to read <see cref="PangLib.PET.Models.Animation"/> structures from Puppet files
+    /// </summary>
     static class AnimationReader
     {
+        /// <summary>
+        /// Helper method to read all animations from a Puppet file and return a list of them
+        /// </summary>
+        /// <param name="sectionReader">BinaryReader instance containing the Animation section data</param>
+        /// <param name="version">Version of the Puppet file</param>
+        /// <returns>List of animations from the Puppet file</returns>
         public static List<Animation> ReadAllAnimations(BinaryReader sectionReader, Version version)
         {
             List<Animation> Animations = new List<Animation>();

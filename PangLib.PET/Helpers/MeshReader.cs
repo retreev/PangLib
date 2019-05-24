@@ -4,8 +4,17 @@ using PangLib.PET.Models;
 
 namespace PangLib.PET.Helpers
 {
+    /// <summary>
+    /// Helper class to read a <see cref="PangLib.PET.Models.Mesh"/> structure from Puppet files
+    /// </summary>
     static class MeshReader
     {
+        /// <summary>
+        /// Helper method to read the mesh from a Puppet file and return it
+        /// </summary>
+        /// <param name="sectionReader">BinaryReader instance containing the Mesh section data</param>
+        /// <param name="version">Version of the Puppet file</param>
+        /// <returns>The mesh from the Puppet file</returns>
         public static Mesh ReadMesh(BinaryReader sectionReader, Version version)
         {
             Mesh mesh = new Mesh();
@@ -36,6 +45,11 @@ namespace PangLib.PET.Helpers
             return mesh;
         }
 
+        /// <summary>
+        /// Helper method to read a single vertex
+        /// </summary>
+        /// <param name="sectionReader">BinaryReader instance</param>
+        /// <returns>An instance of <see cref="PangLib.PET.Models.Vertex"/></returns>
         public static Vertex ReadVertex(BinaryReader sectionReader)
         {
             Vertex vertex = new Vertex();
@@ -67,6 +81,12 @@ namespace PangLib.PET.Helpers
             return vertex;
         }
 
+        /// <summary>
+        /// Helper method to read a single polygon
+        /// </summary>
+        /// <param name="sectionReader">BinaryReader instance</param>
+        /// <param name="version">Version of the Puppet file</param>
+        /// <returns>An instance of <see cref="PangLib.PET.Models.Polygon"/></returns>
         public static Polygon ReadPolygon(BinaryReader sectionReader, Version version)
         {
             Polygon polygon = new Polygon();
