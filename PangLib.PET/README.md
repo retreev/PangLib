@@ -16,7 +16,7 @@ Currently, there isn't much use for the library, but it will be able to parse di
 
 ```cs
 // Load PET file into instance
-PETFile PET = new PETFile("./item1_01.pet");
+PETFile PET = new PETFile(File.Open("./item1_01.pet", FileMode.Open));
 
 // You can now access the different structure types in their corresponding member variables
 ```
