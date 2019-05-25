@@ -1,8 +1,8 @@
 using System.Runtime.InteropServices;
-using PangLib.IFF.BitFlags;
-using PangLib.IFF.GeneralModels;
+using PangLib.IFF.Models.Flags;
+using PangLib.IFF.Models.General;
 
-namespace PangLib.IFF.DataModels
+namespace PangLib.IFF.Models.Data
 {
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Card

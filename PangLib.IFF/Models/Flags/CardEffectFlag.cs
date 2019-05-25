@@ -1,4 +1,4 @@
-namespace PangLib.IFF.BitFlags
+namespace PangLib.IFF.Models.Flags
 {
     public enum CardEffectFlag : ushort
     {

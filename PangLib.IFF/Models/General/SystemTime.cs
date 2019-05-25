@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace PangLib.IFF.GeneralModels
+namespace PangLib.IFF.Models.General
 {
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct SystemTime

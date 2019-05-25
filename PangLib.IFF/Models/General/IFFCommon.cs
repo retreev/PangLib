@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
-using PangLib.IFF.BitFlags;
+using PangLib.IFF.Models.Flags;
 
-namespace PangLib.IFF.GeneralModels
+namespace PangLib.IFF.Models.General
 {
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct IFFCommon
