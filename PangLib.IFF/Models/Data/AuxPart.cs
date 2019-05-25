@@ -6,36 +6,36 @@ namespace PangLib.IFF.Models.Data
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct AuxPart
     {
-        [MarshalAs(UnmanagedType.Struct)]
-        public IFFCommon Header;
-        public byte Amount;
-        public byte Unknown1;
-        public byte Unknown2;
-        public byte Unknown3;
-        public byte Unknown4;
-        public byte Unknown5;
-        public byte Unknown6;
-        public byte Unknown7;
-        public byte Unknown8;
-        public byte Unknown9;
-        public byte Power;
-        public byte Control;
-        public byte Accuracy;
-        public byte Spin;
-        public byte Curve;
-        public byte PowerSlot;
-        public byte ControlSlot;
-        public byte AccuracySlot;
-        public byte SpinSlot;
-        public byte CurveSlot;
-        public ushort ClubDistance;
-        public ushort Luck;
-        public ushort PowerGauge;
-        public ushort PangBonus;
-        public ushort ExperiencePercentage;
-        public byte Unknown24;
-        public byte Unknown25;
-        public byte Unknown26;
-        public byte Unknown27;
+        [field: MarshalAs(UnmanagedType.Struct)]
+        public IFFCommon Header { get; set; }
+        public byte Amount { get; set; }
+        public byte Unknown1 { get; set; }
+        public byte Unknown2 { get; set; }
+        public byte Unknown3 { get; set; }
+        public byte Unknown4 { get; set; }
+        public byte Unknown5 { get; set; }
+        public byte Unknown6 { get; set; }
+        public byte Unknown7 { get; set; }
+        public byte Unknown8 { get; set; }
+        public byte Unknown9 { get; set; }
+        public byte Power { get; set; }
+        public byte Control { get; set; }
+        public byte Accuracy { get; set; }
+        public byte Spin { get; set; }
+        public byte Curve { get; set; }
+        public byte PowerSlot { get; set; }
+        public byte ControlSlot { get; set; }
+        public byte AccuracySlot { get; set; }
+        public byte SpinSlot { get; set; }
+        public byte CurveSlot { get; set; }
+        public ushort ClubDistance { get; set; }
+        public ushort Luck { get; set; }
+        public ushort PowerGauge { get; set; }
+        public ushort PangBonus { get; set; }
+        public ushort ExperiencePercentage { get; set; }
+        public byte Unknown24 { get; set; }
+        public byte Unknown25 { get; set; }
+        public byte Unknown26 { get; set; }
+        public byte Unknown27 { get; set; }
     }
 }

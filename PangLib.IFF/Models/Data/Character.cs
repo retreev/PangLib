@@ -6,36 +6,36 @@ namespace PangLib.IFF.Models.Data
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Character
     {
-        [MarshalAs(UnmanagedType.Struct)]
-        public IFFCommon Header;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string Model;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string Texture1;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string Texture2;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string Texture3;
-        public ushort Power;
-        public ushort Control;
-        public ushort Accuracy;
-        public ushort Spin;
-        public ushort Curve;
-        public byte PowerSlot;
-        public byte ControlSlot;
-        public byte AccuracySlot;
-        public byte SpinSlot;
-        public byte CurveSlot;
-        public byte Unknown1;
-        public uint RankS;
-        public byte RankSPowerSlot;
-        public byte RankSControlSlot;
-        public byte RankSAccuracySlot;
-        public byte RankSSpinSlot;
-        public byte RankSCurveSlot;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string AdditionalTexture;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 3)]
-        public string Unknown2;
+        [field: MarshalAs(UnmanagedType.Struct)]
+        public IFFCommon Header { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string Model { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string Texture1 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string Texture2 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string Texture3 { get; set; }
+        public ushort Power { get; set; }
+        public ushort Control { get; set; }
+        public ushort Accuracy { get; set; }
+        public ushort Spin { get; set; }
+        public ushort Curve { get; set; }
+        public byte PowerSlot { get; set; }
+        public byte ControlSlot { get; set; }
+        public byte AccuracySlot { get; set; }
+        public byte SpinSlot { get; set; }
+        public byte CurveSlot { get; set; }
+        public byte Unknown1 { get; set; }
+        public uint RankS { get; set; }
+        public byte RankSPowerSlot { get; set; }
+        public byte RankSControlSlot { get; set; }
+        public byte RankSAccuracySlot { get; set; }
+        public byte RankSSpinSlot { get; set; }
+        public byte RankSCurveSlot { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string AdditionalTexture { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 3)]
+        public string Unknown2 { get; set; }
     }
 }

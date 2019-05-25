@@ -5,8 +5,8 @@ namespace PangLib.IFF.Models.Data
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Enchant
     {
-        public uint Active;
-        public uint ID;
-        public uint Price;
+        public uint Active { get; set; }
+        public uint ID { get; set; }
+        public uint Price { get; set; }
     }
 }

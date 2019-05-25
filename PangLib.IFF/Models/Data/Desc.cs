@@ -5,8 +5,8 @@ namespace PangLib.IFF.Models.Data
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Desc
     {
-        public uint ID;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
-        public string Text;
+        public uint ID { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 512)]
+        public string Text { get; set; }
     }
 }

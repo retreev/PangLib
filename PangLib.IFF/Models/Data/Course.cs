@@ -6,17 +6,17 @@ namespace PangLib.IFF.Models.Data
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct Course
     {
-        [MarshalAs(UnmanagedType.Struct)]
-        public IFFCommon Header;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string ShortName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string LocalizedName;
-        public byte CourseFlag;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string PropertyFileName;
-        public uint Unknown1;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string CourseSequence;
+        [field: MarshalAs(UnmanagedType.Struct)]
+        public IFFCommon Header { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string ShortName { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string LocalizedName { get; set; }
+        public byte CourseFlag { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string PropertyFileName { get; set; }
+        public uint Unknown1 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string CourseSequence { get; set; }
     }
 }

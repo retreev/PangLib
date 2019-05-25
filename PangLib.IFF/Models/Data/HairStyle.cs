@@ -6,9 +6,9 @@ namespace PangLib.IFF.Models.Data
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public struct HairStyle
     {
-        [MarshalAs(UnmanagedType.Struct)]
-        public IFFCommon Header;
-        public uint Unknown3;
-        public uint HairStyleID;
+        [field: MarshalAs(UnmanagedType.Struct)]
+        public IFFCommon Header { get; set; }
+        public uint Unknown1 { get; set; }
+        public uint HairStyleID { get; set; }
     }
 }
