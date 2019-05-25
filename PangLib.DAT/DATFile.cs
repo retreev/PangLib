@@ -12,22 +12,15 @@ namespace PangLib.DAT
     {
         public List<string> Entries = new List<string>();
 
-        private string FilePath;
         private Encoding FileEncoding;
-
-        /// <summary>
-        /// Constructs a new DATFile instance
-        /// </summary>
-        public DATFile() { }
 
         /// <summary>
         /// Parses the data from the DAT file
         /// </summary>
-        private void Parse()
+        /// <param name="data">Stream containing DAT file data</param>
+        private void Parse(Stream data)
         {
-            byte[] fileDataBytes = File.ReadAllBytes(FilePath);
-
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(fileDataBytes), FileEncoding))
+            using (BinaryReader reader = new BinaryReader(data, FileEncoding))
             {
                 List<char> stringChars = new List<char>();
 
@@ -57,15 +50,16 @@ namespace PangLib.DAT
         ///
         /// Falls back on UTF-8 as default
         /// </summary>
+        /// <param name="filePath">File name of the DAT file</param>
         /// <returns>Encoding of the DAT file</returns>
-        private Encoding GetEncodingFromFileName()
+        private Encoding GetEncodingFromFileName(string filePath)
         {
-            if (FilePath == null)
+            if (filePath == null)
             {
                 throw new InvalidOperationException("No file path given to get encoding from, use SetEncoding() method!");
             }
 
-            string fileName = Path.GetFileNameWithoutExtension(FilePath).ToLower();
+            string fileName = Path.GetFileNameWithoutExtension(filePath).ToLower();
 
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
@@ -112,15 +106,6 @@ namespace PangLib.DAT
         }
 
         /// <summary>
-        /// Sets the file path of the DATFile instance
-        /// </summary>
-        /// <param name="filePath">File path to set</param>
-        public void SetFilePath(string filePath)
-        {
-            FilePath = filePath;
-        }
-
-        /// <summary>
         /// Load a DAT file into a DATFile instance
         /// </summary>
         /// <param name="filePath">File path to load the DAT file from</param>
@@ -128,9 +113,8 @@ namespace PangLib.DAT
         {
             DATFile DAT = new DATFile();
 
-            DAT.SetFilePath(filePath);
-            DAT.SetEncoding(DAT.GetEncodingFromFileName());
-            DAT.Parse();
+            DAT.SetEncoding(DAT.GetEncodingFromFileName(filePath));
+            DAT.Parse(File.Open(filePath, FileMode.Open));
 
             return DAT;
         }
