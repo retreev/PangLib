@@ -74,7 +74,7 @@ namespace PangLib.DAT
                     targetEncoding = Encoding.GetEncoding(932);
                     break;
                 case "english":
-                    targetEncoding = Encoding.GetEncoding(65001);
+                    targetEncoding = Encoding.ASCII;
                     break;
                 case "thailand":
                     targetEncoding = Encoding.GetEncoding(874);
@@ -86,7 +86,7 @@ namespace PangLib.DAT
                 case "spanish":
                 case "german":
                 case "french":
-                    targetEncoding = Encoding.GetEncoding(28591);
+                    targetEncoding = Encoding.GetEncoding(1252);
                     break;
                 default:
                     targetEncoding = Encoding.GetEncoding(65001);
