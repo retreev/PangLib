@@ -13,6 +13,7 @@ dotnet add package PangLib.IFF
 ## Usage
 
 ```cs
+using System.IO;
 using PangLib.IFF;
 using PangLib.IFF.DataModels;
 
@@ -23,7 +24,7 @@ IFFFile<Caddie> IFF = new IFFFile<Caddie>();
 // required for the IFF files to be interpreted by the game properly!
  
 // or load file into a new instance
-IFFFile<Caddie> IFF = IFFFile<Caddie>.Load("./Caddie.iff");
+IFFFile<Caddie> IFF = new IFFFile<Caddie>(File.Open("./Caddie.iff", FileMode.Open));
 
 // You can now access the IFF file entries on IFF.Entries
 // IFF.Entries is a List<T> of the type you pass to the IFFFile instance

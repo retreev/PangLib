@@ -10,15 +10,20 @@ namespace PangLib.IFF
     /// </summary>
     public class IFFFile<T> where T : new()
     {
-        public List<T> Entries = new List<T>();
-        public string FilePath;
-        public bool IsZIPFile;
-        
-        public ushort BindingID { get; set; }
-        public uint Version { get; set; }
+        /// <summary>
+        /// List of IFF file entries
+        /// </summary>
+        public List<T> Entries { get; } = new List<T>();
 
-        private ushort RecordCount;
-        private long RecordLength;
+        /// <summary>
+        /// ID determining relation to other IFF files
+        /// </summary>
+        public ushort BindingID { get; set; }
+        
+        /// <summary>
+        /// Version of this IFF file
+        /// </summary>
+        public uint Version { get; set; }
 
         /// <summary>
         /// Constructs a new IFFFile instance
@@ -26,31 +31,43 @@ namespace PangLib.IFF
         public IFFFile() { }
 
         /// <summary>
+        /// Initializes a new IFFFile instance from a stream of IFF file data
+        /// </summary>
+        /// <param name="data">Stream containing IFF file data</param>
+        public IFFFile(Stream data)
+        {
+            Parse(data);
+        }
+            
+        /// <summary>
         /// Parses the data from the IFF file and saves it into the Entries property
         /// 
         /// The bytes of a single entry are then marshalled into the structure provided by the
         /// generic type of the IFFFile instance
         /// </summary>
+        /// <param name="stream">Stream containing IFF file data</param>
         /// <exception cref="InvalidCastException">Is thrown when the size of a single record mismatches the size of the given generic structure</exception>
-        private void Parse()
+        private void Parse(Stream stream)
         {
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
+            using (BinaryReader reader = new BinaryReader(stream))
             {
-                if ((IsZIPFile = (new string(reader.ReadChars(2)) == "PK")) == true)
-                    return;
+                if (new string(reader.ReadChars(2)) == "PK")
+                {
+                    throw new NotSupportedException("The given IFF file is a ZIP file, please unpack it before attempting to parse it");
+                }
 
                 reader.BaseStream.Seek(0, SeekOrigin.Begin);
 
-                RecordCount = reader.ReadUInt16();
-                RecordLength = (long) ((reader.BaseStream.Length - 8L) / ((long) RecordCount));
+                ushort recordCount = reader.ReadUInt16();
+                long recordLength = ((reader.BaseStream.Length - 8L) / (recordCount));
                 BindingID = reader.ReadUInt16();
                 Version = reader.ReadUInt32();
 
-                for (int i = 0; i < RecordCount; i++)
+                for (int i = 0; i < recordCount; i++)
                 {
-                    reader.BaseStream.Seek(8L + (RecordLength * i), System.IO.SeekOrigin.Begin);
+                    reader.BaseStream.Seek(8L + (recordLength * i), System.IO.SeekOrigin.Begin);
 
-                    byte[] recordData = reader.ReadBytes((int) RecordLength);
+                    byte[] recordData = reader.ReadBytes((int) recordLength);
 
                     T data = new T();
 
@@ -98,20 +115,6 @@ namespace PangLib.IFF
                     writer.Write(arr);
                 });
             }
-        }
-
-        /// <summary>
-        /// Load an IFF file into an IFF
-        /// </summary>
-        /// <param name="filePath">File path to load the IFF file from</param>
-        /// <returns>An IFFFile instance</returns>
-        public static IFFFile<T> Load(string filePath)
-        {
-            IFFFile<T> IFF = new IFFFile<T> {FilePath = filePath};
-
-            IFF.Parse();
-
-            return IFF;
         }
     }
 }
