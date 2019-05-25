@@ -104,6 +104,14 @@ namespace PangLib.DAT
         {
             FileEncoding = encoding;
         }
+        
+        /// <summary>
+        /// Returns the encoding used by the DATFile instance
+        /// </summary>
+        public Encoding GetEncoding()
+        {
+            return FileEncoding;
+        }
 
         /// <summary>
         /// Load a DAT file into a DATFile instance
