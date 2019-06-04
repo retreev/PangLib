@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -14,14 +15,20 @@ namespace PangLib.PAK
     /// </summary>
     public class PAKFile
     {
-        public List<FileEntry> Entries = new List<FileEntry>();
-        private string FilePath;
+        /// <summary>
+        /// File entries included in this archive
+        /// </summary>
+        public List<FileEntry> Entries { get; } = new List<FileEntry>();
         
-        private uint FileListOffset;
-        private uint FileCount;
-        private byte Signature;
+        /// <summary>
+        /// File path of the PAK archive
+        /// </summary>
+        private readonly string FilePath;
 
-        private dynamic Key;
+        /// <summary>
+        /// Key used for en/decrypting parts of file entries
+        /// </summary>
+        private readonly dynamic Key;
 
         /// <summary>
         /// Constructor for the PAK file instance
@@ -39,19 +46,24 @@ namespace PangLib.PAK
         /// <summary>
         /// Reads the PAK file metadata, including file list information and the file list
         /// </summary>
+        /// <exception cref="NotSupportedException">Is thrown if the given PAK file does not have a valid signature</exception>
         private void ReadMetadata()
         {
             using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
             {
                 reader.BaseStream.Seek(-9L, SeekOrigin.End);
 
-                FileListOffset = reader.ReadUInt32();
-                FileCount = reader.ReadUInt32();
-                Signature = reader.ReadByte();
+                uint fileListOffset = reader.ReadUInt32();
+                uint fileCount = reader.ReadUInt32();
 
-                reader.BaseStream.Seek(FileListOffset, SeekOrigin.Begin);
+                if ((reader.ReadByte()) != 0x12)
+                {
+                    throw new NotSupportedException("The signature of this PAK file is invalid!");    
+                }
 
-                for (uint i = 0; i < FileCount; i++)
+                reader.BaseStream.Seek(fileListOffset, SeekOrigin.Begin);
+
+                for (uint i = 0; i < fileCount; i++)
                 {
                     FileEntry fileEntry = new FileEntry();
 
@@ -78,8 +90,7 @@ namespace PangLib.PAK
 
                         fileEntry.FileName = DecryptFileName(tempName, decryptionKey);
 
-                        uint[] decryptionData = new uint[]
-                        {
+                        uint[] decryptionData = {
                             fileEntry.Offset,
                             fileEntry.RealFileSize
                         };
@@ -120,6 +131,9 @@ namespace PangLib.PAK
                         case 2:
                             Directory.CreateDirectory(fileEntry.FileName);
                             break;
+                        default:
+                            Debug.WriteLine($"Unknown compression value '{fileEntry.Compression.ToString()}'");
+                            break;
                     }
 
                     if (fileEntry.FileSize != 0) {
@@ -135,7 +149,7 @@ namespace PangLib.PAK
         /// <param name="fileNameBuffer">Bytes of the file name</param>
         /// <param name="key">Key to decrypt the filename with</param>
         /// <returns>The decrypted filename</returns>
-        private string DecryptFileName(byte[] fileNameBuffer, uint[] key)
+        private static string DecryptFileName(byte[] fileNameBuffer, uint[] key)
         {
             Span<byte> nameSpan = fileNameBuffer;
 
