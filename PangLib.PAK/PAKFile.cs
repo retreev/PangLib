@@ -170,11 +170,34 @@ namespace PangLib.PAK
     /// </summary>
     public struct FileEntry
     {
-        public byte FileNameLength;
-        public byte Compression;
-        public uint Offset;
-        public uint FileSize;
-        public uint RealFileSize;
-        public string FileName;
+        /// <summary>
+        /// Length of the file name
+        /// </summary>
+        public byte FileNameLength { get; set; }
+        
+        /// <summary>
+        /// Compression flag determining if the file is compressed, or a directory
+        /// </summary>
+        public byte Compression { get; set; }
+        
+        /// <summary>
+        /// Offset of the file data from the beginning of the archive
+        /// </summary>
+        public uint Offset { get; set; }
+        
+        /// <summary>
+        /// (Compressed) size of the file
+        /// </summary>
+        public uint FileSize { get; set; }
+        
+        /// <summary>
+        /// Real size of the file
+        /// </summary>
+        public uint RealFileSize { get; set; }
+        
+        /// <summary>
+        /// Full path and name of the file
+        /// </summary>
+        public string FileName { get; set; }
     }
 }
