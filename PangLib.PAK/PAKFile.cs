@@ -19,7 +19,7 @@ namespace PangLib.PAK
         /// File entries included in this archive
         /// </summary>
         public List<FileEntry> Entries { get; } = new List<FileEntry>();
-        
+
         /// <summary>
         /// File path of the PAK archive
         /// </summary>
@@ -58,7 +58,7 @@ namespace PangLib.PAK
 
                 if ((reader.ReadByte()) != 0x12)
                 {
-                    throw new NotSupportedException("The signature of this PAK file is invalid!");    
+                    throw new NotSupportedException("The signature of this PAK file is invalid!");
                 }
 
                 reader.BaseStream.Seek(fileListOffset, SeekOrigin.Begin);
@@ -90,7 +90,8 @@ namespace PangLib.PAK
 
                         fileEntry.FileName = DecryptFileName(tempName, decryptionKey);
 
-                        uint[] decryptionData = {
+                        uint[] decryptionData =
+                        {
                             fileEntry.Offset,
                             fileEntry.RealFileSize
                         };
@@ -98,7 +99,7 @@ namespace PangLib.PAK
                         uint[] resultData = XTEA.Decipher(16, decryptionData, decryptionKey);
 
                         fileEntry.Offset = resultData[0];
-                        fileEntry.RealFileSize = resultData[1]; 
+                        fileEntry.RealFileSize = resultData[1];
                     }
 
                     Entries.Add(fileEntry);
@@ -120,13 +121,14 @@ namespace PangLib.PAK
                 Entries.ForEach(fileEntry =>
                 {
                     reader.BaseStream.Seek(fileEntry.Offset, SeekOrigin.Begin);
-                    data = reader.ReadBytes((int)fileEntry.FileSize);
+                    data = reader.ReadBytes((int) fileEntry.FileSize);
 
                     switch (fileEntry.Compression)
                     {
                         case 1:
                         case 3:
-                            data = LZ77.Decompress(data, fileEntry.FileSize, fileEntry.RealFileSize, fileEntry.Compression);
+                            data = LZ77.Decompress(data, fileEntry.FileSize, fileEntry.RealFileSize,
+                                fileEntry.Compression);
                             break;
                         case 2:
                             Directory.CreateDirectory(fileEntry.FileName);
@@ -136,7 +138,8 @@ namespace PangLib.PAK
                             break;
                     }
 
-                    if (fileEntry.FileSize != 0) {
+                    if (fileEntry.FileSize != 0)
+                    {
                         File.WriteAllBytes(fileEntry.FileName, data);
                     }
                 });
@@ -168,36 +171,43 @@ namespace PangLib.PAK
     /// <summary>
     /// Main structure of file entries
     /// </summary>
-    public struct FileEntry
+    public struct FileEntry : IEquatable<FileEntry>
     {
         /// <summary>
         /// Length of the file name
         /// </summary>
         public byte FileNameLength { get; set; }
-        
+
         /// <summary>
         /// Compression flag determining if the file is compressed, or a directory
         /// </summary>
         public byte Compression { get; set; }
-        
+
         /// <summary>
         /// Offset of the file data from the beginning of the archive
         /// </summary>
         public uint Offset { get; set; }
-        
+
         /// <summary>
         /// (Compressed) size of the file
         /// </summary>
         public uint FileSize { get; set; }
-        
+
         /// <summary>
         /// Real size of the file
         /// </summary>
         public uint RealFileSize { get; set; }
-        
+
         /// <summary>
         /// Full path and name of the file
         /// </summary>
         public string FileName { get; set; }
+
+        public bool Equals(FileEntry other)
+        {
+            return FileNameLength == other.FileNameLength && Compression == other.Compression &&
+                   Offset == other.Offset && FileSize == other.FileSize && RealFileSize == other.RealFileSize &&
+                   string.Equals(FileName, other.FileName);
+        }
     }
 }
