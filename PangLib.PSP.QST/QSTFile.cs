@@ -10,27 +10,27 @@ namespace PangLib.PSP.QST
     /// </summary>
     public class QSTFile
     {
-        public List<QSTDialogue> Entries = new List<QSTDialogue>();
-
-        private string FilePath;
+        /// <summary>
+        /// List of all dialogue entries of the QST file
+        /// </summary>
+        public List<QSTDialogue> Entries { get; } = new List<QSTDialogue>();
 
         /// <summary>
         /// Constructor for QST file instance
         /// </summary>
-        /// <param name="filePath">file path of the QST file</param>
-        public QSTFile (string filePath)
+        /// <param name="data">Stream containing the QST file data</param>
+        public QSTFile (Stream data)
         {
-            FilePath = filePath;
-
-            Parse();
+            Parse(data);
         }
 
         /// <summary>
         /// Parses the contents of the QST file
         /// </summary>
-        private void Parse ()
+        /// <param name="data">Stream containing the QST file data</param>
+        private void Parse (Stream data)
         {
-            using (BinaryReader reader = new BinaryReader(new MemoryStream(File.ReadAllBytes(FilePath))))
+            using (BinaryReader reader = new BinaryReader(data))
             {
                 int dialogueCount = (int) reader.ReadByte();
 
