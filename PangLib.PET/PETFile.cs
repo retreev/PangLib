@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using PangLib.PET.Models;
 using PangLib.PET.Helpers;
+using Version = PangLib.PET.Models.Version;
 
 namespace PangLib.PET
 {
@@ -69,10 +72,21 @@ namespace PangLib.PET
         }
 
         /// <summary>
+        /// Initializes a new instance of <see cref="PETFile"/> from the provided stream
+        /// </summary>
+        /// <param name="data">Stream containing the Puppet file data</param>
+        /// <param name="catchExceptions">Flag allowing conditional exception catching</param>
+        public PETFile(Stream data, bool catchExceptions)
+        {
+            Parse(data, catchExceptions);
+        }
+
+        /// <summary>
         /// Parses the passed Stream into Puppet structures
         /// </summary>
         /// <param name="data">Stream containing the Puppet file data</param>
-        private void Parse(Stream data)
+        /// <param name="catchExceptions">Flag allowing conditional exception catching</param>
+        private void Parse(Stream data, bool catchExceptions = false)
         {
             using (BinaryReader reader = new BinaryReader(data))
             {
@@ -84,38 +98,48 @@ namespace PangLib.PET
 
                     using (BinaryReader sectionReader = new BinaryReader(new MemoryStream(sectionBytes)))
                     {
-                        switch (sectionName)
+                        try
                         {
-                            case "VERS":
-                                Version = VersionReader.ReadVersion(sectionReader);
-                                break;
-                            case "TEXT":
-                                Textures = TextureReader.ReadAllTextures(sectionReader);
-                                break;
-                            case "SMTL":
-                                // TODO: Implement parsing of SMTL section
-                                break;
-                            case "BONE":
-                                Bones = BoneReader.ReadAllBones(sectionReader, Version);
-                                break;
-                            case "ANIM":
-                                Animations = AnimationReader.ReadAllAnimations(sectionReader, Version);
-                                break;
-                            case "MESH":
-                                Mesh = MeshReader.ReadMesh(sectionReader, Version);
-                                break;
-                            case "FANM":
-                                // TODO: Implement parsing of FANM section
-                                break;
-                            case "FRAM":
-                                Frames = FrameReader.ReadAllFrames(sectionReader);
-                                break;
-                            case "MOTI":
-                                Motions = MotionReader.ReadAllMotions(sectionReader);
-                                break;
-                            case "COLL":
-                                CollisionBoxes = CollisionBoxReader.ReadAllCollisionBoxes(sectionReader, Version);
-                                break;
+                            switch (sectionName)
+                            {
+                                case "VERS":
+                                    Version = VersionReader.ReadVersion(sectionReader);
+                                    break;
+                                case "TEXT":
+                                    Textures = TextureReader.ReadAllTextures(sectionReader);
+                                    break;
+                                case "SMTL":
+                                    // TODO: Implement parsing of SMTL section
+                                    break;
+                                case "BONE":
+                                    Bones = BoneReader.ReadAllBones(sectionReader, Version);
+                                    break;
+                                case "ANIM":
+                                    Animations = AnimationReader.ReadAllAnimations(sectionReader, Version);
+                                    break;
+                                case "MESH":
+                                    Mesh = MeshReader.ReadMesh(sectionReader, Version);
+                                    break;
+                                case "FANM":
+                                    // TODO: Implement parsing of FANM section
+                                    break;
+                                case "FRAM":
+                                    Frames = FrameReader.ReadAllFrames(sectionReader);
+                                    break;
+                                case "MOTI":
+                                    Motions = MotionReader.ReadAllMotions(sectionReader);
+                                    break;
+                                case "COLL":
+                                    CollisionBoxes = CollisionBoxReader.ReadAllCollisionBoxes(sectionReader, Version);
+                                    break;
+                                default:
+                                    Debug.WriteLine($"Unknown section '${sectionName}' with size of ${sectionLength.ToString()} bytes");
+                                    break;
+                            }
+                        }
+                        catch (Exception e) when (catchExceptions)
+                        {
+                            Debug.WriteLine($"{e.Message}\n{e.StackTrace}");
                         }
                     }
                 }
