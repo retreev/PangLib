@@ -28,19 +28,19 @@ More information on how you can use each library can be found in their folders a
 
 ## Available Libraries
 
-| Library                                       | Version                                                         | Description                                              |
-| --------------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------------- |
-| [**PangLib.IFF**](PangLib.IFF/)               | ![Nuget](https://img.shields.io/nuget/v/PangLib.IFF.svg)        | Library to handle and parse data from `.iff` files       |
-| [**PangLib.DAT**](PangLib.DAT/)               | ![Nuget](https://img.shields.io/nuget/v/PangLib.DAT.svg)        | Library to handle and parse data from `.dat` files       |
-| [**PangLib.PAK**](PangLib.PAK/)               | ![Nuget](https://img.shields.io/nuget/v/PangLib.PAK.svg)        | Library to handle and parse data from `.pak` files       |
-| [**PangLib.PET**](PangLib.PET/)               | ![Nuget](https://img.shields.io/nuget/v/PangLib.PET.svg)        | Library to handle and parse data from `.*pet` files      |
-| [**PangLib.PSP.NOP**](PangLib.PSP.NOP/)       | ![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.NOP.svg)    | Library to handle and parse data from PSP `.nop` files   |
-| [**PangLib.PSP.PAK**](PangLib.PSP.PAK/)       | ![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.PAK.svg)    | Library to handle and parse data from PSP `.pak` files   |
-| [**PangLib.PSP.QST**](PangLib.PSP.QST/)       | ![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.QST.svg)    | Library to handle and parse data from PSP `.qst` files   |
-| [**PangLib.UCC**](PangLib.UCC/)               | ![Nuget](https://img.shields.io/nuget/v/PangLib.UCC.svg)        | Library to handle and parse data from SelfDesign files   |
-| [**PangLib.UpdateList**](PangLib.UpdateList/) | ![Nuget](https://img.shields.io/nuget/v/PangLib.UpdateList.svg) | Library to handle and parse data from `updatelist` files |
-| [**PangLib.Wii.ECB**](PangLib.Wii.ECB/)       | ![Nuget](https://img.shields.io/nuget/v/PangLib.Wii.ECB.svg)    | Library to handle and parse data from Wii `.ECB` files   |
-| [**PangLib.Utilities**](PangLib.Utilities/)   | ![Nuget](https://img.shields.io/nuget/v/PangLib.Utilities.svg)  | Common utilities used in other `PangLib` libraries       |
+| Library                                       | Version                                                                                                               | Description                                              |
+| --------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------- |
+| [**PangLib.IFF**](PangLib.IFF/)               | [![Nuget](https://img.shields.io/nuget/v/PangLib.IFF.svg)](https://www.nuget.org/packages/PangLib.IFF/)               | Library to handle and parse data from `.iff` files       |
+| [**PangLib.DAT**](PangLib.DAT/)               | [![Nuget](https://img.shields.io/nuget/v/PangLib.DAT.svg)](https://www.nuget.org/packages/PangLib.DAT/)               | Library to handle and parse data from `.dat` files       |
+| [**PangLib.PAK**](PangLib.PAK/)               | [![Nuget](https://img.shields.io/nuget/v/PangLib.PAK.svg)](https://www.nuget.org/packages/PangLib.PAK/)               | Library to handle and parse data from `.pak` files       |
+| [**PangLib.PET**](PangLib.PET/)               | [![Nuget](https://img.shields.io/nuget/v/PangLib.PET.svg)](https://www.nuget.org/packages/PangLib.PET/)               | Library to handle and parse data from `.*pet` files      |
+| [**PangLib.PSP.NOP**](PangLib.PSP.NOP/)       | [![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.NOP.svg)](https://www.nuget.org/packages/PangLib.PSP.NOP/)       | Library to handle and parse data from PSP `.nop` files   |
+| [**PangLib.PSP.PAK**](PangLib.PSP.PAK/)       | [![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.PAK.svg)](https://www.nuget.org/packages/PangLib.PSP.PAK/)       | Library to handle and parse data from PSP `.pak` files   |
+| [**PangLib.PSP.QST**](PangLib.PSP.QST/)       | [![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.QST.svg)](https://www.nuget.org/packages/PangLib.PSP.QST/)       | Library to handle and parse data from PSP `.qst` files   |
+| [**PangLib.UCC**](PangLib.UCC/)               | [![Nuget](https://img.shields.io/nuget/v/PangLib.UCC.svg)](https://www.nuget.org/packages/PangLib.UCC/)               | Library to handle and parse data from SelfDesign files   |
+| [**PangLib.UpdateList**](PangLib.UpdateList/) | [![Nuget](https://img.shields.io/nuget/v/PangLib.UpdateList.svg)](https://www.nuget.org/packages/PangLib.UpdateList/) | Library to handle and parse data from `updatelist` files |
+| [**PangLib.Wii.ECB**](PangLib.Wii.ECB/)       | [![Nuget](https://img.shields.io/nuget/v/PangLib.Wii.ECB.svg)](https://www.nuget.org/packages/PangLib.Wii.ECB/)       | Library to handle and parse data from Wii `.ECB` files   |
+| [**PangLib.Utilities**](PangLib.Utilities/)   | [![Nuget](https://img.shields.io/nuget/v/PangLib.Utilities.svg)](https://www.nuget.org/packages/PangLib.Utilities/)   | Common utilities used in other `PangLib` libraries       |
 
 ## Documentation
 
