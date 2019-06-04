@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <PackageId>PangLib.PSP.QST</PackageId>
-        <Version>1.0.0</Version>
+        <Version>2.0.0</Version>
         <Authors>pixeldesu</Authors>
         <Description>PangLib.PSP.QST is a library that enables handling of PangYa: Fantasy Golf (PSP) dialogue (QST) files</Description>
         <PackageTags>pangya;psp;dialogue;qst;game-files</PackageTags>
