@@ -63,6 +63,11 @@ namespace PangLib.PET
         public Mesh Mesh { get; set; }
 
         /// <summary>
+        /// Denotes that this Puppet file has a specular effect applied
+        /// </summary>
+        public bool SpecularMaterial { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of <see cref="PETFile"/> from the provided stream
         /// </summary>
         /// <param name="data">Stream containing the Puppet file data</param>
@@ -109,7 +114,7 @@ namespace PangLib.PET
                                     Textures = TextureReader.ReadAllTextures(sectionReader);
                                     break;
                                 case "SMTL":
-                                    // TODO: Implement parsing of SMTL section
+                                    SpecularMaterial = true;
                                     break;
                                 case "BONE":
                                     Bones = BoneReader.ReadAllBones(sectionReader, Version);
