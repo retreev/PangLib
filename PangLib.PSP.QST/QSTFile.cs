@@ -56,14 +56,49 @@ namespace PangLib.PSP.QST
         }
     }
 
-    public struct QSTDialogue 
+    /// <summary>
+    /// Main QST file dialogue structure
+    /// </summary>
+    public struct QSTDialogue : IEquatable<QSTDialogue>
     {
-        public byte EventID;
-        public byte ID;
-        public byte CharacterID;
-        public byte Position;
-        public string CharacterImage;
-        public string BackgroundImage;
-        public string Text;
+        /// <summary>
+        /// ID of the occuring event
+        /// </summary>
+        public byte EventID { get; set; }
+        
+        /// <summary>
+        /// Dialogue index/ID
+        /// </summary>
+        public byte ID { get; set; }
+        
+        /// <summary>
+        /// ID of the character currently speaking
+        /// </summary>
+        public byte CharacterID { get; set; }
+        
+        /// <summary>
+        /// Position of the current character
+        /// </summary>
+        public byte Position { get; set; }
+        
+        /// <summary>
+        /// Portrait of the current character
+        /// </summary>
+        public string CharacterImage { get; set; }
+        
+        /// <summary>
+        /// Current background image
+        /// </summary>
+        public string BackgroundImage { get; set; }
+        
+        /// <summary>
+        /// Text of the current dialogue
+        /// </summary>
+        public string Text { get; set; }
+
+        public bool Equals(QSTDialogue other)
+        {
+            return EventID == other.EventID && ID == other.ID;
+        }
     }
 }
