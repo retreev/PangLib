@@ -1,0 +1,22 @@
+version: '{build}'
+image: Visual Studio 2017
+install:
+- ps: >-
+    $xmlPath = "$env:appveyor_build_folder\PangLib.DAT\PangLib.DAT.csproj"
+
+    $xml = [xml](get-content $xmlPath)
+
+    $version = ($xml.Project.PropertyGroup | ? {$_.Version}).Version
+
+    Update-AppveyorBuild -Version "$version-$env:appveyor_build_id"
+before_build:
+- ps: >-
+    cd PangLib.DAT/
+
+    dotnet restore
+only_commits:
+  files:
+    - PangLib.DAT/
+build:
+  project: PangLib.DAT/PangLib.DAT.csproj
+  verbosity: minimal
