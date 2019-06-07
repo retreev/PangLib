@@ -1,5 +1,8 @@
 # PangLib.PET
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.PET.svg)](https://www.nuget.org/packages/PangLib.PET/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.PET.svg)](https://www.nuget.org/packages/PangLib.PET/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.PET) |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+
 Library to handle and parse Pangya model (`.*pet`) files.
 
 ## Installation

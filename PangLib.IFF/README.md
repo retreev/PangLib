@@ -1,5 +1,8 @@
 # PangLib.IFF
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.IFF.svg)](https://www.nuget.org/packages/PangLib.IFF/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.IFF.svg)](https://www.nuget.org/packages/PangLib.IFF/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.IFF) |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |  
+
 Library to handle and parse data from Pangya metadata and item (`.iff`) files.
 
 ## Installation

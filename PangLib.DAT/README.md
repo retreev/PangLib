@@ -1,5 +1,8 @@
 # PangLib.DAT
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.DAT.svg)](https://www.nuget.org/packages/PangLib.DAT/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.DAT.svg)](https://www.nuget.org/packages/PangLib.DAT/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.DAT) |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+
 Library to handle and parse data from Pangya translation (`.dat`) files.
 
 ## Installation

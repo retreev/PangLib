@@ -1,5 +1,8 @@
 # PangLib.PSP.NOP
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.NOP.svg)](https://www.nuget.org/packages/PangLib.PSP.NOP/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.PSP.NOP.svg)](https://www.nuget.org/packages/PangLib.PSP.NOP/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.PSP.NOP) |
+| --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+
 Library to handle Pangya: Fantasy Golf (PSP) archive files (`.nop`) files.
 
 ## Installation

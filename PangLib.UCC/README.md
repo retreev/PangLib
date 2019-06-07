@@ -1,5 +1,8 @@
 # PangLib.UCC
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.UCC.svg)](https://www.nuget.org/packages/PangLib.UCC/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.UCC.svg)](https://www.nuget.org/packages/PangLib.UCC/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.UCC) |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+
 Library to handle Pangya self-design files.
 
 ## Installation

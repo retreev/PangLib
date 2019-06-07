@@ -1,5 +1,8 @@
 # PangLib.PSP.PAK
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.PSP.PAK.svg)](https://www.nuget.org/packages/PangLib.PSP.PAK/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.PSP.PAK.svg)](https://www.nuget.org/packages/PangLib.PSP.PAK/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.PSP.PAK) |
+| --------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+
 Library to handle Pangya: Fantasy Golf (PSP) archive files (`.pak`) files.
 
 ## Installation

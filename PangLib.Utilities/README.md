@@ -1,5 +1,8 @@
 # PangLib.Utilities
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.Utilities.svg)](https://www.nuget.org/packages/PangLib.Utilities/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.Utilities.svg)](https://www.nuget.org/packages/PangLib.Utilities/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.Utilities) |
+| ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+
 Utilities for common interaction with PangYa game files.
 
 ## Installation

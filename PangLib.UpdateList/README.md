@@ -1,5 +1,8 @@
 # PangLib.UpdateList
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.UpdateList.svg)](https://www.nuget.org/packages/PangLib.UpdateList/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.UpdateList.svg)](https://www.nuget.org/packages/PangLib.UpdateList/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.UpdateList) |
+| --------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- |
+
 Library to handle Pangya updatelist files.
 
 ## Installation

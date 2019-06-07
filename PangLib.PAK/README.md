@@ -1,5 +1,8 @@
 # PangLib.PAK
 
+| [![Nuget](https://img.shields.io/nuget/v/PangLib.PAK.svg)](https://www.nuget.org/packages/PangLib.PAK/) | [![Nuget](https://img.shields.io/nuget/dt/PangLib.PAK.svg)](https://www.nuget.org/packages/PangLib.PAK/) | [Issues](https://github.com/pangyatools/PangLib/labels/PangLib.PAK) |
+| ------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+
 Library to handle Pangya archive files (`.pak`) files.
 
 ## Installation
