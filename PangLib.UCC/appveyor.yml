@@ -8,7 +8,7 @@ install:
 
     $version = ($xml.Project.PropertyGroup | ? {$_.Version}).Version
 
-    UpUCCe-AppveyorBuild -Version "$version-$env:appveyor_build_id"
+    Update-AppveyorBuild -Version "$version-$env:appveyor_build_id"
 before_build:
 - ps: >-
     cd PangLib.UCC/
