@@ -1,0 +1,22 @@
+version: '{build}'
+image: Visual Studio 2017
+install:
+- ps: >-
+    $xmlPath = "$env:appveyor_build_folder\PangLib.UCC\PangLib.UCC.csproj"
+
+    $xml = [xml](get-content $xmlPath)
+
+    $version = ($xml.Project.PropertyGroup | ? {$_.Version}).Version
+
+    UpUCCe-AppveyorBuild -Version "$version-$env:appveyor_build_id"
+before_build:
+- ps: >-
+    cd PangLib.UCC/
+
+    dotnet restore
+only_commits:
+  files:
+    - PangLib.UCC/
+build:
+  project: PangLib.UCC/PangLib.UCC.csproj
+  verbosity: minimal
