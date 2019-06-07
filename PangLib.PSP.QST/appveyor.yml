@@ -1,0 +1,22 @@
+version: '{build}'
+image: Visual Studio 2017
+install:
+- ps: >-
+    $xmlPath = "$env:appveyor_build_folder\PangLib.PSP.QST\PangLib.PSP.QST.csproj"
+
+    $xml = [xml](get-content $xmlPath)
+
+    $version = ($xml.Project.PropertyGroup | ? {$_.Version}).Version
+
+    Update-AppveyorBuild -Version "$version-$env:appveyor_build_id"
+before_build:
+- ps: >-
+    cd PangLib.PSP.QST/
+
+    dotnet restore
+only_commits:
+  files:
+    - PangLib.PSP.QST/
+build:
+  project: PangLib.PSP.QST/PangLib.PSP.QST.csproj
+  verbosity: minimal
