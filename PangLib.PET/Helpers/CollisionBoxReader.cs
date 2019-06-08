@@ -29,21 +29,19 @@ namespace PangLib.PET.Helpers
                 collisionBox.Unknown1 = sectionReader.ReadUInt32();
                 collisionBox.Unknown2 = sectionReader.ReadUInt32();
 
-                int nameLength = sectionReader.ReadInt32();
+                uint nameLength = sectionReader.ReadUInt32();
 
-                collisionBox.Name = Encoding.UTF8.GetString(sectionReader.ReadBytes(nameLength));
+                collisionBox.Name = Encoding.UTF8.GetString(sectionReader.ReadBytes((int) nameLength));
 
-                int boneNameLength = sectionReader.ReadInt32();
+                uint boneNameLength = sectionReader.ReadUInt32();
 
-                collisionBox.BoneName = Encoding.UTF8.GetString(sectionReader.ReadBytes(boneNameLength));
+                collisionBox.BoneName = Encoding.UTF8.GetString(sectionReader.ReadBytes((int) boneNameLength));
 
-                if (version.Minor == 0)
-                {
-                    collisionBox.Unknown3 = sectionReader.ReadByte();
-                }
+                uint scriptLength = sectionReader.ReadUInt32();
                 
-                collisionBox.Unknown4 = sectionReader.ReadUInt32();
-                collisionBox.Unknown5 = sectionReader.ReadUInt32();
+                collisionBox.Script = Encoding.UTF8.GetString(sectionReader.ReadBytes((int) scriptLength));
+
+                collisionBox.Unknown3 = sectionReader.ReadUInt32();
 
                 collisionBox.MinX = sectionReader.ReadSingle();
                 collisionBox.MinY = sectionReader.ReadSingle();

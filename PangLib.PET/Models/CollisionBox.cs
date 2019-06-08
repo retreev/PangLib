@@ -26,22 +26,14 @@ namespace PangLib.PET.Models
         public string BoneName { get; set; }
         
         /// <summary>
-        /// Unknown value
+        /// Script executed on this collision box
         /// </summary>
-        /// <remarks>
-        /// This value is only present in version 1.0 Puppet files
-        /// </remarks>
-        public byte Unknown3 { get; set; }
+        public string Script { get; set; }
         
         /// <summary>
         /// Unknown value
         /// </summary>
-        public uint Unknown4 { get; set; }
-        
-        /// <summary>
-        /// Unknown value
-        /// </summary>
-        public uint Unknown5 { get; set; }
+        public uint Unknown3 { get; set; }
         
         /// <summary>
         /// Minimal X coordinate
