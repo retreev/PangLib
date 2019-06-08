@@ -19,7 +19,7 @@ Example, wanting to use the `PangLib.IFF` library:
 ```
 $ mkdir MyCoolProject && cd MyCoolProject
 $ dotnet new console
-$ dotnet add package [panglib-package-name]
+$ dotnet add package PangLib.IFF
 ```
 
 You should get a message about the reference being added successfully, now you can use the library inside your application!
@@ -58,6 +58,13 @@ You can contribute in many ways, like:
 
 Of course you can already contribute code if you are a developer, adding features, additional libraries and more, I'm
 pretty open to anything, as long as it is related to Pangya and the addition is reasonable!
+
+### Discuss on other Websites
+
+Forum posts allowing for engagement and feedback on PangLib:
+
+- [pangya.community](https://pangya.community/t/panglib-a-toolchain-for-pangya-files/22)
+- [RageZone](http://forum.ragezone.com/f513/panglib-set-libraries-pangya-game-1162203/)
 
 ## License
 
