@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using PangLib.PET.Models;
+using Version = PangLib.PET.Models.Version;
 
 namespace PangLib.PET.Helpers
 {
@@ -25,8 +26,18 @@ namespace PangLib.PET.Helpers
 
                 animation.BoneID = sectionReader.ReadByte();
 
+                // Once the root bone is reached (ID 255) stop reading animations
                 if (animation.BoneID == 255)
-                    break;
+                {
+                    break;    
+                }
+
+                // Bone ID 254 have two additional bytes after the ID (FE 00) to skip over
+                if (animation.BoneID == 254)
+                {
+                    animation.SubID = sectionReader.ReadByte();
+                    animation.SubSubID = sectionReader.ReadByte();
+                }
 
                 uint positionDataCount = sectionReader.ReadUInt32();
                 animation.PositionData = new PositionData[positionDataCount];

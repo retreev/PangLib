@@ -11,6 +11,20 @@ namespace PangLib.PET.Models
         public byte BoneID { get; set; }
         
         /// <summary>
+        /// Sub ID of the <see cref="PangLib.PET.Models.Bone"/> being animated
+        ///
+        /// This is only used in Animations with the <see cref="BoneID"/> 254
+        /// </summary>
+        public byte SubID { get; set; }
+        
+        /// <summary>
+        /// Sub-Sub ID of the <see cref="PangLib.PET.Models.Bone"/> being animated
+        ///
+        /// This is only used in Animations with the <see cref="BoneID"/> 254
+        /// </summary>
+        public byte SubSubID { get; set; }
+        
+        /// <summary>
         /// List of <see cref="PangLib.PET.Models.PositionData"/> of this animation
         /// </summary>
         public PositionData[] PositionData { get; set; }
