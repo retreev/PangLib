@@ -1,6 +1,8 @@
 <img align="left" src=".github/Images/pang.png" width="64" />
 
-# PangLib [![CodeFactor](https://www.codefactor.io/repository/github/pangyatools/panglib/badge)](https://www.codefactor.io/repository/github/pangyatools/panglib)
+# PangLib 
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5c7ef3db76de435e83008f257cb11d11)](https://www.codacy.com/app/PangyaTools/PangLib?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pangyatools/PangLib&amp;utm_campaign=Badge_Grade) [![Discord](https://discordapp.com/api/guilds/521180240542826496/widget.png?style=shield)](https://discord.gg/HwDTssf)
 
 Series of tools to interact with Pangya game files
 
