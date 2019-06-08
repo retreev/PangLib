@@ -44,9 +44,29 @@ More information on how you can use each library can be found in their folders a
 | [**PangLib.Wii.ECB**](PangLib.Wii.ECB/)       | [![Nuget](https://img.shields.io/nuget/v/PangLib.Wii.ECB.svg)](https://www.nuget.org/packages/PangLib.Wii.ECB/)       | [![Build status](https://ci.appveyor.com/api/projects/status/divi17vkamgtmqko/branch/master?svg=true)](https://ci.appveyor.com/project/pixeldesu/panglib-3511b/branch/master) | Library to handle and parse data from Wii `.ECB` files   |
 | [**PangLib.Utilities**](PangLib.Utilities/)   | [![Nuget](https://img.shields.io/nuget/v/PangLib.Utilities.svg)](https://www.nuget.org/packages/PangLib.Utilities/)   | [![Build status](https://ci.appveyor.com/api/projects/status/1eohtvn6tp6t89ed/branch/master?svg=true)](https://ci.appveyor.com/project/pixeldesu/panglib-aan6t/branch/master) | Common utilities used in other `PangLib` libraries       |
 
-## Documentation
+## Building
 
-Documentation on the parsed file formats can be found at [docs.pangya.golf](https://docs.pangya.golf)
+To build PangLib or any of the libraries inside it, you need, just as for using it, the [.NET Core SDK](https://www.microsoft.com/net/download).
+
+Once the SDK is available on your system to use, you can either run the following commands in the project root to build every library from the solution,
+or navigate to a subfolder (e.g. `PangLib.PET/`) and execute them there:
+
+```
+$ dotnet restore
+$ dotnet build
+```
+
+If the commands run successfully, you now have compiled libraries available at `[library-name]/bin/Debug/netstandard2.0/[arch]`
+
+To quickly test changes or use your local copy of a PangLib library in a project, you can run the following command to add 
+a reference:
+
+```
+$ dotnet add reference [path to .csproj file of desired library]
+```
+
+This will now allow you to change the code of the library, and of your program and once you build your program, it will also
+build the referenced library again, so you don't have to manually include a built library or publish it to Nuget yourself.
 
 ## Contributing
 
@@ -67,6 +87,10 @@ Forum posts allowing for engagement and feedback on PangLib:
 
 - [pangya.community](https://pangya.community/t/panglib-a-toolchain-for-pangya-files/22)
 - [RageZone](http://forum.ragezone.com/f513/panglib-set-libraries-pangya-game-1162203/)
+
+## Documentation
+
+Documentation on the parsed file formats can be found at [docs.pangya.golf](https://docs.pangya.golf)
 
 ## License
 
