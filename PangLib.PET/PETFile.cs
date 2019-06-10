@@ -66,6 +66,11 @@ namespace PangLib.PET
         /// Denotes that this Puppet file has a specular effect applied
         /// </summary>
         public bool SpecularMaterial { get; set; }
+        
+        /// <summary>
+        /// <see cref="PangLib.PET.Models.Extra"/> section parsed from this Puppet file
+        /// </summary>
+        public Extra Extra { get; set; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="PETFile"/> from the provided stream
@@ -118,6 +123,9 @@ namespace PangLib.PET
                                     break;
                                 case "BONE":
                                     Bones = BoneReader.ReadAllBones(sectionReader, Version);
+                                    break;
+                                case "EXTR":
+                                    Extra = ExtraReader.ReadExtra(sectionReader);
                                     break;
                                 case "ANIM":
                                     Animations = AnimationReader.ReadAllAnimations(sectionReader, Version);
