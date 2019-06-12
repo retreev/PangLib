@@ -40,9 +40,3 @@ static void SaveImage(SKBitmap bitmap, string filename)
     }
 }
 ```
-
-## Known Issues
-
-- You can't save custom images to UCC files
-- You can't save UCC files back to disk
-- You can't create an empty UCC file instance to fill with own images
