@@ -75,7 +75,7 @@ namespace PangLib.PAK
 
                     byte[] tempName = reader.ReadBytes(fileEntry.FileNameLength);
 
-                    if (fileEntry.Compression < 4 && fileEntry.Compression > -1)
+                    if (fileEntry.Compression < 4)
                     {
                         uint decryptionKey = (uint) Key;
 
