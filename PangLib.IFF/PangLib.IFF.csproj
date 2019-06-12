@@ -13,6 +13,8 @@
         <PackageIconUrl>https://raw.githubusercontent.com/pangyatools/PangLib/master/.github/Images/pang.png</PackageIconUrl>
 
         <TargetFramework>netstandard2.0</TargetFramework>
+
+        <LangVersion>7.3</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
