@@ -9,15 +9,18 @@ namespace PangLib.UCC
     /// </summary>
     public class UCCFile
     {
+        /// <summary>
+        /// ZIPArchive instance for the UCC file containing the self-design parts
+        /// </summary>
         private ZipArchive ZIPFile;
 
         /// <summary>
         /// Constructor for UCC file instance
         /// </summary>
-        /// <param name="filePath">Path of the UCC file</param>
-        public UCCFile(string filePath)
+        /// <param name="data">Stream containing the UCC file data</param>
+        public UCCFile(Stream data)
         {
-            ZIPFile = ZipFile.Open(filePath, ZipArchiveMode.Read);
+            ZIPFile = new ZipArchive(data);
         }
         
         /// <summary>
@@ -85,7 +88,10 @@ namespace PangLib.UCC
 
                     posX++;
 
-                    if (posX != width) continue;
+                    if (posX != width)
+                    {
+                        continue;
+                    }
                     
                     posY++;
                     posX = 0;
