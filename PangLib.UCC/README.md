@@ -16,15 +16,29 @@ dotnet add package PangLib.UCC
 ## Usage
 
 ```cs
+using System.IO;
+using SkiaSharp;
+
 // Load UCC file into instance
-UCCFile UCC = new UCCFile("./selfdesign.jpg");
+UCCFile UCC = new UCCFile(File.Open("./selfdesign.jpg", FileMode.Open));
 
 // UCC files are zip archives and using this
 // method you can turn any file entry inside
-// the file into a Bitmap, which you then can
+// the file into a SKBitmap, which you then can
 // use further, or just save to disk
-Bitmap frontImage = UCC.GetBitmapFromFileEntry("front");
-frontImage.Save("./front.png", ImageFormat.Png);
+SKBitmap iconImage = UCC.GetBitmapFromFileEntry("icon");
+SaveImage(iconImage, "icon.png");
+
+static void SaveImage(SKBitmap bitmap, string filename)
+{
+    using (var image = SKImage.FromBitmap(bitmap))
+    using (var data = image.Encode(SKEncodedImageFormat.Png, 100)) {
+        // save the data to a stream
+        using (var stream = File.OpenWrite(filename)) {
+            data.SaveTo(stream);
+        }
+    }
+}
 ```
 
 ## Known Issues
