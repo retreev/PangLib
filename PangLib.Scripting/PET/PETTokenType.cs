@@ -5,7 +5,7 @@ namespace PangLib.Scripting.PET
         Argument,
         Asterisk,
         CloseParenthesis,
-        OpenParenthesis,
-        StringValue
+        CommandName,
+        OpenParenthesis
     }
 }

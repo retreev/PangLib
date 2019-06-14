@@ -14,7 +14,7 @@ namespace PangLib.Scripting.PET
                 new List<PETTokenDefinition>
                 {
                     new PETTokenDefinition(PETTokenType.Asterisk, @"^\*"),
-                    new PETTokenDefinition(PETTokenType.StringValue, @"^\w+"),
+                    new PETTokenDefinition(PETTokenType.CommandName, @"^\w+"),
                     new PETTokenDefinition(PETTokenType.OpenParenthesis, "^\\("),
                     new PETTokenDefinition(PETTokenType.Argument, "^\"[^\"]*\"{1}"),
                     new PETTokenDefinition(PETTokenType.CloseParenthesis, "^\\)")
