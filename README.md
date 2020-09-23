@@ -4,11 +4,7 @@
 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/ee32fb04b92c4910acc16fa93f3d6a89)](https://www.codacy.com/gh/pangyatools/PangLib/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pangyatools/PangLib&amp;utm_campaign=Badge_Grade) [![Discord](https://discordapp.com/api/guilds/521180240542826496/widget.png?style=shield)](https://discord.gg/HwDTssf)
 
-Series of tools to interact with Pangya game files
-
-## About
-
-This set of libraries allows developers to build tools interacting with files of the MMO Golf game Pangya by Ntreev Software.
+Series of tools to interact with Pangya (PC) game files
 
 ## Usage
 
@@ -30,7 +26,6 @@ $ dotnet add package [package-name]
 | [**PangLib.PET**](PangLib.PET/)               | [![Nuget](https://img.shields.io/nuget/v/PangLib.PET.svg)](https://www.nuget.org/packages/PangLib.PET/)               | [![Build status](https://ci.appveyor.com/api/projects/status/7gjip9py34vnmtv1/branch/master?svg=true)](https://ci.appveyor.com/project/pixeldesu/panglib/branch/master)       | Library to handle and parse data from `.*pet` files      |
 | [**PangLib.UCC**](PangLib.UCC/)               | [![Nuget](https://img.shields.io/nuget/v/PangLib.UCC.svg)](https://www.nuget.org/packages/PangLib.UCC/)               | [![Build status](https://ci.appveyor.com/api/projects/status/nqxjdr7pem7a9pv9/branch/master?svg=true)](https://ci.appveyor.com/project/pixeldesu/panglib-9je33/branch/master) | Library to handle and parse data from SelfDesign files   |
 | [**PangLib.UpdateList**](PangLib.UpdateList/) | [![Nuget](https://img.shields.io/nuget/v/PangLib.UpdateList.svg)](https://www.nuget.org/packages/PangLib.UpdateList/) | [![Build status](https://ci.appveyor.com/api/projects/status/v1iexyfax1jc790s/branch/master?svg=true)](https://ci.appveyor.com/project/pixeldesu/panglib-njuqy/branch/master) | Library to handle and parse data from `updatelist` files |
-| [**PangLib.Wii.ECB**](PangLib.Wii.ECB/)       | [![Nuget](https://img.shields.io/nuget/v/PangLib.Wii.ECB.svg)](https://www.nuget.org/packages/PangLib.Wii.ECB/)       | [![Build status](https://ci.appveyor.com/api/projects/status/divi17vkamgtmqko/branch/master?svg=true)](https://ci.appveyor.com/project/pixeldesu/panglib-3511b/branch/master) | Library to handle and parse data from Wii `.ECB` files   |
 | [**PangLib.Utilities**](PangLib.Utilities/)   | [![Nuget](https://img.shields.io/nuget/v/PangLib.Utilities.svg)](https://www.nuget.org/packages/PangLib.Utilities/)   | [![Build status](https://ci.appveyor.com/api/projects/status/1eohtvn6tp6t89ed/branch/master?svg=true)](https://ci.appveyor.com/project/pixeldesu/panglib-aan6t/branch/master) | Common utilities used in other `PangLib` libraries       |
 
 ## Building
