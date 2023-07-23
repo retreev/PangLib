@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>PangLib.WEP</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>pixeldesu</Authors>
+    <Description>PangLib.WEP is a library that enables handling and parsing of PangYa binary (.gbin/.aibin/.sgbin) files</Description>
+    <PackageTags>pangya;binary;game-files</PackageTags>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+
+    <RepositoryUrl>https://github.com/pangyatools/PangLib</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/pangyatools/PangLib</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/pangyatools/PangLib/master/.github/Images/pang.png</PackageIconUrl>
+
+    <TargetFramework>netstandard2.0</TargetFramework>
+
+    <RootNamespace>PangLib.BIN</RootNamespace>
+  </PropertyGroup>
+
+</Project>
