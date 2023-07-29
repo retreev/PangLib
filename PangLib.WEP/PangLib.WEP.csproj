@@ -14,7 +14,7 @@
 
     <TargetFramework>netstandard2.0</TargetFramework>
 
-    <RootNamespace>PangLib.BIN</RootNamespace>
+    <RootNamespace>PangLib.WEP</RootNamespace>
   </PropertyGroup>
 
 </Project>
