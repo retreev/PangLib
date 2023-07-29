@@ -4,8 +4,17 @@ using PangLib.WEP.Models;
 
 namespace PangLib.WEP.Helpers
 {
+    /// <summary>
+    /// Helper class to read <see cref="PangLib.WEP.Models.MapCheck"/> structures from WEP files
+    /// </summary>
     public class MapCheckReader
     {
+        /// <summary>
+        /// Helper method to read the map check structure from a WEP file
+        /// </summary>
+        /// <param name="reader">BinaryReader instance</param>
+        /// <param name="version">Version of the WEP file</param>
+        /// <returns>The parsed map check structure</returns>
         public static MapCheck ReadMapCheck(BinaryReader reader, int version)
         {
             MapCheck mapCheck = new MapCheck
