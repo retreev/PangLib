@@ -4,8 +4,17 @@ using PangLib.WEP.Models;
 
 namespace PangLib.WEP.Helpers
 {
+    /// <summary>
+    /// Helper class to read <see cref="PangLib.WEP.Models.Color"/>/<see cref="PangLib.WEP.Models.ColorVertexMap"/> structures from WEP files
+    /// </summary>
     public class ColorReader
     {
+        /// <summary>
+        /// Helper method to read a list of colors from a WEP file
+        /// </summary>
+        /// <param name="reader">BinaryReader instance</param>
+        /// <param name="count">Count of colors</param>
+        /// <returns>List of colors from the WEP file</returns>
         public static List<Color> ReadAllColors(BinaryReader reader, int count)
         {
             List<Color> colors = new List<Color>();
@@ -25,6 +34,11 @@ namespace PangLib.WEP.Helpers
             return colors;
         }
 
+        /// <summary>
+        /// Helper method to read all vertex color maps from a WEP file and return a list of them
+        /// </summary>
+        /// <param name="reader">BinaryReader instance</param>
+        /// <returns>List of vertex color maps from the WEP file</returns>
         public static List<VertexColorMap> ReadAllVertexColorMaps(BinaryReader reader)
         {
             List<VertexColorMap> vertexColorMaps = new List<VertexColorMap>();
