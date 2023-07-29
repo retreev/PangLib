@@ -10,24 +10,74 @@ namespace PangLib.WEP
 {
     public class WEPFile
     {
+        /// <summary>
+        /// Version of the WEP file
+        /// </summary>
         public int Version = 0;
-        public List<CameraNode> CameraNodes { get; set; }
-        public List<PointNode> PointNodes { get; set; }
-        public List<AreaNode> AreaNodes { get; set; }
-        public List<string> Textures { get; set; }
-        public List<NodeList> NodeLists { get; set; }
         
+        /// <summary>
+        /// List of <see cref="PangLib.WEP.Models.CameraNode"/> parsed from this WEP file
+        /// </summary>
+        public List<CameraNode> CameraNodes { get; set; }
+                
+        /// <summary>
+        /// List of <see cref="PangLib.WEP.Models.PointNode"/> parsed from this WEP file
+        /// </summary>
+        public List<PointNode> PointNodes { get; set; }
+                
+        /// <summary>
+        /// List of <see cref="PangLib.WEP.Models.AreaNode"/> parsed from this WEP file
+        /// </summary>
+        public List<AreaNode> AreaNodes { get; set; }
+                
+        /// <summary>
+        /// List of textures parsed from this WEP file
+        /// </summary>
+        public List<string> Textures { get; set; }
+                
+        /// <summary>
+        /// List of <see cref="PangLib.WEP.Models.NodeList"/> parsed from this WEP file
+        /// </summary>
+        public List<NodeList> NodeLists { get; set; }
+
+        /// <summary>
+        /// Base <see cref="PangLib.WEP.Models.Element"/> of this WEP file
+        /// </summary>
         public Element BaseElement { get; set; }
+                
+        /// <summary>
+        /// List of <see cref="PangLib.WEP.Models.Color"/> parsed from this WEP file
+        /// </summary>
         public List<Color> BaseColors { get; set; }
+                
+        /// <summary>
+        /// List of <see cref="PangLib.WEP.Models.VertexColorMap"/> parsed from this WEP file
+        /// </summary>
         public List<VertexColorMap> VertexColorMaps { get; set; }
+                
+        /// <summary>
+        /// List of <see cref="PangLib.WEP.Models.Element"/> parsed from this WEP file
+        /// </summary>
         public List<Element> Elements { get; set; }
+        
+        /// <summary>
+        /// <see cref="PangLib.WEP.Models.MapCheck"/> of this WEP file
+        /// </summary>
         public MapCheck MapCheck { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="WEPFile"/> from the provided stream
+        /// </summary>
+        /// <param name="data">Stream containing the WEP file data</param>
         public WEPFile(Stream data)
         {
             Parse(data);
         }
 
+        /// <summary>
+        /// Parses the passed Stream into WEP file structures
+        /// </summary>
+        /// <param name="data">Stream containing the WEP file data</param>
         private void Parse(Stream data)
         {
             using (BinaryReader reader = new BinaryReader(data))
