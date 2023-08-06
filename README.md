@@ -79,6 +79,15 @@ Forum posts allowing for engagement and feedback on PangLib:
 
 Documentation on the parsed file formats can be found at [docs.pangya.golf](https://docs.pangya.golf)
 
+## Acknowledgements
+
+PangLib would not be possible with prior research and tooling developed by others, namely:
+
+* [HSReina](https://github.com/HSReina) for several tools and hints, especially around PET models
+* [jchv](https://github.com/jchv) for [the Blender import script](https://github.com/retreev/io_scene_mpet)
+* [Dave Devils](https://github.com/DaveDevils) for the documentation provided in [PangTools](https://github.com/davedevils/PangTools)
+* [Acrisio Filho](https://github.com/Acrisio-Filho) for [the provided GBIN and SBIN readers](https://github.com/Acrisio-Filho/SuperSS-Dev/tree/master/Tools)
+
 ## License
 
 This project is licensed under the AGPL-3.0
