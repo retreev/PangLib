@@ -22,6 +22,8 @@ jobs:
         with:
           dotnet-version: '5.x'
       - name: Install dependencies
-        run: cd PangLib.DAT && dotnet restore
+        working-directory: PangLib.DAT
+        run: dotnet restore
       - name: Build project
-        run: cd PangLib.DAT && dotnet build
+        working-directory: PangLib.DAT
+        run: dotnet build
