@@ -1,0 +1,28 @@
+name: PangLib.IFF (Build)
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'PangLib.IFF/**.*'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'PangLib.IFF/**.*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4.1.0
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '5.x'
+      - name: Install dependencies
+        working-directory: PangLib.IFF
+        run: dotnet restore
+      - name: Build project
+        working-directory: PangLib.IFF
+        run: dotnet build
