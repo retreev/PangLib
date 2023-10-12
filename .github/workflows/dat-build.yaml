@@ -3,8 +3,12 @@ name: PangLib.DAT (Build)
 on:
   push:
     branches: [ master ]
+    paths:
+      - 'PangLib.DAT/**.*'
   pull_request:
     branches: [ master ]
+    paths:
+      - 'PangLib.DAT/**.*'
 
 jobs:
   build:
@@ -12,11 +16,6 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4.1.0
-      - name: Get changed files
-        id: changed-files
-        uses: tj-actions/changed-files@v39
-        with:
-          files: "PangLib.DAT/**/*.*"
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
