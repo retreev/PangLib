@@ -1,0 +1,28 @@
+name: PangLib.SBIN (Build)
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'PangLib.SBIN/**.*'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'PangLib.SBIN/**.*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4.1.0
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '5.x'
+      - name: Install dependencies
+        working-directory: PangLib.SBIN
+        run: dotnet restore
+      - name: Build project
+        working-directory: PangLib.SBIN
+        run: dotnet build
