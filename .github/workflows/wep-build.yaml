@@ -1,0 +1,28 @@
+name: PangLib.WEP (Build)
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'PangLib.WEP/**.*'
+  pull_request:
+    branches: [ master ]
+    paths:
+      - 'PangLib.WEP/**.*'
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4.1.0
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '5.x'
+      - name: Install dependencies
+        working-directory: PangLib.WEP
+        run: dotnet restore
+      - name: Build project
+        working-directory: PangLib.WEP
+        run: dotnet build
