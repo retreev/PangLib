@@ -1,6 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <PackageId>PangLib.Scripting</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>pixeldesu</Authors>
+    <Description>PangLib.Scripting is a library to handle and parse Pangya scripting languages</Description>
+    <PackageTags>pangya;parsing;scripting</PackageTags>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+
+    <RepositoryUrl>https://github.com/retreev/PangLib</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/retreev/PangLib</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/retreev/PangLib/master/.github/Images/pang.png</PackageIconUrl>
+
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
