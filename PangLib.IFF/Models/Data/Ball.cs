@@ -1,37 +1,52 @@
+﻿using PangLib.IFF.Models.General;
+using PangLib.IFF.Models.Flags;
 using System.Runtime.InteropServices;
-using PangLib.IFF.Models.General;
-
 namespace PangLib.IFF.Models.Data
 {
+    #region Struct Ball.iff
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct Ball
+    public class Ball : IFFCommon
     {
-        [field: MarshalAs(UnmanagedType.Struct)]
-        public IFFCommon Header { get; set; }
-        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 36)]
-        public string Unknown1 { get; set; }
+        public uint Unknown0 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string Texture { get; set; }
+        public string Model { get; set; }
         public uint Unknown2 { get; set; }
         public uint Unknown3 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string BallSequence0 { get; set; }
+        public string BallFx1 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string BallSequence1 { get; set; }
+        public string BallFx2 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string BallSequence2 { get; set; }
+        public string BallFx3 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string BallSequence3 { get; set; }
+        public string BallFx4 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string BallSequence4 { get; set; }
+        public string BallFx5 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string BallSequence5 { get; set; }
+        public string BallFx6 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string BallSequence6 { get; set; }
+        public string BallFx7 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
-        public string EffectName { get; set; }
-        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 240)]
-        public string Unknown4 { get; set; }
-        public uint PangBonus { get; set; }
+        public string BallFx8 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string BallFx9 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string BallFx10 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string BallFx11 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string BallFx12 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string BallFx13 { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
+        public string BallFx14 { get; set; }
+        public ushort Power { get; set; }
+        public ushort Control { get; set; }
+        public ushort Impact { get; set; }
+        public ushort Spin { get; set; }
+        public ushort Curve { get; set; }
+        public ushort Unknown4 { get; set; }
     }
+#endregion
+
 }

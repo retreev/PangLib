@@ -1,120 +1,335 @@
-﻿using System;
+﻿using PangLib.IFF.Extensions;
+using PangLib.IFF.Models.General;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace PangLib.IFF
 {
     /// <summary>
-    /// Main IFF file class
+    /// new version create By LuisMK D:
     /// </summary>
-    public class IFFFile<T> where T : new()
+    /// <typeparam name="T"></typeparam>
+    [DebuggerDisplay("{" + nameof(GetDebuggerDisplay) + "(),nq}")]
+    public partial class IFFFile<T> : List<T>
     {
         /// <summary>
-        /// List of IFF file entries
+        /// Header IFF(cabeçario do IFF, contem Contagem dos itens existentes no *.iff, ID de ligacao, Versão do IFF 
         /// </summary>
-        public List<T> Entries { get; } = new List<T>();
-
+        public IFFHeader Header { get; set; } = new IFFHeader();
         /// <summary>
-        /// ID determining relation to other IFF files
+        /// Atualiza o IFF/Update for IFF
         /// </summary>
-        public ushort BindingID { get; set; }
-        
-        /// <summary>
-        /// Version of this IFF file
-        /// </summary>
-        public uint Version { get; set; }
-
-        /// <summary>
-        /// Constructs a new IFFFile instance
-        /// </summary>
-        public IFFFile() { }
-
-        /// <summary>
-        /// Initializes a new IFFFile instance from a stream of IFF file data
-        /// </summary>
-        /// <param name="data">Stream containing IFF file data</param>
-        public IFFFile(Stream data)
+        public bool Update { get; set; }
+        public IFFFile()
         {
-            Parse(data);
+            Header = new IFFHeader();
+            Update = false;
         }
-            
+
         /// <summary>
-        /// Parses the data from the IFF file and saves it into the Entries property
-        /// 
-        /// The bytes of a single entry are then marshalled into the structure provided by the
-        /// generic type of the IFFFile instance
+        /// class construtor(classe construtura do IFFList)
         /// </summary>
-        /// <param name="stream">Stream containing IFF file data</param>
-        /// <exception cref="InvalidCastException">Is thrown when the size of a single record mismatches the size of the given generic structure</exception>
-        private void Parse(Stream stream)
+        /// <param name="path">local onde fica o arquivo/ local</param>
+        public IFFFile(string path)
         {
-            using (BinaryReader reader = new BinaryReader(stream))
+            Header = new IFFHeader();
+            Update = false;
+            Load(File.ReadAllBytes(path));
+        }
+
+        public bool CheckVersionIFF()
+        {
+            if (Header.Version == 13)
             {
-                if (new string(reader.ReadChars(2)) == "PK")
-                {
-                    throw new NotSupportedException("The given IFF file is a ZIP file, please unpack it before attempting to parse it");
-                }
+                return true;
+            }
+            else if (Header.Version == 13)
+            {
+                throw new Exception(
+                      $"[IFFFile::Error]: version-incompatible file structure: ({Marshal.SizeOf((T)Activator.CreateInstance(typeof(T)))})");
 
-                reader.BaseStream.Seek(0, SeekOrigin.Begin);
-
-                ushort recordCount = reader.ReadUInt16();
-                long recordLength = ((reader.BaseStream.Length - 8L) / (recordCount));
-                BindingID = reader.ReadUInt16();
-                Version = reader.ReadUInt32();
-
-                for (int i = 0; i < recordCount; i++)
-                {
-                    reader.BaseStream.Seek(8L + (recordLength * i), System.IO.SeekOrigin.Begin);
-
-                    byte[] recordData = reader.ReadBytes((int) recordLength);
-
-                    T data = new T();
-
-                    int size = Marshal.SizeOf(data);
-                    IntPtr ptr = Marshal.AllocHGlobal(size);
-
-                    if (recordData.Length != size)
-                    {
-                        throw new InvalidCastException(
-                            $"The record length ({recordData.Length}) mismatches the length of the passed structure ({size})");
-                    }
-
-                    Marshal.Copy(recordData, 0, ptr, size);
-
-                    data = (T) Marshal.PtrToStructure(ptr, data.GetType());
-                    Marshal.FreeHGlobal(ptr);
-
-                    Entries.Add(data);
-                }
+            }
+            else if (Header.Version != 13)
+            {
+                throw new Exception($"[IFFFile::Error]:" +
+                    $"Version Actual: 13 \n " +
+                    $"Version File: {Header.Version} \n" +
+                    $"Version-incompatible file structure\n");
+            }
+            else
+            {
+                throw new Exception($"[IFFFile::Error]: Versao Atual: 13 \n Versao Arquivo: {Header.Version} \nVersao do IFF esta incorreta\n por favor coloque a versão atual");
             }
         }
 
+        public virtual string GetItemName(uint TypeID)
+        {
+            try
+            {
+                foreach (var item in this)
+                {
+                    if (item is IFFCommon)//verifica se IFFCommon
+                    {
+                        var item2 = item as IFFCommon;
+                        if (item2.ID == TypeID)
+                        {
+                            return item2.Name;
+                        }
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+            }
+            catch { return ""; }
+            return "";
+        }
+
+        /// <summary>
+        ///so obtem se for IFFCommon
+        /// </summary>
+        /// <param name="TypeID"></param>
+        /// <returns>retorna o tipo</returns>
+        public T GetItem(uint TypeID)
+        {
+            foreach (var item in this)
+            {
+                if (item is IFFCommon)//verifica se IFFCommon
+                {
+                    var item2 = item as IFFCommon;
+                    if (item2.ID == TypeID)
+                    {
+                        return item;
+                    }
+                }
+                else
+                {
+                    return CreateItem();
+                }
+            }
+            return CreateItem();
+        }
+
+        public IFFCommon GetItemCommon(uint TypeID)
+        {
+            foreach (var item in this)
+            {
+                if (item is IFFCommon)//verifica se IFFCommon
+                {
+                    var item2 = item as IFFCommon;
+                    if (item2.ID == TypeID)
+                    {
+                        return item2;
+                    }
+                }
+                else
+                {
+                    return new IFFCommon().CreateNewItem();
+                }
+            }
+            return new IFFCommon().CreateNewItem();
+        }
+
+        public virtual uint GetPrice(uint TypeID)
+        {
+            return GetItemCommon(TypeID).Shop.Price;
+        }
+
+        public virtual sbyte GetShopPriceType(uint TypeID)
+        {
+            return (sbyte)GetItemCommon(TypeID).Shop.flag_shop.ShopFlag;
+        }
+
+        public virtual bool IsBuyable(uint TypeID)
+        {
+            var item = GetItemCommon(TypeID);
+            if (item.Active == 1 && item.Shop.flag_shop.MoneyFlag == 0 || (int)item.Shop.flag_shop.MoneyFlag == 1 || (int)item.Shop.flag_shop.MoneyFlag == 2)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public virtual bool IsExist(uint TypeID)
+        {
+            var item = GetItemCommon(TypeID);
+
+            return Convert.ToBoolean(item.Active);
+        }
+
+        public virtual bool LoadItem(uint ID, ref T item)
+        {
+            if (!this.TryGetValue(ID, out T value))
+            {
+                return false;
+            }
+            item = value;
+            return true;
+        }
+
+        public virtual bool TryGetValue(uint ID, out T value)
+        {
+            if (GetItem(ID) != null)
+            {
+                value = GetItem(ID);
+                return true;
+            }
+            value = CreateItem();
+            return false;
+        }
+
+        //adiciona e atualiza o cabecario do iff
+        public virtual void AddItem(T item)
+        {
+            var OldCount = Count;
+            this.Add(item);
+            if (Count > Header.Count)//so atualiza se o  contador for maior
+            {
+                Header.Count = (short)Count;
+                Update = true;
+                Debug.WriteLine($"IFFFile::AddItemRange: Atualizou o IFF, Contador=> Novo({Count}), Antigo({OldCount}) ");
+            }
+        }
+
+        public virtual void AddItemRange(IEnumerable<T> item)
+        {
+            var OldCount = Count;
+            this.AddRange(item);
+            if (Count > Header.Count)//so atualiza se o  contador for maior
+            {
+                Header.Count = (short)Count;
+                Update = true;
+                Debug.WriteLine($"IFFFile::AddItemRange: Atualizou o IFF, Contador=> Novo({Count}), Antigo({OldCount}) ");
+            }
+        }
+
+        public bool CheckItemSize(long size)
+        {
+            long recordLength = (size - 8L) / Header.Count;
+            if (recordLength != Marshal.SizeOf(CreateItem()))
+            {
+                throw new Exception(
+                    $"The record({CreateItem().GetType().Name}) length ({recordLength}) mismatches the length of the passed structure ({Marshal.SizeOf(CreateItem())})");
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// parses the *.iff file, if all goes well it should read all data present
+        /// </summary>
+        /// <param name="data">contains all Information about the *.iff file, size, item count, version, link id</param>
+        /// <exception cref="Exception">if I get exception, I must have done something wrong, correct me please?</exception>
+        public virtual void Load(byte[] data)
+        {
+            PangyaBinaryReader Reader = null;
+
+            try
+            {
+                Reader = new PangyaBinaryReader(new MemoryStream(data));
+                Header = Reader.Read<IFFHeader>();
+                CheckVersionIFF();
+                CheckItemSize(Reader.GetSize());
+                for (int i = 0; i < Header.Count; i++)
+                {
+                    //reader object and convert is class IFF
+                    var item = (T)Reader.Read(CreateItem());
+                    //add item in List<T>
+                    AddItem(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                //show log error :(
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                //is dispose memory :D
+                Reader.Dispose();
+            }
+        }
+        public virtual void Load(byte[] data, int _count)
+        {
+            PangyaBinaryReader Reader = null;
+
+            try
+            {
+                Reader = new PangyaBinaryReader(new MemoryStream(data));
+
+                for (int i = 0; i < _count; i++)
+                {
+                    //reader object and convert is class IFF
+                    var item = (T)Reader.Read(CreateItem());
+                    //add item in List<T>
+                    AddItem(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                //show log error :(
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                //is dispose memory :D
+                Reader.Dispose();
+            }
+        }
+
+
+        /// <summary>
+        /// save list load in iff 
+        /// </summary>
+        /// <param name="filePath">local file</param>
         /// <summary>
         /// Save a IFFFile instance to a file
         /// </summary>
         /// <param name="filePath">File path to save the IFF file to</param>
         public void Save(string filePath)
         {
-            using (BinaryWriter writer = new BinaryWriter(File.Open(filePath, FileMode.Create, FileAccess.Write)))
+            try
             {
-                writer.Write((ushort) Entries.Count);
-                writer.Write(BindingID);
-                writer.Write(Version);
-                
-                Entries.ForEach(entry =>
+                using (PangyaBinaryWriter writer = new PangyaBinaryWriter())
                 {
-                    int size = Marshal.SizeOf(entry);
-                    byte[] arr = new byte[size];
-
-                    IntPtr ptr = Marshal.AllocHGlobal(size);
-                    Marshal.StructureToPtr(entry, ptr, true);
-                    Marshal.Copy(ptr, arr, 0, size);
-                    Marshal.FreeHGlobal(ptr);
-                    
-                    writer.Write(arr);
-                });
+                    writer.WriteStruct(Header);
+                    foreach (var entry in this)
+                    {
+                        writer.WriteStruct(entry);
+                    }
+                    writer.WriteFile(filePath);
+                    Update = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
+   
+        private string GetDebuggerDisplay()
+        {
+            return ToString();
+        }
+
+        protected virtual T CreateItem()
+        {
+            return (T)Activator.CreateInstance(typeof(T));
+        }
+
+        public virtual int GetSize()
+        {
+            return Marshal.SizeOf(CreateItem());
+        }
+
+        ~IFFFile()
+        {
+        }
     }
+    
 }
