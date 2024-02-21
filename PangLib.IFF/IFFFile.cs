@@ -6,8 +6,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
 namespace PangLib.IFF
 {
     /// <summary>
@@ -246,7 +244,7 @@ namespace PangLib.IFF
             catch (Exception ex)
             {
                 //show log error :(
-                MessageBox.Show(ex.Message);
+               
             }
             finally
             {
@@ -273,7 +271,7 @@ namespace PangLib.IFF
             catch (Exception ex)
             {
                 //show log error :(
-                MessageBox.Show(ex.Message);
+               
             }
             finally
             {
@@ -308,7 +306,7 @@ namespace PangLib.IFF
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+               
             }
         }
    

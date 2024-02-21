@@ -1,7 +1,6 @@
 using System.IO;
 using System;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using PangLib.IFF.Models.Flags;
 using PangLib.IFF.Extensions;
 
@@ -81,13 +80,16 @@ namespace PangLib.IFF.Models.General
         /// voce não pode listar este item pois o valor ira 
         /// ativar um codigo no ProjectG de alerta
         /// </summary>
-        public void SendMessage()
+        public bool SendMessage()
         {
             bool result = Shop.flag_shop.can_send_mail_and_personal_shop
              || Shop.flag_shop.block_mail_and_personal_shop
              || Shop.flag_shop.is_saleable;
             if (result && Shop.Price >= 1000000)
-                MessageBox.Show($"\nBe careful, you activated an item, but did not change its value\n check this item({ID})", "Pangya Editor v2", MessageBoxButtons.OKCancel, MessageBoxIcon.Error);
+                return true;
+
+            return false;
+               
         }
 
 
