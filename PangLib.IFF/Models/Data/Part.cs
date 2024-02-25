@@ -50,8 +50,8 @@ namespace PangLib.IFF.Models.Data
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public class CardSlot
         {
-            public ushort Slot_Char { get; set; }//Bonus Char Slot
-            public ushort Slot_Caddie { get; set; }//Bonus Card Slot
+            public ushort CharSlot { get; set; }//Bonus Char Slot
+            public ushort CaddieSlot { get; set; }//Bonus Card Slot
         }
         [field: MarshalAs(UnmanagedType.Struct)]
         public CardSlot _CardSlot { get; set; }
@@ -59,6 +59,28 @@ namespace PangLib.IFF.Models.Data
         public uint RentPang { get; set; }
         public uint Un1 { get; set; }
         public uint EquipmentCategory { get => Convert.ToUInt32(type_item); set => type_item = (PartType)value; }
+        public uint CharacterType => (uint)((ID & 0x3fc0000) / Math.Pow(2.0, 18.0));
+        public ushort Character_Raw => (ushort)(((double)(ID & 0x3fc0000)) / Math.Pow(2.0, 18.0));
+
+        public int getPersonagemNome() => (int)CharacterType;
+        public object newTypeid(object charSerial, object Pos, object Group, object Type, object serial)
+        {
+            int num = 0;
+            try
+            {
+                num = (int)(2.0 * Math.Pow(2.0, 26.0) +
+                            (double)charSerial * Math.Pow(2.0, 18.0) +
+                            (double)Pos * Math.Pow(2.0, 13.0) +
+                            (double)Group * Math.Pow(2.0, 11.0) +
+                            (double)Type * Math.Pow(2.0, 9.0) +
+                            (double)serial);
+            }
+            catch (Exception)
+            {
+                num = 0;
+            }
+            return num;
+        }
 
     }
     #endregion

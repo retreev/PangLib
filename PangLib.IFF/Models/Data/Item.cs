@@ -15,7 +15,15 @@ namespace PangLib.IFF.Models.Data
         public ushort Accuracy { get; set; }
         public ushort Spin { get; set; }
         public ushort Curve { get; set; }
+        // Aqui é o No Limit time preço, mas quando compra ele passa o preço de -1, mas no visual ele mostra o valor que está aqui
         public ushort Un1 { get; set; }
+    }
+    public enum TypeItem: uint
+    {
+        Active = 0,
+        consumable = 1,
+        Passive = 128,
+        GM = 252,
     }
     #endregion
 }

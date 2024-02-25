@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using System.Collections;
 using PangLib.IFF.Models.Flags;
-
 namespace PangLib.IFF.Models.General
 {
-   
     [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 1)]
     public class IFFLevel
     {
+        [field: MarshalAs(UnmanagedType.U1, SizeConst = 1)]
         private ItemLevelEnum _level;//ler somente esse ;D
 
         public bool GoodLevel(byte _stlevel)
@@ -20,7 +18,6 @@ namespace PangLib.IFF.Models.General
 
             return false;
         }
-
         public byte level
         {
             get
@@ -29,47 +26,30 @@ namespace PangLib.IFF.Models.General
             }
             set
             {
+                if (value > 70)
+                {
+                    value = 70;
+                }
                 _level =(ItemLevelEnum)value;
             }
         }
+        /// <summary>
+        /// set value in level max, true = 70, false = other value
+        /// </summary>
         public bool is_max
         {
-            get {
-                bool _is_max = false;
-                BitArray bits = new BitArray(BitConverter.GetBytes(level));
-                bits = PadToFullByte(bits);
-                if (bits.Get(7))
+            get { return (level & 0b01000000) != 0; }
+            set
+            {
+                if (value)
                 {
-                    _is_max = true;
-                    bits.Set(7, false);
+                    var new_level = level;
+                    level = Convert.ToByte((new_level |= 0b01000000) - 55);
                 }
                 else
-                {
-                    _is_max = false;
-                }
-                return _is_max;
+                    level &= 0b00111111;
             }
         }
 
-        BitArray PadToFullByte(BitArray bits)
-        {
-            BitArray array = new BitArray(8, false);
-            if (bits.Count > 0)
-            {
-                for (int i = 0; i < bits.Count; i++)
-                {
-                    if ((bits.Count > 8) && (i < 8))
-                    {
-                        array.Set(i, bits[i]);
-                    }
-                }
-            }
-            return array;
-        }
-
-        public static explicit operator int(IFFLevel v)
-        {
-          return  v.level;
-        }
     }
 }

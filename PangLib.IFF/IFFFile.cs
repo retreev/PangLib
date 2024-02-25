@@ -37,7 +37,8 @@ namespace PangLib.IFF
         {
             Header = new IFFHeader();
             Update = false;
-            Load(File.ReadAllBytes(path));
+            if (File.Exists(path))
+                Load(File.ReadAllBytes(path));
         }
 
         public bool CheckVersionIFF()
@@ -182,28 +183,23 @@ namespace PangLib.IFF
             return false;
         }
 
-        //adiciona e atualiza o cabecario do iff
-        public virtual void AddItem(T item)
+        public new void AddRange(IEnumerable<T> item)
         {
             var OldCount = Count;
-            this.Add(item);
+            base.AddRange(item);
             if (Count > Header.Count)//so atualiza se o  contador for maior
             {
                 Header.Count = (short)Count;
                 Update = true;
-                Debug.WriteLine($"IFFFile::AddItemRange: Atualizou o IFF, Contador=> Novo({Count}), Antigo({OldCount}) ");
             }
         }
-
-        public virtual void AddItemRange(IEnumerable<T> item)
+        public new void Add(T item)
         {
-            var OldCount = Count;
-            this.AddRange(item);
+            base.Add(item);
             if (Count > Header.Count)//so atualiza se o  contador for maior
             {
                 Header.Count = (short)Count;
                 Update = true;
-                Debug.WriteLine($"IFFFile::AddItemRange: Atualizou o IFF, Contador=> Novo({Count}), Antigo({OldCount}) ");
             }
         }
 
@@ -238,10 +234,10 @@ namespace PangLib.IFF
                     //reader object and convert is class IFF
                     var item = (T)Reader.Read(CreateItem());
                     //add item in List<T>
-                    AddItem(item);
+                    Add(item);
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //show log error :(
                
@@ -265,10 +261,10 @@ namespace PangLib.IFF
                     //reader object and convert is class IFF
                     var item = (T)Reader.Read(CreateItem());
                     //add item in List<T>
-                    AddItem(item);
+                    Add(item);
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //show log error :(
                
@@ -304,12 +300,59 @@ namespace PangLib.IFF
                     Update = false;
                 }
             }
-            catch (Exception ex)
+            catch
             {
                
             }
         }
-   
+        public byte[] GetBytes()
+        {
+            try
+            {
+                var size = Marshal.SizeOf(CreateItem());
+                var bytes = new byte[size];
+                // Crie um stream para armazenar os bytes serializados
+                using (PangyaBinaryWriter stream = new PangyaBinaryWriter())
+                {
+                    // Crie um formateador binário
+                    foreach (var item in this)
+                    {
+                        stream.WriteStruct(item);
+                    }
+                    // Obtenha os bytes do stream
+                    bytes = stream.GetBytes;
+                }
+                return bytes;
+            }
+            catch
+            {
+                return new byte[0];
+            }
+        }
+
+        public byte[] GetBytes(int index)
+        {
+            try
+            {
+                var size = Marshal.SizeOf(CreateItem());
+                var bytes = new byte[size];
+                // Crie um stream para armazenar os bytes serializados
+                using (PangyaBinaryWriter stream = new PangyaBinaryWriter())
+                {
+                    // Crie um formateador binário
+                    var item = this[index];
+                    stream.WriteStruct(item);
+
+                    // Obtenha os bytes do stream
+                    bytes = stream.GetBytes;
+                }
+                return bytes;
+            }
+            catch
+            {
+                return new byte[0];
+            }
+        }
         private string GetDebuggerDisplay()
         {
             return ToString();

@@ -128,6 +128,11 @@ namespace PangLib.IFF.Models.General
             get => Shop == null ? 0 : Shop.DiscountPrice;
             set => Shop.DiscountPrice = value;
         }
+        public uint isValid
+        {
+            get => Active;
+            set => Active = value;
+        }
         public sbyte GetShopPriceType()
         {
             return (sbyte)Shop.flag_shop.ShopFlag;
@@ -232,7 +237,7 @@ namespace PangLib.IFF.Models.General
         {
             //se testar o flag do tipo de moeda antes, não vai dar certo
             //tem que testar o flag hide primeiro
-            var result = Shop.flag_shop.IsHide ? 2 : Shop.flag_shop.IsTypeCash ? 0 : 1;
+            var result = Shop.flag_shop.IsHide ? 0 : Shop.flag_shop.IsTypeCash ? 1 : 2;
             return result;
         }
 
