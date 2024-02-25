@@ -1,14 +1,16 @@
+﻿using PangLib.IFF.Models.General;
+using PangLib.IFF.Models.Flags;
+using System;
 using System.Runtime.InteropServices;
-using PangLib.IFF.Models.General;
-
 namespace PangLib.IFF.Models.Data
 {
+    #region Struct HairStyle.iff
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct HairStyle
+    public class HairStyle : IFFCommon
     {
-        [field: MarshalAs(UnmanagedType.Struct)]
-        public IFFCommon Header { get; set; }
-        public uint Unknown1 { get; set; }
-        public uint HairStyleID { get; set; }
+        public byte Color { get; set; }
+        public CharTypeByHairColor Character { get; set; }
+        public ushort Blank { get; set; }
     }
+    #endregion
 }
