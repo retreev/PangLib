@@ -1,8 +1,7 @@
-﻿namespace PangLib.SBIN.Models
+﻿namespace PangLib.SBIN.Models;
+
+public class PuppetShadowMap
 {
-    public class PuppetShadowMap
-    {
-        public string Name;
-        public ShadowMap ShadowMap;
-    }
+    public string Name;
+    public ShadowMap ShadowMap;
 }

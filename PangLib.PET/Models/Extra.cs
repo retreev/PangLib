@@ -1,13 +1,12 @@
-namespace PangLib.PET.Models
+namespace PangLib.PET.Models;
+
+/// <summary>
+/// Base extra structure for Puppet files
+/// </summary>
+public struct Extra
 {
     /// <summary>
-    /// Base extra structure for Puppet files
+    /// Character set used in the Puppet file
     /// </summary>
-    public struct Extra
-    {
-        /// <summary>
-        /// Character set used in the Puppet file
-        /// </summary>
-        public char[] CharacterSet;
-    }
+    public char[] CharacterSet;
 }

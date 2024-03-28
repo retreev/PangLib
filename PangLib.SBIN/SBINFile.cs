@@ -3,34 +3,33 @@ using System.IO;
 using PangLib.SBIN.Helpers;
 using PangLib.SBIN.Models;
 
-namespace PangLib.SBIN
+namespace PangLib.SBIN;
+
+public class SBINFile
 {
-    public class SBINFile
+    public List<PuppetShadowMap> PuppetShadowMaps;
+    public ShadowMap ShadowMap;
+
+    public SBINFile(Stream data)
     {
-        public List<PuppetShadowMap> PuppetShadowMaps;
-        public ShadowMap ShadowMap;
+        Parse(data);
+    }
 
-        public SBINFile(Stream data)
+    private void Parse(Stream data)
+    {
+        using (BinaryReader reader = new BinaryReader(data))
         {
-            Parse(data);
-        }
+            int version = reader.ReadInt32();
 
-        private void Parse(Stream data)
-        {
-            using (BinaryReader reader = new BinaryReader(data))
+            if (version > 0xFFFE000)
             {
-                int version = reader.ReadInt32();
-
-                if (version > 0xFFFE000)
-                {
-                    PuppetShadowMaps = PuppetShadowMapReader.ReadAllPuppetShadowMaps(reader);
-                }
-                else
-                {
-                    reader.BaseStream.Seek(0, SeekOrigin.Begin);
-                    ShadowMap = ShadowMapReader.ReadShadowMap(reader);
-                }
+                PuppetShadowMaps = PuppetShadowMapReader.ReadAllPuppetShadowMaps(reader);
+            }
+            else
+            {
+                reader.BaseStream.Seek(0, SeekOrigin.Begin);
+                ShadowMap = ShadowMapReader.ReadShadowMap(reader);
             }
         }
-    }    
+    }
 }
