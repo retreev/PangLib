@@ -3,53 +3,52 @@ using System.IO;
 using System.Text;
 using PangLib.PET.Models;
 
-namespace PangLib.PET.Helpers
+namespace PangLib.PET.Helpers;
+
+/// <summary>
+/// Helper class to read <see cref="PangLib.PET.Models.Motion"/> structures from Puppet files
+/// </summary>
+static class MotionReader
 {
     /// <summary>
-    /// Helper class to read <see cref="PangLib.PET.Models.Motion"/> structures from Puppet files
+    /// Helper method to read all motions from a Puppet file and return a list of them
     /// </summary>
-    static class MotionReader
+    /// <param name="sectionReader">BinaryReader instance containing the Motion section data</param>
+    /// <returns>List of motions from the Puppet file</returns>
+    public static List<Motion> ReadAllMotions(BinaryReader sectionReader)
     {
-        /// <summary>
-        /// Helper method to read all motions from a Puppet file and return a list of them
-        /// </summary>
-        /// <param name="sectionReader">BinaryReader instance containing the Motion section data</param>
-        /// <returns>List of motions from the Puppet file</returns>
-        public static List<Motion> ReadAllMotions(BinaryReader sectionReader)
+        List<Motion> motions = new List<Motion>();
+
+        uint motionCount = sectionReader.ReadUInt32();
+
+        for (int i = 0; i < motionCount; i++)
         {
-            List<Motion> motions = new List<Motion>();
+            Motion motion = new Motion();
 
-            uint motionCount = sectionReader.ReadUInt32();
+            int nameLength = sectionReader.ReadInt32();
 
-            for (int i = 0; i < motionCount; i++)
-            {
-                Motion motion = new Motion();
+            motion.Name = Encoding.UTF8.GetString(sectionReader.ReadBytes(nameLength));
 
-                int nameLength = sectionReader.ReadInt32();
+            motion.FrameStart = sectionReader.ReadUInt32();
+            motion.FrameEnd = sectionReader.ReadUInt32();
 
-                motion.Name = Encoding.UTF8.GetString(sectionReader.ReadBytes(nameLength));
+            int targetNameLength = sectionReader.ReadInt32();
 
-                motion.FrameStart = sectionReader.ReadUInt32();
-                motion.FrameEnd = sectionReader.ReadUInt32();
+            motion.TargetName = Encoding.UTF8.GetString(sectionReader.ReadBytes(targetNameLength));
 
-                int targetNameLength = sectionReader.ReadInt32();
+            int typeNameLength = sectionReader.ReadInt32();
 
-                motion.TargetName = Encoding.UTF8.GetString(sectionReader.ReadBytes(targetNameLength));
+            motion.TypeName = Encoding.UTF8.GetString(sectionReader.ReadBytes(typeNameLength));
 
-                int typeNameLength = sectionReader.ReadInt32();
+            motion.Type = sectionReader.ReadUInt32();
 
-                motion.TypeName = Encoding.UTF8.GetString(sectionReader.ReadBytes(typeNameLength));
+            int boneNameLength = sectionReader.ReadInt32();
 
-                motion.Type = sectionReader.ReadUInt32();
+            motion.BoneName = Encoding.UTF8.GetString(sectionReader.ReadBytes(boneNameLength));
 
-                int boneNameLength = sectionReader.ReadInt32();
-
-                motion.BoneName = Encoding.UTF8.GetString(sectionReader.ReadBytes(boneNameLength));
-
-                motions.Add(motion);
-            }
-
-            return motions;
+            motions.Add(motion);
         }
+
+        return motions;
     }
 }

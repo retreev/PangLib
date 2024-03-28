@@ -1,8 +1,7 @@
-﻿namespace PangLib.SBIN.Models
+﻿namespace PangLib.SBIN.Models;
+
+public struct Vertex
 {
-    public struct Vertex
-    {
-        public int Number;
-        public int Index;
-    }
+    public int Number;
+    public int Index;
 }

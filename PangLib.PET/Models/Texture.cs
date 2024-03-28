@@ -1,13 +1,12 @@
-namespace PangLib.PET.Models
+namespace PangLib.PET.Models;
+
+/// <summary>
+/// Base texture structure for Puppet files
+/// </summary>
+public struct Texture
 {
     /// <summary>
-    /// Base texture structure for Puppet files
+    /// File name of the texture
     /// </summary>
-    public struct Texture
-    {
-        /// <summary>
-        /// File name of the texture
-        /// </summary>
-        public string FileName { get; set; }
-    }
+    public string FileName { get; set; }
 }

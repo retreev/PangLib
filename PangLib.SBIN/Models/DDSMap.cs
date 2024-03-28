@@ -1,7 +1,6 @@
-﻿namespace PangLib.SBIN.Models
+﻿namespace PangLib.SBIN.Models;
+
+public struct DDSMap
 {
-    public struct DDSMap
-    {
-        public byte[] Values;
-    }
+    public byte[] Values;
 }

@@ -1,31 +1,30 @@
 ﻿using System.Collections.Generic;
 
-namespace PangLib.WEP.Models
+namespace PangLib.WEP.Models;
+
+/// <summary>
+/// Base color type
+/// </summary>
+public struct Color
 {
     /// <summary>
-    /// Base color type
+    /// Color values
     /// </summary>
-    public struct Color
-    {
-        /// <summary>
-        /// Color values
-        /// </summary>
-        public List<int> Values { get; set; }
-    }
+    public List<int> Values { get; set; }
+}
 
+/// <summary>
+/// Color values for puppet models
+/// </summary>
+public struct VertexColorMap
+{
     /// <summary>
-    /// Color values for puppet models
+    /// Puppet model name
     /// </summary>
-    public struct VertexColorMap
-    {
-        /// <summary>
-        /// Puppet model name
-        /// </summary>
-        public string Name { get; set; }
+    public string Name { get; set; }
         
-        /// <summary>
-        /// List of color values
-        /// </summary>
-        public List<Color> Colors { get; set; }
-    }
+    /// <summary>
+    /// List of color values
+    /// </summary>
+    public List<Color> Colors { get; set; }
 }

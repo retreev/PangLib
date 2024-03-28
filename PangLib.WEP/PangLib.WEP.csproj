@@ -15,6 +15,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
 
     <RootNamespace>PangLib.WEP</RootNamespace>
+
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
 
 </Project>
