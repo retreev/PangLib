@@ -284,7 +284,6 @@ namespace PangLib.IFF.Models.Flags
     /// </summary>
     public enum ShopFlag : byte
     {
-
         Display = 85,
         /// <summary>
         /// Unknown value
@@ -309,7 +308,7 @@ namespace PangLib.IFF.Models.Flags
         /// <summary>
         /// Unknown value
         /// </summary>
-        Unknown32 = 32,
+        Pang = 32,
 
         Active = 37,
         PersonalShop_Active = 18, //oou 19?
@@ -346,7 +345,23 @@ namespace PangLib.IFF.Models.Flags
         /// No special buying conditions
         /// </summary>
         None = 0x00,
+
+        /// <summary>
+        /// Displays a "Special" banner on a shop item
+        /// </summary>
+        BannerSpecial = 3,
+
+        /// <summary>
+        /// Displays a "Hot" banner on a shop item
+        /// </summary>
+        BannerHot = 64,   Combine = 97, Combine96 = 96, Combine98 = 99,Combine99 = 99,
+
+        /// <summary>
+        /// Displays a "New" banner on a shop item
+        /// </summary>
+        BannerNew = 2
     }
+
     public enum MoneyFlag : byte
     {
         /// <summary>
@@ -375,6 +390,11 @@ namespace PangLib.IFF.Models.Flags
         Unknown2 = 0x08,
 
         /// <summary>
+        /// Unknown value
+        /// </summary>
+        Unknown3 = 0x03,
+
+        /// <summary>
         /// Item is for display only
         /// </summary>
         DisplayOnly = 0x04,
@@ -383,7 +403,7 @@ namespace PangLib.IFF.Models.Flags
         /// This shop item is active
         /// </summary>
         Active = 0x01,
-
+              Flag2 = 0x02,
         /// <summary>
         /// No special shop display condition
         /// </summary>

@@ -28,16 +28,10 @@ namespace PangLib.IFF.Models.Data
         public string Texture5 { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
         public string Texture6 { get; set; }
-        public ushort Power { get; set; }
-        public ushort Control { get; set; }
-        public ushort Impact { get; set; }
-        public ushort Spin { get; set; }
-        public ushort Curve { get; set; }
-        public ushort PowerSlot { get; set; }
-        public ushort ControlSlot { get; set; }
-        public ushort ImpactSlot { get; set; }
-        public ushort SpinSlot { get; set; }
-        public ushort CurveSlot { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct, SizeConst = 10)]
+        public IFFStats Stats { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct)]
+        public IFFSlotStats SlotStats { get; set; }
         [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
         byte[] _EquippableWith { get; set; }
         public string EquippableWith

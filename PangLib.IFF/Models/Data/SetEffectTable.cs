@@ -34,7 +34,6 @@ namespace PangLib.IFF.Models.Data
         public Item item { get; set; }
         public byte Slot { get; set; }
         public byte Effect_Add_Power { get; set; }   // Força sem penalidade
-        public uint Unk { get; set; }   // Força sem penalidade
     }
     #endregion
 }

@@ -6,13 +6,14 @@ namespace PangLib.IFF.Models.Data
 {
 
     #region Struct CaddieItem.iff
-    enum CaddieType : byte {
-				COOKIE,		// CASH
-				PANG,		// PANG
-				ESPECIAL,	// ACHO, por que não tem nenhum item com esse, não vi pelo menos
-				UPGRADE
-}
-[StructLayout(LayoutKind.Sequential, Pack = 4)]
+    enum CaddieType : byte
+    {
+        COOKIE,     // CASH
+        PANG,       // PANG
+        ESPECIAL,   // ACHO, por que não tem nenhum item com esse, não vi pelo menos
+        UPGRADE
+    }
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public class CaddieItem : IFFCommon
     {
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]

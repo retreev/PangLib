@@ -6,7 +6,7 @@ namespace PangLib.IFF.Models.Data
     /// Is Struct file TikiPointTable.iff
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct TikiPointTable
+    public class TikiPointTable
     {
         public uint Index;
         public byte TypeID;

@@ -30,19 +30,9 @@ namespace PangLib.IFF.Models.General
         /// <summary>
         /// true = cookie, false is Pang
         /// </summary>
-        public bool IsTypeCash
+        public bool IsCash
         {
             get { return ((int)ShopFlag & 0b00000001) != 0; }
-            set
-            {
-                int _PriceType = (int)ShopFlag;
-                if (value)
-                    _PriceType |= 0b00000001;
-                else
-                    _PriceType &= 0b11111110;
-
-                ShopFlag = (ShopFlag)_PriceType;
-            }
         }
         /// <summary>
         /// IsReserve
@@ -50,29 +40,11 @@ namespace PangLib.IFF.Models.General
         public bool can_send_mail_and_personal_shop
         {
             get { return ((int)ShopFlag & 0b00000010) != 0; }
-            set
-            {
-                int _PriceType = (int)ShopFlag;
-                if (value)
-                    _PriceType |= 0b00000010;
-                else
-                    _PriceType &= 0b11111101;
-                ShopFlag = (ShopFlag)_PriceType;
-            }
         }
 
         public bool IsDuplication
         {
             get { return ((int)ShopFlag & 0b00000100) != 0; }
-            set
-            {
-                int _PriceType = (int)ShopFlag;
-                if (value)
-                    _PriceType |= 0b00000100;
-                else
-                    _PriceType &= 0b11111011;
-                ShopFlag = (ShopFlag)_PriceType;
-            }
         }
 
         public bool IsSpecial
@@ -86,15 +58,6 @@ namespace PangLib.IFF.Models.General
         public bool block_mail_and_personal_shop
         {
             get { return ((int)ShopFlag & 0b00010000) != 0; }
-            set
-            {
-                int _PriceType = (int)ShopFlag;
-                if (value)
-                    _PriceType |= 0b00010000;
-                else
-                    _PriceType &= 0b11101111;
-                ShopFlag = (ShopFlag)_PriceType;
-            }
         }
         /// <summary>
         /// is hot ou sale
@@ -102,43 +65,16 @@ namespace PangLib.IFF.Models.General
         public bool is_saleable
         {
             get { return ((int)ShopFlag & 0b00100000) != 0; }
-            set
-            {
-                int _PriceType = (int)ShopFlag;
-                if (value)
-                    _PriceType |= 0b00100000;
-                else
-                    _PriceType &= 0b11011111;
-                ShopFlag = (ShopFlag)_PriceType;
-            }
         }
 
         public bool IsGift
         {
-            get { return Get(6); }
-            set
-            {
-                int _PriceType = (int)ShopFlag;
-                if (value)
-                    _PriceType |= 0b01000000;
-                else
-                    _PriceType &= 0b10111111;
-                ShopFlag = (ShopFlag)_PriceType;
-            }
+            get { return ShopFlag == Flags.ShopFlag.Combine99 || ShopFlag == Flags.ShopFlag.Combine96 || ShopFlag == Flags.ShopFlag.Combine || ShopFlag == Flags.ShopFlag.Combine98; }
         }
 
         public bool IsDisplay
         {
-            get { return ((int)ShopFlag & 0b10000000) != 0; }
-            set
-            {
-                int _PriceType = (int)ShopFlag;
-                if (value)
-                    _PriceType |= 0b10000000;
-                else
-                    _PriceType &= 0b01111111;
-                ShopFlag = (ShopFlag)_PriceType;
-            }
+            get { return  ShopFlag == Flags.ShopFlag.Only_Display || ShopFlag == Flags.ShopFlag.Display; }
         }
 
         public bool IsNormal
@@ -170,13 +106,9 @@ namespace PangLib.IFF.Models.General
         {
             get
             {
-                return ShopFlag == (ShopFlag)6 && MoneyFlag == 0 && IsTypeCash == false;
+                return ShopFlag == (ShopFlag)6 && MoneyFlag == 0 && IsCash == false;
             }
-            set
-            {
-                ShopFlag = (ShopFlag)6;
-                MoneyFlag = 0;
-            }
+            
         }
 
         public bool IsNew { get => (ShopFlag == (ShopFlag)4 && MoneyFlag == (MoneyFlag)1) || (ShopFlag == (ShopFlag)0x21 && MoneyFlag == (MoneyFlag)1); }

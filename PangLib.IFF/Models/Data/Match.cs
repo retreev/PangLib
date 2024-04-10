@@ -11,10 +11,9 @@ namespace PangLib.IFF.Models.Data
     public class Match
     {
         public uint Enable { get; set; }
-        public uint TypeID { get; set; }
-        [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 80)]
-        byte[] NameInBytes { get; set; }
-        public string Name { get => Encoding.UTF7.GetString(NameInBytes).Replace("\0", ""); set => NameInBytes = Encoding.UTF7.GetBytes(value.PadRight(80, '\0')); }
+        public uint ID { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
+        public string Name { get; set; }
         public ItemLevelEnum Level { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
         public string TrophyTexture1 { get; set; }

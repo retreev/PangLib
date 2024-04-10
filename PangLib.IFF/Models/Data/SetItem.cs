@@ -13,11 +13,8 @@ namespace PangLib.IFF.Models.Data
         public uint[] Item_TypeID { get; set; }
         [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
         public ushort[] Item_Qty { get; set; }
-        public ushort Power { get; set; }
-        public ushort Control { get; set; }
-        public ushort Impact { get; set; }
-        public ushort Spin { get; set; }
-        public ushort Curve { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct, SizeConst = 10)]
+        public IFFStats Stats { get; set; }
         public TypeSetFlag SetType { get; set; }       
         public string GetQntSet(int idx)
         {

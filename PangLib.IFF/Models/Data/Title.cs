@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 namespace PangLib.IFF.Models.Data
 {
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct Title
+    public class Title
     {
         public uint Active { get; set; }
         public uint ID { get; set; }

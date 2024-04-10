@@ -1,0 +1,49 @@
+﻿using PangLib.IFF.JP.Models.General;
+using PangLib.IFF.JP.Models.Flags;
+using System;
+using System.Runtime.InteropServices;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+
+namespace PangLib.IFF.JP.Models.Data
+{
+    #region Struct CadieMagicBox.iff
+    [StructLayout(LayoutKind.Sequential, Pack = 4)]
+    public class CadieMagicBox 
+    {
+        public uint MagicID { get; set; }//index
+        public uint Enabled { get; set; }//valido
+        public CadieBoxSetor Page { get; set; }//showOnPage
+        public CadieBoxEnum BoxType { get; set; }//
+        public uint Level { get; set; }//okay
+        public uint ProdItem { get; set; }
+        public uint ID { get; set; }
+        public uint Quatity { get; set; }
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        public class Packege
+        {
+        [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+        public uint[] TradeID { get; set; }
+        [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+        public uint[] TradeQuantity { get; set; }
+		}
+		        [field: MarshalAs(UnmanagedType.Struct)]
+		public Packege packege{ get; set; }
+        public uint Box_Random_ID { get; set; }
+
+		[field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]//is 64, 2 short unknown
+        byte[] NameInBytes { get; set; } 	
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+	public class Date
+		{       
+        [field: MarshalAs(UnmanagedType.Struct, SizeConst = 16)]
+        public IFFTime DateStart { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct, SizeConst = 16)]
+        public IFFTime DateEnd { get; set; }
+		}
+		        [field: MarshalAs(UnmanagedType.Struct)]
+		public Date date { get; set; }
+		public string Name { get => Encoding.GetEncoding("Shift_JIS").GetString(NameInBytes).Replace("\0", ""); set => NameInBytes = Encoding.GetEncoding("Shift_JIS").GetBytes(value.PadRight(40, '\0')); }
+    }
+    #endregion
+}

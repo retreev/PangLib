@@ -6,7 +6,7 @@ namespace PangLib.IFF.Models.Data
     /// Is Struct file TikiRecipe.iff
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public struct TikiRecipe
+    public class TikiRecipe
     {
         public uint Enable;
         public byte TypeID;

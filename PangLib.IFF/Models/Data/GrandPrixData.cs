@@ -10,7 +10,7 @@ namespace PangLib.IFF.Models.Data
     public class GrandPrixData
     {
         public uint Enabled { get; set; }
-        public uint TypeID { get; set; }
+        public uint ID { get; set; }
         public uint TypeID_Link { get; set; }
         public GP_ABA TypeGP { get; set; }
         public ushort TimeHole { get; set; }
@@ -57,7 +57,7 @@ namespace PangLib.IFF.Models.Data
 
         {
             Enabled = 0;
-            TypeID = 0;
+            ID = 0;
             TypeID_Link = 0;
             TypeGP = GP_ABA.ROOKIE; // You need to assign a value to this property based on its type
             TimeHole = 0;
@@ -104,7 +104,7 @@ namespace PangLib.IFF.Models.Data
         public GrandPrixData CreateEvent()
         {
             Enabled = 1;
-            TypeID = 51947265;
+            ID = 51947265;
             TypeID_Link = 51947264;
             TypeGP = GP_ABA.EVENT;
             TimeHole = 0;

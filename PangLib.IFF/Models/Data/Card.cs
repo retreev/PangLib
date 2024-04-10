@@ -11,11 +11,8 @@ namespace PangLib.IFF.Models.Data
         public byte Rarity { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
         public string MPet { get; set; }
-        public ushort PowerSlot { get; set; }
-        public ushort ControlSlot { get; set; }
-        public ushort AccuracySlot { get; set; }
-        public ushort SpinSlot { get; set; }
-        public ushort CurveSlot { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct, SizeConst = 10)]
+        public IFFStats SlotStats { get; set; }
         public ushort Effect { get; set; }
         public ushort EffectValue { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]

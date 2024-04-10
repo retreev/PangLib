@@ -11,11 +11,8 @@ namespace PangLib.IFF.Models.Data
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
         public string MPet { get; set; }
         public ushort Flag_Roll { get; set; }
-        public ushort Price1Day { get; set; }
-        public ushort Price7Day { get; set; }
-        public ushort Price15Day { get; set; }
-        public ushort Price30Day { get; set; }
-        public ushort Price365Day { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct)]
+        public IFFPrice sPrice { get; set; }
     }
     #endregion
 

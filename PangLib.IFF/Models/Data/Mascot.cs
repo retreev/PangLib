@@ -10,11 +10,8 @@ namespace PangLib.IFF.Models.Data
         public string MPet { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 40)]
         public string Texture1 { get; set; }
-        public ushort Price1Day { get; set; }
-        public ushort Price7Day { get; set; }
-        public ushort Price15Day { get; set; }
-        public ushort PriceUnknownDay { get; set; }
-        public ushort Price30Day { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct)]
+        public IFFPrice sPrice { get; set; } 
         public byte Power { get; set; }
         public byte Control { get; set; }
         public byte Impact { get; set; }

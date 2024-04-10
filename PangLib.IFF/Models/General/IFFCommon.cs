@@ -58,17 +58,17 @@ namespace PangLib.IFF.Models.General
             Icon = reader.ReadPStr(43); //89 start position
             //--------------------------end--------------------------------\\
             //------------------ SHOP DADOS ---------------------------------\\
-            Shop = (IFFShopData)reader.Read(new IFFShopData());
+            Shop = (IFFShopData)reader.Read(new IFFShopData(), 16);
             //-------------------  END  ------------------------------\\
             //------------------ Tiki SHOP---------------------\\
             if (version != 11)
             {
-                tiki = (IFFTikiShopData)reader.Read(new IFFTikiShopData());
+                tiki = (IFFTikiShopData)reader.Read(new IFFTikiShopData(), 24);
             }
             //-----------------------------------------------\\
 
             //-------------------- TIME IFF--------------\\
-            date = (IFFDate)reader.Read(new IFFDate());
+            date = (IFFDate)reader.Read(new IFFDate(), 36);
             //--------------------------------------------------\\
             if (jump)
             {
@@ -86,8 +86,10 @@ namespace PangLib.IFF.Models.General
              || Shop.flag_shop.block_mail_and_personal_shop
              || Shop.flag_shop.is_saleable;
             if (result && Shop.Price >= 1000000)
+            {
+              new  Exception($"\nBe careful, you activated an item, but did not change its value\n check this item({ID})");
                 return true;
-
+            }
             return false;
                
         }
@@ -204,7 +206,7 @@ namespace PangLib.IFF.Models.General
             // Ex: 0 + 0 = 0 Não é
             byte is_giftable = Convert.ToByte(Shop.flag_shop.IsGift);
             byte _is_saleable = Convert.ToByte(Shop.flag_shop.is_saleable);
-            return (Active == 1 && Shop.flag_shop.IsTypeCash
+            return (Active == 1 && Shop.flag_shop.IsCash
                     && (_is_saleable ^ is_giftable) == 1);
         }
 
@@ -221,7 +223,7 @@ namespace PangLib.IFF.Models.General
 
         public bool IsOnlyGift()
         {
-            return (Active == 1 && Shop.flag_shop.IsTypeCash
+            return (Active == 1 && Shop.flag_shop.IsCash
                     && Shop.flag_shop.is_saleable && Shop.flag_shop.IsGift == false);
         }
 
@@ -237,10 +239,153 @@ namespace PangLib.IFF.Models.General
         {
             //se testar o flag do tipo de moeda antes, não vai dar certo
             //tem que testar o flag hide primeiro
-            var result = Shop.flag_shop.IsHide ? 0 : Shop.flag_shop.IsTypeCash ? 1 : 2;
+            var result = Shop.flag_shop.IsHide ? 0 : Shop.flag_shop.IsCash ? 1 : 2;
             return result;
         }
 
+        public void SetItemNew(bool tipoMoeda)
+        {
+            SetFlagShop(tipoMoeda, true);
+        }
 
+        public void SetItemHot(bool tipoMoeda)
+        {
+            SetFlagShop(tipoMoeda, false, true);
+        }
+
+        public void SetItemNormal(bool tipoMoeda)
+        {
+            SetFlagShop(tipoMoeda, false, false, true);
+        }
+
+        public void SetItemPSQ(bool tipoMoeda)
+        {
+            SetFlagShop(tipoMoeda, false, false, false, true);
+        }
+
+        public void SetItemGift(bool tipoMoeda)
+        {
+            SetFlagShop(tipoMoeda, false, false, false, false, false, false, true);
+        }
+
+        public void SetItemDesativado(bool tipoMoeda)
+        {
+            SetFlagShop(tipoMoeda, false, false, false, false, false, true);
+        }
+
+        public void SetItemDisplay(bool tipoMoeda)
+        {
+            SetFlagShop(tipoMoeda, false, false, false, false, true);
+        }
+
+        /// <summary>
+        /// seta tipo de bandeira a ser exibida no shopFlag
+        /// </summary>
+        /// <param name="tipoMoney">false é pang, true é cookies</param>
+        /// <param name="IsNew">novo item</param>
+        /// <param name="IsHot">item quente</param>
+        /// <param name="IsNormal"> item normal</param>
+        /// <param name="IsPSQ"> item personal shop</param>
+        /// <param name="IsGift">item gift</param>
+        /// <param name="IsDesativado">desativado</param>
+        /// <param name="Is_OnlyDisplay">é item para ficar visivel </param>
+        public void SetFlagShop(bool tipoMoeda /*pang = false*/, bool IsNew = false, bool IsHot = false, bool IsNormal = false, bool IsPSQ = false, bool IsDesativado = false, bool Is_OnlyDisplay = false, bool IsGift = false, bool IsSpecial = false)
+        {
+            if (Is_OnlyDisplay)
+            {
+                Shop.flag_shop.ShopFlag = Flags.ShopFlag.Only_Display;
+                Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+            }
+            else if (IsDesativado)
+            {
+                Shop.flag_shop.ShopFlag = Flags.ShopFlag.None;
+                Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+            }
+            else
+            {
+                if (!tipoMoeda && IsNormal) // pangs
+                {
+                    if (IsPSQ && IsGift) // combinacao dos 3(ativo no shop normal e tambem no psq)
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Combine98;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+                    }
+                    else if (IsGift) // combinacao dos 3(ativo no shop normal e tambem no psq)
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Combine96;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.BannerNew;
+                    }
+                    else if (IsPSQ) // combinacao dos 3(ativo no shop normal e tambem no psq)
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Unknown64;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+                    }
+                    else
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Pang;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+                    }
+                }
+                else if (tipoMoeda && IsNormal) // cookies
+                {
+                    if (IsPSQ && IsGift) // nesse quesito tenho que olhar pro setitem, e o caddieitem
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Combine99;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+                    }
+                    else if (IsGift) // combinacao dos 3(ativo no shop normal e tambem no psq)
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Combine;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+                    }
+                    else if (IsPSQ) // combinacao dos 3(ativo no shop normal e tambem no psq)
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Cookies_0;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+                    }
+                    else if (IsNew) // normal +new is cookies
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Cookies_0;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.Active;
+                    }
+                    else if (IsHot) // normal + hot teste ainda
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Cookies_0;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.BannerNew;
+                    }
+                    else // somente no shop, sem flags, é cookies
+                    {
+                        Shop.flag_shop.ShopFlag = Flags.ShopFlag.Cookies_0;
+                        Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+                    }
+                }
+
+                if (IsNew && (!tipoMoeda || (tipoMoeda && IsNormal)))
+                {
+                    Shop.flag_shop.ShopFlag = Flags.ShopFlag.Coupon;
+                    Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.Active;
+                }
+
+                if (IsHot)
+                {
+                    Shop.flag_shop.ShopFlag = Flags.ShopFlag.Pang;
+                    Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.Flag2;
+                }
+
+                if (IsPSQ)
+                {
+                    Shop.flag_shop.ShopFlag = Flags.ShopFlag.NonGiftable;
+                    Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.None;
+                }
+
+                if (IsSpecial)
+                {
+                    Shop.flag_shop.ShopFlag = Flags.ShopFlag.Pang;
+                    Shop.flag_shop.MoneyFlag = Flags.MoneyFlag.Unknown3;
+                }
+            }
+
+            SendMessage();
+        }
     }
 }

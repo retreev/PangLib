@@ -358,29 +358,7 @@ namespace PangLib.IFF.Extensions
                 yield return ReadUInt32();
             }
         }
-        //não testado
-        public bool Read(out object value, int Count)
-        {
-            try
-            {
-                var obj = new object();
-                byte[] recordData = ReadBytes(Count);
-
-                IntPtr ptr = Marshal.AllocHGlobal(Count);
-
-                Marshal.Copy(recordData, 0, ptr, Count);
-
-                value = Marshal.PtrToStructure(ptr, obj.GetType());
-                Marshal.FreeHGlobal(ptr);
-            }
-            catch
-            {
-                value = 0;
-                return false;
-            }
-            return true;
-        }
-
+       
         public T ReadStruct<T>()
         {
             var byteLength = Marshal.SizeOf(typeof(T));
@@ -407,6 +385,7 @@ namespace PangLib.IFF.Extensions
             }
             return local;
         }
+
         public object Read(object value)
         {
             var count = Marshal.SizeOf(value);
@@ -429,40 +408,42 @@ namespace PangLib.IFF.Extensions
             return value;
         }
 
-        public object Read(object value, object value_ori)
+        public object Read(object value, long real_size)
         {
-            var Count = Marshal.SizeOf(value_ori);
-
-            byte[] recordData = ReadBytes(Count);
-
-            if (recordData.Length != Count)
+            try
             {
-                throw new Exception(
-                    $"The record length ({recordData.Length}) mismatches the length of the passed structure ({Count})");
+                var count = Marshal.SizeOf(value);
+
+                byte[] recordData = new byte[real_size];
+                if (count > real_size)
+                {
+                    recordData = ReadBytes((int)real_size);
+                    count = (int)real_size;
+                }
+                else if (real_size > count)
+                {
+                    recordData = ReadBytes((int)real_size);
+                    count = (int)real_size;
+                }
+                else
+                {
+                    recordData = ReadBytes(count);
+                }
+                IntPtr ptr = Marshal.AllocHGlobal(count);
+
+                Marshal.Copy(recordData, 0, ptr, count);
+
+                value = Marshal.PtrToStructure(ptr, value.GetType());
+                Marshal.FreeHGlobal(ptr);
+                return value;
             }
+            catch (Exception ex)
+            {
 
-            IntPtr ptr = Marshal.AllocHGlobal(Count);
-
-            Marshal.Copy(recordData, 0, ptr, Count);
-
-            value = Marshal.PtrToStructure(ptr, value.GetType());
-            Marshal.FreeHGlobal(ptr);
-            return value;
+                throw ex;
+            }
         }
-
-        public object Read(object value, int Count)
-        {
-            byte[] recordData = ReadBytes(Count);
-
-            IntPtr ptr = Marshal.AllocHGlobal(Count);
-
-            Marshal.Copy(recordData, 0, ptr, Count);
-
-            value = Marshal.PtrToStructure(ptr, value.GetType());
-            Marshal.FreeHGlobal(ptr);
-            return value;
-        }
-        public Object ReadObject(object obj)
+ public Object ReadObject(object obj)
         {
             foreach (var property in obj.GetType().GetProperties())
             {

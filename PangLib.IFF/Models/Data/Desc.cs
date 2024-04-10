@@ -9,7 +9,7 @@ namespace PangLib.IFF.Models.Data
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
     public class Desc
     {
-        public uint TypeID { get; set; }
+        public uint ID { get; set; }
         [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 512)]
         byte[] DescriptionInBytes { get; set; }//4 start position
         public string Description 
@@ -22,7 +22,7 @@ namespace PangLib.IFF.Models.Data
             {
 
                 DescriptionInBytes = new byte[512];
-                Buffer.BlockCopy(Encoding.UTF7.GetBytes(value), 0, DescriptionInBytes, 0, Math.Min(value.Length, 64));
+                Buffer.BlockCopy(Encoding.UTF7.GetBytes(value), 0, DescriptionInBytes, 0, Math.Min(value.Length, 512));
             }
         }
 

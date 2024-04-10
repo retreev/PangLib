@@ -3,6 +3,7 @@ using PangLib.IFF.Models.General;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -115,6 +116,40 @@ namespace PangLib.IFF
             return CreateItem();
         }
 
+        /// <summary>
+        ///so obtem se for IFFCommon
+        /// </summary>
+        /// <param name="TypeID"></param>
+        /// <returns>retorna o tipo</returns>
+        public T GetItem(uint TypeID, bool get_common = true)
+        {
+            foreach (var item in this)
+            {
+                if (item is IFFCommon && get_common)//verifica se IFFCommon
+                {
+                    var item2 = item as IFFCommon;
+                    if (item2.ID == TypeID)
+                    {
+                        return item;
+                    }
+                }
+                if (item is IFFCommon && !get_common)//verifica se IFFCommon
+                {
+                    var item2 = item as IFFCommon;
+                    if (item2.ID == TypeID)
+                    {
+                        return (T)item;
+                    }
+                }
+                else
+                {
+                    return CreateItem();
+                }
+            }
+            return CreateItem();
+        }
+
+
         public IFFCommon GetItemCommon(uint TypeID)
         {
             foreach (var item in this)
@@ -202,14 +237,35 @@ namespace PangLib.IFF
                 Update = true;
             }
         }
+        /// <summary>
+        /// remove e atualiza os dados em seguida
+        /// </summary>
+        /// <param name="item"></param>
+        public new void Remove(T item)
+        {
+            base.Remove(item);
+            Header.Count = (short)Count;
+            Update = true;
+        }
+
+        /// <summary>
+        /// remove e atualiza os dados em seguida
+        /// </summary>
+        /// <param name="item"></param>
+        public new void RemoveAt(int item)
+        {
+            base.RemoveAt(item);
+            Header.Count = (short)Count;
+            Update = true;
+        }
 
         public bool CheckItemSize(long size)
         {
             long recordLength = (size - 8L) / Header.Count;
-            if (recordLength != Marshal.SizeOf(CreateItem()))
+            long item_size = Marshal.SizeOf(CreateItem());
+            if (recordLength != item_size)
             {
-                throw new Exception(
-                    $"The record({CreateItem().GetType().Name}) length ({recordLength}) mismatches the length of the passed structure ({Marshal.SizeOf(CreateItem())})");
+                return false;
             }
             return true;
         }
@@ -228,19 +284,20 @@ namespace PangLib.IFF
                 Reader = new PangyaBinaryReader(new MemoryStream(data));
                 Header = Reader.Read<IFFHeader>();
                 CheckVersionIFF();
-                CheckItemSize(Reader.GetSize());
+                var real_size = (Reader.GetSize() - 8L) / Header.Count;
+                CheckItemSize(real_size);
                 for (int i = 0; i < Header.Count; i++)
                 {
                     //reader object and convert is class IFF
-                    var item = (T)Reader.Read(CreateItem());
+                    var item = Reader.ReadStruct<T>();
                     //add item in List<T>
                     Add(item);
                 }
             }
-            catch
+            catch(Exception e)
             {
                 //show log error :(
-               
+                throw e;
             }
             finally
             {
@@ -248,35 +305,6 @@ namespace PangLib.IFF
                 Reader.Dispose();
             }
         }
-        public virtual void Load(byte[] data, int _count)
-        {
-            PangyaBinaryReader Reader = null;
-
-            try
-            {
-                Reader = new PangyaBinaryReader(new MemoryStream(data));
-
-                for (int i = 0; i < _count; i++)
-                {
-                    //reader object and convert is class IFF
-                    var item = (T)Reader.Read(CreateItem());
-                    //add item in List<T>
-                    Add(item);
-                }
-            }
-            catch
-            {
-                //show log error :(
-               
-            }
-            finally
-            {
-                //is dispose memory :D
-                Reader.Dispose();
-            }
-        }
-
-
         /// <summary>
         /// save list load in iff 
         /// </summary>
@@ -302,7 +330,7 @@ namespace PangLib.IFF
             }
             catch
             {
-               
+
             }
         }
         public byte[] GetBytes()
@@ -353,6 +381,34 @@ namespace PangLib.IFF
                 return new byte[0];
             }
         }
+
+        public byte[] GetBytes(uint ID, bool get)
+        {
+            try
+            {
+                var size = Marshal.SizeOf(CreateItem());
+                var bytes = new byte[size];
+                // Crie um stream para armazenar os bytes serializados
+                using (PangyaBinaryWriter stream = new PangyaBinaryWriter())
+                {
+                    // Crie um formateador binário
+                    var item = GetItem(ID);
+                    stream.WriteStruct(item);
+
+                    // Obtenha os bytes do stream
+                    bytes = stream.GetBytes;
+                }
+                return bytes;
+            }
+            catch
+            {
+                return new byte[0];
+            }
+        }
+        public T FindByIndex(int idx)
+        {
+            return this[idx];
+        }
         private string GetDebuggerDisplay()
         {
             return ToString();
@@ -372,5 +428,4 @@ namespace PangLib.IFF
         {
         }
     }
-    
 }

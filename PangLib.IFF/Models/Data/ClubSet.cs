@@ -17,16 +17,10 @@ namespace PangLib.IFF.Models.Data
         }
         [field: MarshalAs(UnmanagedType.Struct)]
         public ClubType Club { get; set; }
-        public ushort Power { get; set; }
-        public ushort Control { get; set; }
-        public ushort Impact { get; set; }
-        public ushort Spin { get; set; }
-        public ushort Curve { get; set; }
-        public ushort PowerSlot { get; set; }
-        public ushort ControlSlot { get; set; }
-        public ushort ImpactSlot { get; set; }
-        public ushort SpinSlot { get; set; }
-        public ushort CurveSlot { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct, SizeConst = 10)]
+        public IFFStats Stats { get; set; }
+        [field: MarshalAs(UnmanagedType.Struct, SizeConst = 10)]
+        public IFFStats SlotStats { get; set; }
 
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         public class WorkShop
@@ -37,7 +31,6 @@ namespace PangLib.IFF.Models.Data
             public float rate { get; set; }
             public uint tipo_rank_s { get; set; }
             public uint flag_transformar { get; set; }
-            // Adicione outras propriedades/flags conforme necessário
         }
         [field: MarshalAs(UnmanagedType.Struct)]
         public WorkShop work_shop { get; set; }

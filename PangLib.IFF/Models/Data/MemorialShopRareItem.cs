@@ -8,47 +8,27 @@ using System.Threading.Tasks;
 
 namespace PangLib.IFF.Models.Data
 {
-
-
+    #region Struct MemorialRareItem.iff
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public class MemorialShopRareItem_GB
-    {
-        public uint Enabled { get; set; }
-        public uint Number { get; set; }
-        public uint Count { get; set; }
-        public uint TypeID { get; set; }
-        public uint Probabilities { get; set; }
-        public MemorialRareType RareType { get; set; }// Tipo Raro, EX: -1 - 0 normal, 1 - 2 raro, 3 - 4 Super raro
-        public FilterType ItemType { get; set; }
-        public uint Sex { get; set; }
-        public uint Value_1 { get; set; }
-        public uint Item { get; set; }
-        public CharacterType CharacterType { get; set; }
-
-        [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 24)]
-        public byte[] B_Bytes;
-    }
-        #region Struct MemorialRareItem.iff
-        [StructLayout(LayoutKind.Sequential, Pack = 4)] 
-    
     public class MemorialShopRareItem
     {
         public uint Enabled { get; set; }
-        public uint Number { get; set; }
-        public uint Count { get; set; }
+        [StructLayout(LayoutKind.Sequential, Pack = 1, Size = 8)]
+        public class Gacha
+        {
+            public uint Number { get; set; }
+            public uint Count { get; set; }
+        }
+        [field: MarshalAs(UnmanagedType.Struct, SizeConst = 8)]
+        public Gacha gacha { get; set; }
         public uint TypeID { get; set; }
         public uint Probabilities { get; set; }
         public MemorialRareType RareType { get; set; }// Tipo Raro, EX: -1 - 0 normal, 1 - 2 raro, 3 - 4 Super raro
-        public FilterType ItemType { get; set; }
-        public FilterType Sex { get; set; }
-        public FilterType Value_1 { get; set; }
-        public FilterType Item { get; set; }
-        public FilterType CharacterType { get; set; }
         [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]
         public int[] filter { get; set; }
         [field: MarshalAs(UnmanagedType.ByValTStr, SizeConst = 4)]//28 se for byte
         public string Version { get; set; }
-        [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 6)]//28 se for byte
+        [field: MarshalAs(UnmanagedType.ByValArray, SizeConst = 5)]//28 se for byte
         public int[] Null_Bytes { get; set; }
         public MemorialShopRareItem New()
         {
@@ -57,12 +37,7 @@ namespace PangLib.IFF.Models.Data
             Null_Bytes = new int[6];
             return this;
         }
-        public int[] getFilter()
-        {
-            var New_filter = new int[] { (int)ItemType, (int)Sex, (int)Value_1, (int)Item, (int)CharacterType, filter[0], filter[1], filter[2], filter[3], filter[4], };
-            
-            return New_filter;
-        }
+      
         public FilterType GetItemType(string type)
         {
             switch (type)
@@ -161,7 +136,7 @@ namespace PangLib.IFF.Models.Data
             return 0;
         }
 
-       
+
     }
     #endregion
 }
